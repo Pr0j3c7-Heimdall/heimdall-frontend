@@ -15,7 +15,7 @@ export const heroData = {
   description: 'AI가 생성한 콘텐츠가 일상에 넘쳐나는 시대. Heimdall로 신뢰할 수 있는 검증 결과를 확인하세요.',
   ctas: [
     { href: '/#showcase', label: '검사하기', variant: 'primary' },
-    { href: 'https://github.com/heimdall', label: 'GitHub', variant: 'outline' }
+    { href: 'https://github.com/Pr0j3c7-Heimdall', label: 'GitHub', variant: 'outline' }
   ]
 };
 
@@ -131,7 +131,7 @@ export const ctaData = {
   title: '지금 바로 시작하세요',
   description: 'GitHub에서 소스 코드를 확인하고, API 가이드를 통해 연동해 보세요.',
   buttons: [
-    { href: 'https://github.com/heimdall', label: 'GitHub에서 보기' },
+    { href: 'https://github.com/Pr0j3c7-Heimdall', label: 'GitHub에서 보기' },
     { href: '/docs', label: '가이드' }
   ]
 };
@@ -160,7 +160,7 @@ export const demoData = [
 export const linksData = {
   title: '시작하기',
   items: [
-    { href: 'https://github.com/heimdall', label: 'GitHub', description: '소스코드 및 예제' },
+    { href: 'https://github.com/Pr0j3c7-Heimdall', label: 'GitHub', description: '소스코드 및 예제' },
     { href: '/docs', label: '가이드', description: 'API 문서 및 사용법' }
   ]
 };
