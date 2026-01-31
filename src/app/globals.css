@@ -1043,7 +1043,7 @@ a {
   width: 100%;
 }
 
-/* Loader - 달 아이콘 회전 */
+/* Loader - 달/방패 아이콘 회전 */
 @keyframes loader-spin {
   from {
     transform: rotate(0deg);

@@ -4,12 +4,24 @@ export default {
   title: 'Components/Loader',
   component: Loader,
   argTypes: {
-    size: { control: { type: 'number', min: 24, max: 96, step: 8 } }
+    size: { control: { type: 'number', min: 24, max: 96, step: 8 } },
+    variant: {
+      control: { type: 'radio' },
+      options: ['moon', 'shield']
+    }
   }
 };
 
 export const Default = {
-  args: { size: 48 }
+  args: { size: 48, variant: 'moon' }
+};
+
+export const Moon = {
+  args: { size: 48, variant: 'moon' }
+};
+
+export const Shield = {
+  args: { size: 48, variant: 'shield' }
 };
 
 export const Small = {
@@ -28,6 +40,21 @@ export const Sizes = {
       <Loader size={48} />
       <Loader size={64} />
       <Loader size={80} />
+    </div>
+  )
+};
+
+export const Compare = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ textAlign: 'center' }}>
+        <Loader size={48} variant="moon" />
+        <p style={{ marginTop: 8, fontSize: 14, color: '#6b7280' }}>달</p>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Loader size={48} variant="shield" />
+        <p style={{ marginTop: 8, fontSize: 14, color: '#6b7280' }}>방패</p>
+      </div>
     </div>
   )
 };
