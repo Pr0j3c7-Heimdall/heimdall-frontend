@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
 import Chip from '@/components/Chip';
+import FaqItem from '@/components/FaqItem';
 import {
   navItems,
   footerLinks,
@@ -16,6 +17,7 @@ import {
   techStackData,
   ctaData
 } from '@/data/home';
+import { faqData } from '@/data/faq';
 
 export default function HomePage() {
   return (
@@ -165,6 +167,21 @@ export default function HomePage() {
                   ))}
                 </ul>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 자주 묻는 질문 */}
+      <section id="faq" className="section">
+        <div className="section__inner">
+          <div className="section__header">
+            <h2 className="section__title">자주 묻는 질문</h2>
+            <p className="section__desc">Heimdall 이용과 관련해 자주 받는 질문을 정리했습니다.</p>
+          </div>
+          <div className="faq-list faq-list--home">
+            {faqData.map((item) => (
+              <FaqItem key={item.id} id={item.id} question={item.question} answer={item.answer} />
             ))}
           </div>
         </div>
