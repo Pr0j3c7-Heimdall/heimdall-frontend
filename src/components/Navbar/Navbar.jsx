@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import Button from '@/components/Button';
 
-export default function Navbar({ logo = 'Heimdall', navItems = [], cta }) {
+export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, secondaryBtn, cta }) {
+  const mainCta = primaryBtn || cta;
   return (
     <nav className="navbar">
       <div className="navbar__inner">
@@ -20,9 +21,14 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], cta }) {
           ))}
         </ul>
         <div className="navbar__actions">
-          {cta && (
-            <Button href={cta.href} variant="primary" size="sm">
-              {cta.label}
+          {secondaryBtn && (
+            <Button href={secondaryBtn.href} variant="ghost" size="sm">
+              {secondaryBtn.label}
+            </Button>
+          )}
+          {mainCta && (
+            <Button href={mainCta.href} variant="primary" size="sm">
+              {mainCta.label}
             </Button>
           )}
         </div>
