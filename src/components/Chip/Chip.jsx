@@ -11,14 +11,7 @@ const SIZES = {
   md: 'chip--md'
 };
 
-export default function Chip({
-  children,
-  variant = 'default',
-  size = 'md',
-  onRemove,
-  className = '',
-  ...props
-}) {
+export default function Chip({ children, variant = 'default', size = 'md', onRemove, className = '', ...props }) {
   const baseClass = 'chip';
   const variantClass = VARIANTS[variant] || VARIANTS.default;
   const sizeClass = SIZES[size] || SIZES.md;
@@ -28,12 +21,7 @@ export default function Chip({
     <span className={classNames} {...props}>
       {children}
       {onRemove && (
-        <button
-          type="button"
-          className="chip__remove"
-          onClick={onRemove}
-          aria-label="제거"
-        >
+        <button type="button" className="chip__remove" onClick={onRemove} aria-label="제거">
           ×
         </button>
       )}
