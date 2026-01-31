@@ -469,10 +469,6 @@ a {
   margin: 0 auto;
 }
 
-.showcase__row:nth-child(even) {
-  background: var(--color-bg-alt);
-}
-
 .showcase__row--reverse {
   direction: rtl;
 }
@@ -545,6 +541,23 @@ a {
   border-color: var(--color-primary);
 }
 
+.analysis-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.analysis-card__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
 .analysis-card__title {
   font-size: 1rem;
   font-weight: 600;
@@ -574,6 +587,23 @@ a {
 
 .feature-card:hover {
   border-color: var(--color-primary);
+}
+
+.feature-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.feature-card__icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 .feature-card__title {

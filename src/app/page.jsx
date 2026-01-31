@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Badge from '@/components/Badge';
 import Chip from '@/components/Chip';
 import FaqItem from '@/components/FaqItem';
+import { Icons } from '@/components/icons';
 import {
   navItems,
   footerLinks,
@@ -96,6 +97,7 @@ export default function HomePage() {
           <div className="analysis-grid">
             {analysisData.items.map((item) => (
               <div key={item.id} className="analysis-card">
+                <span className="analysis-card__icon">{Icons[item.icon]}</span>
                 <h3 className="analysis-card__title">{item.title}</h3>
                 <p className="analysis-card__desc">{item.description}</p>
               </div>
@@ -114,6 +116,7 @@ export default function HomePage() {
           <div className="features-grid">
             {featuresData.items.map((item) => (
               <div key={item.id} className="feature-card">
+                <span className="feature-card__icon">{Icons[item.icon]}</span>
                 <h3 className="feature-card__title">{item.title}</h3>
                 <p className="feature-card__desc">{item.description}</p>
               </div>
