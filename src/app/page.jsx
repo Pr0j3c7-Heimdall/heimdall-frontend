@@ -2,6 +2,7 @@ import Layout from '@/components/Layout';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
+import Badge from '@/components/Badge';
 import { navItems, footerLinks, heroData } from '@/data/home';
 
 export default function HomePage() {
@@ -22,7 +23,9 @@ export default function HomePage() {
     >
       <section className="hero">
         <div className="hero__inner">
-          <span className="hero__badge">{heroData.badge}</span>
+          <Badge variant="default" className="hero__badge">
+            {heroData.badge}
+          </Badge>
           <h1 className="hero__title" style={{ whiteSpace: 'pre-line' }}>
             {heroData.title}
           </h1>
