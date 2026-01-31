@@ -13,14 +13,7 @@ const SIZES = {
   md: 'badge--md'
 };
 
-export default function Badge({
-  children,
-  variant = 'default',
-  size = 'md',
-  href,
-  className = '',
-  ...props
-}) {
+export default function Badge({ children, variant = 'default', size = 'md', href, className = '', ...props }) {
   const baseClass = 'badge';
   const variantClass = VARIANTS[variant] || VARIANTS.default;
   const sizeClass = SIZES[size] || SIZES.md;
