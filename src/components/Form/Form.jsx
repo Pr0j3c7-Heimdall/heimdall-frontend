@@ -1,13 +1,6 @@
 'use client';
 
-export default function Form({
-  children,
-  onSubmit,
-  action,
-  method = 'post',
-  className = '',
-  ...props
-}) {
+export default function Form({ children, onSubmit, action, method = 'post', className = '', ...props }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit?.(e);
