@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { ImageVerifyContent } from '@/components/ImageVerify';
 import { navItems, footerLinks } from '@/data/home';
 
 export default function ImageVerifyPage() {
@@ -13,11 +14,9 @@ export default function ImageVerifyPage() {
           primaryBtn={{ href: '/register', label: '회원가입' }}
         />
       }
-      footer={<Footer links={footerLinks} />}
+      footer={<Footer links={footerLinks} copyright={`© ${new Date().getFullYear()} Heimdall. All rights reserved.`} />}
     >
-      <main className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>
-        <p>이미지 검사 페이지</p>
-      </main>
+      <ImageVerifyContent />
     </Layout>
   );
 }
