@@ -2,9 +2,37 @@
 
 import Link from 'next/link';
 import Button from '@/components/Button';
+import { useAuthModal } from '@/contexts/AuthModalContext';
 
 export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, secondaryBtn, cta }) {
+  const { openAuthModal } = useAuthModal();
   const mainCta = primaryBtn || cta;
+
+  const renderBtn = (btn, variant) => {
+    if (!btn) return null;
+    const isLogin = btn.href === '/login';
+    const isRegister = btn.href === '/register';
+    if (isLogin) {
+      return (
+        <Button variant={variant} size="sm" onClick={() => openAuthModal('login')}>
+          {btn.label}
+        </Button>
+      );
+    }
+    if (isRegister) {
+      return (
+        <Button variant={variant} size="sm" onClick={() => openAuthModal('register')}>
+          {btn.label}
+        </Button>
+      );
+    }
+    return (
+      <Button href={btn.href} variant={variant} size="sm">
+        {btn.label}
+      </Button>
+    );
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar__inner">
@@ -21,16 +49,8 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
           ))}
         </ul>
         <div className="navbar__actions">
-          {secondaryBtn && (
-            <Button href={secondaryBtn.href} variant="ghost" size="sm">
-              {secondaryBtn.label}
-            </Button>
-          )}
-          {mainCta && (
-            <Button href={mainCta.href} variant="primary" size="sm">
-              {mainCta.label}
-            </Button>
-          )}
+          {renderBtn(secondaryBtn, 'ghost')}
+          {renderBtn(mainCta, 'primary')}
         </div>
       </div>
     </nav>
