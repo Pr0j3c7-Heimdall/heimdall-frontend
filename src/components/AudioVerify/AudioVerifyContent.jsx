@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AudioDropzone from './AudioDropzone';
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
@@ -16,17 +16,23 @@ export default function AudioVerifyContent() {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!file) {
+      setPreviewUrl(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
+
   const handleSelect = (selectedFile) => {
     if (!selectedFile) return;
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
     setFile(selectedFile);
-    setPreviewUrl(URL.createObjectURL(selectedFile));
   };
 
   const handleReset = () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
     setFile(null);
-    setPreviewUrl(null);
   };
 
   const handleVerify = async () => {
