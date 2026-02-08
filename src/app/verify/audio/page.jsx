@@ -1,6 +1,7 @@
 import Layout from '@/components/Layout';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { AudioVerifyContent } from '@/components/AudioVerify';
 import { navItems, footerLinks } from '@/data/home';
 
 export default function AudioVerifyPage() {
@@ -13,11 +14,9 @@ export default function AudioVerifyPage() {
           primaryBtn={{ href: '/register', label: '회원가입' }}
         />
       }
-      footer={<Footer links={footerLinks} />}
+      footer={<Footer links={footerLinks} copyright={`© ${new Date().getFullYear()} Heimdall. All rights reserved.`} />}
     >
-      <main className="container" style={{ paddingTop: 80, paddingBottom: 80 }}>
-        <p>음성 검사 페이지</p>
-      </main>
+      <AudioVerifyContent />
     </Layout>
   );
 }
