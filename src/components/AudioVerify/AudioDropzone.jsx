@@ -1,12 +1,13 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Icons } from '@/components/icons';
 
-const ACCEPT = 'audio/mpeg,audio/wav,audio/mp4,audio/x-m4a';
+const ACCEPT = 'audio/mpeg,audio/wav,audio/mp4,audio/x-m4a';44
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
 
 export default function AudioDropzone({ onSelect, disabled }) {
+  const inputRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState('');
 
@@ -58,7 +59,7 @@ export default function AudioDropzone({ onSelect, disabled }) {
 
   const handleClick = () => {
     if (disabled) return;
-    document.getElementById('audio-verify-input')?.click();
+    inputRef.current?.click();
   };
 
   return (
@@ -74,7 +75,7 @@ export default function AudioDropzone({ onSelect, disabled }) {
       aria-label="음성 파일을 드래그하거나 클릭하여 업로드"
     >
       <input
-        id="audio-verify-input"
+        ref={inputRef}
         type="file"
         accept={ACCEPT}
         onChange={handleChange}
