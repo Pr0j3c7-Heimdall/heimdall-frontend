@@ -1,9 +1,9 @@
 'use client';
 
-import Layout from '@/components/Layout';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Button from '@/components/Button';
+import Layout from '@/components/layout/Layout';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import Button from '@/components/ui/Button';
 import { navItems, footerLinks } from '@/data/home';
 
 function ActionButton({ action, variant }) {

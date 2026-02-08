@@ -1,7 +1,7 @@
-import Layout from '@/components/Layout';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { AudioVerifyContent } from '@/components/AudioVerify';
+import Layout from '@/components/layout/Layout';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import { AudioVerifyContent } from '@/components/verify/AudioVerify';
 import { navItems, footerLinks } from '@/data/home';
 
 export default function AudioVerifyPage() {

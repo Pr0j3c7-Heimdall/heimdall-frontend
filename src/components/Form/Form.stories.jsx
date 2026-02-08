@@ -1,5 +1,5 @@
 import Form, { FormField } from './index';
-import Button from '@/components/Button';
+import Button from '@/components/ui/Button';
 
 export default {
   title: 'Components/Form',

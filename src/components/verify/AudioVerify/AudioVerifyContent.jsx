@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import AudioDropzone from './AudioDropzone';
-import Button from '@/components/Button';
-import Loader from '@/components/Loader';
+import Button from '@/components/ui/Button';
+import Loader from '@/components/ui/Loader';
 import { Icons } from '@/components/icons';
 import {
   audioAnalysisMethodsData,
