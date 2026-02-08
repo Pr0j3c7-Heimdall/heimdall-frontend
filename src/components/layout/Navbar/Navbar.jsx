@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Button from '@/components/Button';
+import Button from '@/components/ui/Button';
 import { useAuthModal } from '@/contexts/AuthModalContext';
 
 export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, secondaryBtn, cta }) {

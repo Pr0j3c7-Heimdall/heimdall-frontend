@@ -1,6 +1,6 @@
 'use client';
 
-import Input from '@/components/Input';
+import Input from '@/components/ui/Input';
 
 export default function FormField({ label, error, helperText, required, ...inputProps }) {
   return (

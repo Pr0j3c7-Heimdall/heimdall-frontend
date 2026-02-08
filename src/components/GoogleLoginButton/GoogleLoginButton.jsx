@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GoogleLogin } from '@react-oauth/google';
-import Button from '@/components/Button';
+import Button from '@/components/ui/Button';
 import { loginWithGoogle } from '@/lib/auth';
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
