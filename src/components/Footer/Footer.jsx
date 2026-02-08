@@ -15,6 +15,7 @@ export default function Footer({ links = [], copyright }) {
             </Link>
           ))}
         </div>
+        <p className="footer__credit">본 프로젝트는 성공회대학교 우로 장학회의 지원을 받아 제작되었습니다.</p>
         <p className="footer__copyright">{copyright || `© ${year} Heimdall. All rights reserved.`}</p>
       </div>
     </footer>
