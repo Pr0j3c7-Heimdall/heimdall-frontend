@@ -88,6 +88,29 @@ export const Icons = {
     <svg viewBox="0 0 24 24" style={{ ...iconStyle, width: 20, height: 20 }}>
       <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  ),
+  user: (
+    <svg viewBox="0 0 24 24" style={iconStyle}>
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  ),
+  mail: (
+    <svg viewBox="0 0 24 24" style={iconStyle}>
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <path d="M22 6l-10 7L2 6" />
+    </svg>
+  ),
+  calendar: (
+    <svg viewBox="0 0 24 24" style={iconStyle}>
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+    </svg>
+  ),
+  key: (
+    <svg viewBox="0 0 24 24" style={iconStyle}>
+      <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+    </svg>
   )
 };
 
