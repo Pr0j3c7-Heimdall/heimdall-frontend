@@ -1,6 +1,9 @@
 /** 마이페이지 목데이터 - API 연동 시 교체 */
 
-export const snbItems = [{ href: '/mypage/profile', label: '회원정보', icon: 'profile' }];
+export const snbItems = [
+  { href: '/mypage/profile', label: '회원정보', icon: 'profile' },
+  { href: '/mypage/history', label: '검증 내역', icon: 'history' }
+];
 
 export const profileMock = {
   name: '홍길동',
