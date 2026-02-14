@@ -3,9 +3,11 @@
 import { useEffect } from 'react';
 import GoogleLoginButton from '@/components/GoogleLoginButton';
 import { useAuthModal } from '@/contexts/AuthModalContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function AuthModal() {
   const { isOpen, type, openAuthModal, closeAuthModal } = useAuthModal();
+  const { refreshAuth } = useAuth();
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -50,7 +52,13 @@ export default function AuthModal() {
             ? '구글 계정으로 Heimdall에 로그인하세요.'
             : '구글 계정으로 Heimdall에 가입하세요. (로그인 겸 가입)'}
         </p>
-        <GoogleLoginButton text={isLogin ? 'signin_with' : 'signup_with'} onSuccess={closeAuthModal} />
+        <GoogleLoginButton
+          text={isLogin ? 'signin_with' : 'signup_with'}
+          onSuccess={() => {
+            refreshAuth();
+            closeAuthModal();
+          }}
+        />
         <p className="modal__foot">
           {isLogin ? (
             <>
