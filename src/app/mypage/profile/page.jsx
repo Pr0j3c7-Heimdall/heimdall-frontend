@@ -58,7 +58,9 @@ export default function MypageProfilePage() {
               회원탈퇴
             </h2>
             <p className="modal__desc">
-              탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다. 정말 탈퇴하시겠습니까?
+              회원 탈퇴 시 모든 데이터가 삭제됩니다.
+              <br />
+              복구할 수 없으며, 진행하시겠습니까?
             </p>
             <div className="modal__actions">
               <Button variant="outline" size="sm" onClick={() => setShowWithdrawConfirm(false)}>
