@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { getAccessToken, clearTokens } from '@/lib/auth';
+import { getAccessToken, getRefreshToken, clearTokens, logoutApi } from '@/lib/auth';
 
 const AuthContext = createContext(null);
 
@@ -22,11 +22,19 @@ export function AuthProvider({ children }) {
     setIsLoggedIn(!!getAccessToken());
   }, []);
 
-  const logout = useCallback(() => {
-    clearTokens();
-    setIsLoggedIn(false);
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
+  const logout = useCallback(async () => {
+    const refreshToken = getRefreshToken();
+    const accessToken = getAccessToken();
+    try {
+      if (refreshToken) {
+        await logoutApi(refreshToken, accessToken);
+      }
+    } finally {
+      clearTokens();
+      setIsLoggedIn(false);
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
     }
   }, []);
 
