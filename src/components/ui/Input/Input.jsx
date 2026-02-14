@@ -1,5 +1,7 @@
 'use client';
 
+import { useId } from 'react';
+
 const SIZES = {
   sm: 'input--sm',
   md: 'input--md',
@@ -7,7 +9,8 @@ const SIZES = {
 };
 
 export default function Input({ label, error, helperText, size = 'md', className = '', id, ...props }) {
-  const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
+  const generatedId = useId();
+  const inputId = id || `input-${generatedId.replace(/:/g, '')}`;
   const sizeClass = SIZES[size] || SIZES.md;
   const classNames = ['input', sizeClass, error && 'input--error', className].filter(Boolean).join(' ');
 
