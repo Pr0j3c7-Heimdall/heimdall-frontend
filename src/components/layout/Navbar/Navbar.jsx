@@ -10,8 +10,8 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
 
   const renderBtn = (btn, variant) => {
     if (!btn) return null;
-    const isLogin = btn.href === '/login';
-    const isRegister = btn.href === '/register';
+    const isLogin = btn.href === '/login' || (btn.isAuthAction && btn.label === '로그인');
+    const isRegister = btn.href === '/register' || (btn.isAuthAction && btn.label === '회원가입');
     if (isLogin) {
       return (
         <Button variant={variant} size="sm" onClick={() => openAuthModal('login')}>
@@ -22,6 +22,13 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
     if (isRegister) {
       return (
         <Button variant={variant} size="sm" onClick={() => openAuthModal('register')}>
+          {btn.label}
+        </Button>
+      );
+    }
+    if (btn.onClick) {
+      return (
+        <Button variant={variant} size="sm" onClick={btn.onClick}>
           {btn.label}
         </Button>
       );
