@@ -14,7 +14,7 @@ export default function ImageVerifyPage() {
           primaryBtn={{ href: '/register', label: '회원가입' }}
         />
       }
-      footer={<Footer links={footerLinks} copyright={`© ${new Date().getFullYear()} Heimdall. All rights reserved.`} />}
+      footer={<Footer links={footerLinks} />}
     >
       <ImageVerifyContent />
     </Layout>
