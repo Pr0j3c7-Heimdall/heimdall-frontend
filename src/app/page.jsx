@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/Layout';
-import Navbar from '@/components/layout/Navbar';
+import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
 import Chip from '@/components/ui/Chip';
@@ -25,11 +25,7 @@ export default function HomePage() {
   return (
     <Layout
       header={
-        <Navbar
-          navItems={navItems}
-          secondaryBtn={{ href: '/login', label: '로그인' }}
-          primaryBtn={{ href: '/register', label: '회원가입' }}
-        />
+        <NavbarWithAuth navItems={navItems} />
       }
       footer={<Footer links={footerLinks} />}
     >
