@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Layout from '@/components/layout/Layout';
-import Navbar from '@/components/layout/Navbar';
+import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import { navItems, footerLinks } from '@/data/home';
 import { snbItems } from '@/data/mypage';
@@ -15,11 +15,7 @@ export default function MypageLayout({ children }) {
     <Layout
       mainClassName="layout__main--mypage"
       header={
-        <Navbar
-          navItems={navItems}
-          secondaryBtn={{ href: '/mypage', label: '마이페이지' }}
-          primaryBtn={{ href: '/verify/image', label: '검사하기' }}
-        />
+        <NavbarWithAuth navItems={navItems} />
       }
       footer={<Footer links={footerLinks} />}
     >
