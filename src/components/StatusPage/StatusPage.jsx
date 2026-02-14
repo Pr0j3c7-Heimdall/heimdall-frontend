@@ -28,7 +28,7 @@ export default function StatusPage({ statusCode, title, message, primaryAction =
           primaryBtn={{ href: '/register', label: '회원가입' }}
         />
       }
-      footer={<Footer links={footerLinks} copyright={`© ${new Date().getFullYear()} Heimdall. All rights reserved.`} />}
+      footer={<Footer links={footerLinks} />}
     >
       <div className="status-page">
         <div className="status-page__inner">
