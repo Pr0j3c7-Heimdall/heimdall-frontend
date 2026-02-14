@@ -75,6 +75,14 @@ export async function logoutApi(refreshToken, accessToken = null) {
 }
 
 /**
+ * 회원탈퇴 API (status=DELETED, deleted_at 기록)
+ * Authorization: Bearer {accessToken} 필요
+ */
+export async function withdrawApi() {
+  await api.delete('/api/v1/auth/me');
+}
+
+/**
  * 액세스 토큰 재발급 (리프레시 토큰 사용)
  * @param {string} refreshToken - 리프레시 토큰
  * @returns {Promise<{ success: boolean, data?: { accessToken, refreshToken? } }>}
@@ -112,7 +120,11 @@ api.interceptors.response.use(
     if (err?.response?.status !== 401 || originalRequest._retry) {
       return Promise.reject(err);
     }
-    if (originalRequest.url?.includes('/auth/refresh') || originalRequest.url?.includes('/auth/logout')) {
+    const skipRetry =
+      originalRequest.url?.includes('/auth/refresh') ||
+      originalRequest.url?.includes('/auth/logout') ||
+      (originalRequest.url?.includes('/auth/me') && originalRequest.method?.toLowerCase() === 'delete');
+    if (skipRetry) {
       return Promise.reject(err);
     }
 

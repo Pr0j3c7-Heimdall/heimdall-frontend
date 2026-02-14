@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react';
-import { getAccessToken, getRefreshToken, clearTokens, logoutApi } from '@/lib/auth';
+import { getAccessToken, getRefreshToken, clearTokens, logoutApi, withdrawApi } from '@/lib/auth';
 
 const AuthContext = createContext(null);
 
@@ -38,12 +38,15 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const withdraw = useCallback(() => {
-    // TODO: API 연동 시 회원탈퇴 API 호출
-    clearTokens();
-    setIsLoggedIn(false);
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
+  const withdraw = useCallback(async () => {
+    try {
+      await withdrawApi();
+    } finally {
+      clearTokens();
+      setIsLoggedIn(false);
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
     }
   }, []);
 
