@@ -1,12 +1,18 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import { useAuthModal } from '@/contexts/AuthModalContext';
 
 export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, secondaryBtn, cta }) {
+  const [mounted, setMounted] = useState(false);
   const { openAuthModal } = useAuthModal();
   const mainCta = primaryBtn || cta;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const renderBtn = (btn, variant) => {
     if (!btn) return null;
@@ -42,9 +48,13 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
         <ul className="navbar__links">
           {navItems.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} className="navbar__link">
-                {item.label}
-              </Link>
+              {mounted ? (
+                <Link href={item.href} className="navbar__link">
+                  {item.label}
+                </Link>
+              ) : (
+                <span className="navbar__link">{item.label}</span>
+              )}
             </li>
           ))}
         </ul>
