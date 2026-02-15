@@ -6,10 +6,10 @@
 
 .mypage {
   display: flex;
-  gap: 40px;
+  gap: var(--spacing-40);
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 32px 24px 80px;
+  padding: var(--spacing-32) var(--spacing-24) 80px;
   min-height: 60vh;
 }
 
@@ -27,7 +27,7 @@
 
 .mypage-snb__link {
   display: block;
-  padding: 12px 16px;
+  padding: var(--spacing-12) var(--spacing-16);
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--color-fg-muted);
@@ -56,39 +56,39 @@
 .mypage-section__title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-8);
 }
 
 .mypage-section__desc {
   font-size: 0.9375rem;
   color: var(--color-fg-muted);
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-24);
 }
 
 .mypage-section__subtitle {
   font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-16);
 }
 
 .mypage-section__block {
-  margin-top: 24px;
+  margin-top: var(--spacing-24);
 }
 
 .mypage-section__actions {
-  margin-top: 16px;
+  margin-top: var(--spacing-16);
 }
 
 /* 개요 카드 */
 .overview-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: var(--spacing-16);
+  margin-bottom: var(--spacing-32);
 }
 
 .overview-card {
-  padding: 20px;
+  padding: var(--spacing-20);
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -117,9 +117,9 @@
 .activity-list__item {
   display: grid;
   grid-template-columns: 80px 1fr 80px 100px;
-  gap: 16px;
+  gap: var(--spacing-16);
   align-items: center;
-  padding: 12px 16px;
+  padding: var(--spacing-12) var(--spacing-16);
   border-bottom: 1px solid var(--color-border);
   font-size: 0.9375rem;
 }
@@ -130,7 +130,7 @@
 
 .activity-list__type {
   font-size: 0.8125rem;
-  padding: 4px 8px;
+  padding: 4px var(--spacing-8);
   border-radius: var(--radius-sm);
   background: var(--color-bg-muted);
   color: var(--color-fg-muted);
@@ -166,8 +166,8 @@
 .profile-list__item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
+  gap: var(--spacing-16);
+  padding: var(--spacing-16) var(--spacing-20);
   border-bottom: 1px solid var(--color-border);
   font-size: 0.9375rem;
   background: var(--color-bg-alt);
@@ -183,8 +183,8 @@
 
 .profile-list__icon {
   flex-shrink: 0;
-  width: 24px;
-  height: 24px;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,7 +203,7 @@
 }
 
 .profile-list__note {
-  margin-top: 24px;
+  margin-top: var(--spacing-24);
   font-size: 0.8125rem;
   color: var(--color-fg-muted);
 }
@@ -237,8 +237,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-16);
 }
 
 .history-toolbar__search {
@@ -252,11 +252,11 @@
 
 .history-toolbar__filters {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-8);
 }
 
 .history-toolbar__select {
-  padding: 8px 12px;
+  padding: var(--spacing-8) var(--spacing-12);
   font-size: 0.875rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -283,7 +283,7 @@
 
 .history-table__th,
 .history-table__td {
-  padding: 12px 16px;
+  padding: var(--spacing-12) var(--spacing-16);
   text-align: left;
   border-bottom: 1px solid var(--color-border);
 }
@@ -314,7 +314,7 @@
 
 .history-table__badge {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 4px var(--spacing-8);
   font-size: 0.8125rem;
   border-radius: var(--radius-sm);
 }
@@ -348,7 +348,7 @@
 }
 
 .history-table__empty {
-  padding: 48px;
+  padding: var(--spacing-48);
   text-align: center;
   color: var(--color-fg-muted);
 }
@@ -358,8 +358,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 48px 24px;
+  gap: var(--spacing-16);
+  padding: var(--spacing-48) var(--spacing-24);
   text-align: center;
 }
 
@@ -370,7 +370,7 @@
 
 .history-empty__actions {
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-12);
   flex-wrap: wrap;
   justify-content: center;
 }
