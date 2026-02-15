@@ -1577,8 +1577,8 @@ a {
 
 /* 프로필 - 회원탈퇴 */
 .profile-withdraw {
-  margin-top: 32px;
-  padding-top: 24px;
+  margin-top: var(--spacing-32);
+  padding-top: var(--spacing-24);
   border-top: 1px solid var(--color-border);
   font-size: 0.875rem;
   color: var(--color-fg-muted);

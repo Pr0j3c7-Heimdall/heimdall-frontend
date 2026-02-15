@@ -58,6 +58,10 @@
   --max-width: 1200px;
   --nav-height: 64px;
 
+  /* Spacing */
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+
   /* Interaction */
   --interaction-hover-opacity: 0.94;
   --interaction-pressed-opacity: 0.88;
