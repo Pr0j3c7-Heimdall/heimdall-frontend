@@ -76,10 +76,22 @@ export async function logoutApi(refreshToken, accessToken = null) {
 
 /**
  * 회원탈퇴 API (status=DELETED, deleted_at 기록)
+ * DELETE /api/v1/auth/me
  * Authorization: Bearer {accessToken} 필요
  */
 export async function withdrawApi() {
   await api.delete('/api/v1/auth/me');
+}
+
+/**
+ * 회원정보 조회 API
+ * GET /api/v1/users/me
+ * Authorization: Bearer {accessToken} 필요
+ * @returns {Promise<{ success: boolean, data?: { name, email, createdAt } }>}
+ */
+export async function getMeApi() {
+  const { data } = await api.get('/api/v1/users/me');
+  return data;
 }
 
 /**
