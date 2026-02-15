@@ -23,12 +23,7 @@ import { faqData } from '@/data/faq';
 
 export default function HomePage() {
   return (
-    <Layout
-      header={
-        <NavbarWithAuth navItems={navItems} />
-      }
-      footer={<Footer links={footerLinks} />}
-    >
+    <Layout header={<NavbarWithAuth navItems={navItems} />} footer={<Footer links={footerLinks} />}>
       {/* Hero */}
       <section className="hero">
         <div className="hero__inner">

@@ -316,7 +316,9 @@ a {
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
   text-align: center;
   animation: modal-in 0.3s ease-out;
 }
@@ -606,7 +608,9 @@ a {
   align-items: center;
   justify-content: center;
   font-size: 4rem;
-  transition: transform var(--transition-hover), box-shadow var(--transition-hover);
+  transition:
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover);
 }
 
 .showcase__row:hover .showcase__placeholder {
@@ -658,7 +662,10 @@ a {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 24px;
-  transition: transform var(--transition-hover), box-shadow var(--transition-hover), border-color var(--transition-hover);
+  transition:
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover),
+    border-color var(--transition-hover);
 }
 
 .analysis-card:hover {
@@ -709,7 +716,10 @@ a {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 24px;
-  transition: transform var(--transition-hover), box-shadow var(--transition-hover), border-color var(--transition-hover);
+  transition:
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover),
+    border-color var(--transition-hover);
 }
 
 .feature-card:hover {
@@ -809,7 +819,10 @@ a {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 24px;
-  transition: transform var(--transition-hover), box-shadow var(--transition-hover), border-color var(--transition-hover);
+  transition:
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover),
+    border-color var(--transition-hover);
 }
 
 .tech-card:hover {
@@ -1007,12 +1020,12 @@ a {
   border-radius: var(--radius-sm);
 }
 
-.chip[role="button"]:hover,
+.chip[role='button']:hover,
 .chip--clickable:hover {
   opacity: var(--interaction-hover-opacity);
 }
 
-.chip[role="button"]:active,
+.chip[role='button']:active,
 .chip--clickable:active {
   opacity: var(--interaction-pressed-opacity);
 }
@@ -1200,7 +1213,9 @@ a {
   border: 2px dashed var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: border-color var(--transition-hover), background var(--transition-hover);
+  transition:
+    border-color var(--transition-hover),
+    background var(--transition-hover);
 }
 
 .verify-dropzone:hover:not(.verify-dropzone--disabled) {
@@ -1400,7 +1415,9 @@ a {
   font-weight: 500;
   color: var(--color-fg-muted);
   border-radius: var(--radius-md);
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .mypage-snb__link:hover {
@@ -1546,7 +1563,6 @@ a {
 .profile-list__item:last-child {
   border-bottom: none;
 }
-
 
 .profile-list__icon {
   flex-shrink: 0;

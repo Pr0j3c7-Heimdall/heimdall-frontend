@@ -29,28 +29,15 @@ export default function AuthModal() {
 
   return (
     <div className="modal-overlay" onClick={closeAuthModal} role="presentation">
-      <div
-        className="modal"
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="auth-modal-title"
-      >
-        <button
-          type="button"
-          className="modal__close"
-          onClick={closeAuthModal}
-          aria-label="닫기"
-        >
+      <div className="modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+        <button type="button" className="modal__close" onClick={closeAuthModal} aria-label="닫기">
           ×
         </button>
         <h2 id="auth-modal-title" className="modal__title">
           {isLogin ? '로그인' : '회원가입'}
         </h2>
         <p className="modal__desc">
-          {isLogin
-            ? '구글 계정으로 Heimdall에 로그인하세요.'
-            : '구글 계정으로 Heimdall에 가입하세요. (로그인 겸 가입)'}
+          {isLogin ? '구글 계정으로 Heimdall에 로그인하세요.' : '구글 계정으로 Heimdall에 가입하세요. (로그인 겸 가입)'}
         </p>
         <GoogleLoginButton
           text={isLogin ? 'signin_with' : 'signup_with'}

@@ -3,7 +3,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { Icons } from '@/components/icons';
 
-const ACCEPT = 'audio/mpeg,audio/wav,audio/mp4,audio/x-m4a';44
+const ACCEPT = 'audio/mpeg,audio/wav,audio/mp4,audio/x-m4a';
+44;
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
 
 export default function AudioDropzone({ onSelect, disabled }) {

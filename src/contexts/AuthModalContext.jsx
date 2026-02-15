@@ -15,11 +15,7 @@ export function AuthModalProvider({ children }) {
     setState((prev) => ({ ...prev, isOpen: false }));
   }, []);
 
-  return (
-    <AuthModalContext.Provider value={{ ...state, openAuthModal, closeAuthModal }}>
-      {children}
-    </AuthModalContext.Provider>
-  );
+  return <AuthModalContext.Provider value={{ ...state, openAuthModal, closeAuthModal }}>{children}</AuthModalContext.Provider>;
 }
 
 export function useAuthModal() {

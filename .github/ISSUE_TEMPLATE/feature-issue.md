@@ -4,7 +4,6 @@ about: Suggest an idea for this project
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## 📄 Description
@@ -12,8 +11,9 @@ assignees: ''
 -
 
 ## ✅ To-Do
-- [ ]  [ ]
-- [ ]  [ ]
-- [ ]  [ ]
+
+- [ ] [ ]
+- [ ] [ ]
+- [ ] [ ]
 
 ## 💡 References / Memo

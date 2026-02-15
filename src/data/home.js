@@ -41,7 +41,7 @@ export const showcaseData = [
       '음성 파일의 AI 합성 여부를 분석합니다. TTS, 보이스 클로닝으로 생성된 음성과 실제 녹음을 구분하여 음성 인증·콘텐츠 검증에 활용할 수 있습니다.',
     reverse: true,
     href: '/verify/audio'
-  },
+  }
 ];
 
 export const analysisData = {
@@ -66,7 +66,7 @@ export const analysisData = {
       icon: 'mic',
       title: '음성 합성 탐지',
       description: 'TTS, 보이스 클로닝 등 AI가 생성한 음성을 실시간으로 구분합니다.'
-    },
+    }
   ]
 };
 
@@ -133,7 +133,7 @@ export const demoData = [
     title: '음성 검사',
     description: '음성 파일의 AI 합성 여부를 분석합니다. 보이스 클로닝, TTS 생성 음성과 실제 녹음을 구분해 드립니다.',
     href: '/verify/audio'
-  },
+  }
 ];
 
 export const linksData = {

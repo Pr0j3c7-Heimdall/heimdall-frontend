@@ -6,12 +6,7 @@ import { navItems, footerLinks } from '@/data/home';
 
 export default function ImageVerifyPage() {
   return (
-    <Layout
-      header={
-        <NavbarWithAuth navItems={navItems} />
-      }
-      footer={<Footer links={footerLinks} />}
-    >
+    <Layout header={<NavbarWithAuth navItems={navItems} />} footer={<Footer links={footerLinks} />}>
       <ImageVerifyContent />
     </Layout>
   );

@@ -11,12 +11,5 @@ export default function NavbarWithAuth({ navItems, ...rest }) {
     primaryBtn = { ...primaryBtn, onClick: logout };
   }
 
-  return (
-    <Navbar
-      navItems={navItems}
-      secondaryBtn={secondaryBtn}
-      primaryBtn={primaryBtn}
-      {...rest}
-    />
-  );
+  return <Navbar navItems={navItems} secondaryBtn={secondaryBtn} primaryBtn={primaryBtn} {...rest} />;
 }
