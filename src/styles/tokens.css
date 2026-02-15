@@ -1,0 +1,83 @@
+/**
+ * Design tokens - 다크모드 시 [data-theme="dark"] 에서 override
+ */
+:root {
+  /* Background */
+  --color-bg: #fafafa;
+  --color-bg-alt: #ffffff;
+  --color-bg-muted: #f9fafb;
+  --color-bg-inverse: #0f172a;
+
+  /* Foreground (text) */
+  --color-fg: #111827;
+  --color-fg-muted: #6b7280;
+  --color-fg-on-inverse: #ffffff;
+  --color-fg-muted-on-inverse: rgba(255, 255, 255, 0.8);
+
+  /* Primary */
+  --color-primary: #374151;
+  --color-primary-hover: #1f2937;
+  --color-primary-light: #f3f4f6;
+  --color-on-primary: #ffffff;
+
+  /* Border */
+  --color-border: #e5e7eb;
+  --color-border-on-inverse: rgba(255, 255, 255, 0.5);
+
+  /* Semantic */
+  --color-error: #dc2626;
+  --color-error-muted: rgba(220, 38, 38, 0.15);
+  --color-focus-ring: rgba(55, 65, 81, 0.15);
+  --color-info-fg: #2563eb;
+  --color-info-bg: rgba(59, 130, 246, 0.1);
+  --color-success-fg: #16a34a;
+  --color-success-bg: rgba(34, 197, 94, 0.1);
+
+  /* Surface */
+  --color-nav-bg: rgba(255, 255, 255, 0.9);
+  --color-footer-bg: var(--color-bg-muted);
+
+  /* Opacity */
+  --opacity-disabled: 0.5;
+  --opacity-muted: 0.7;
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.2);
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* Hero gradient */
+  --color-hero-start: #f1f5f9;
+  --color-hero-mid: #f8fafc;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* Layout */
+  --max-width: 1200px;
+  --nav-height: 64px;
+
+  /* Spacing */
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+
+  /* Interaction */
+  --interaction-hover-opacity: 0.94;
+  --interaction-pressed-opacity: 0.88;
+  --transition-hover: 0.15s ease;
+}

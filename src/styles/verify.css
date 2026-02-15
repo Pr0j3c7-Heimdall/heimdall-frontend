@@ -1,0 +1,195 @@
+/* Verify - 이미지/음성 검사 페이지 */
+
+.verify-section {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+
+.verify-content {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.verify-dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  padding: 40px 24px;
+  background: var(--color-bg-alt);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-hover),
+    background var(--transition-hover);
+}
+
+.verify-dropzone:hover:not(.verify-dropzone--disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.verify-dropzone--dragging {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.verify-dropzone--disabled {
+  cursor: not-allowed;
+  opacity: var(--opacity-muted);
+}
+
+.verify-dropzone__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.verify-dropzone__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-muted);
+  margin-bottom: 16px;
+}
+
+.verify-dropzone__icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.verify-dropzone__text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-fg);
+  margin-bottom: 4px;
+}
+
+.verify-dropzone__hint {
+  font-size: 0.875rem;
+  color: var(--color-fg-muted);
+  margin-bottom: 0;
+}
+
+.verify-dropzone__error {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  color: var(--color-error);
+}
+
+.verify-preview {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.verify-preview__image-wrap,
+.verify-preview__audio-wrap {
+  aspect-ratio: 16 / 10;
+  background: var(--color-bg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.verify-preview__audio-wrap {
+  padding: 24px;
+}
+
+.verify-preview__audio {
+  width: 100%;
+  max-width: 400px;
+}
+
+.verify-preview__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.verify-preview__meta {
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.verify-preview__name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-fg);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.verify-preview__size {
+  font-size: 0.875rem;
+  color: var(--color-fg-muted);
+  margin: 0;
+}
+
+.verify-preview__reset {
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.verify-preview__reset:hover {
+  opacity: var(--interaction-hover-opacity);
+  text-decoration: underline;
+}
+
+.verify-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.verify-btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 검사 진행/대기 */
+.verify-progress__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  text-align: center;
+}
+
+.verify-progress__inner .loader {
+  margin-bottom: 24px;
+}
+
+.verify-progress__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.verify-progress__desc {
+  font-size: 0.9375rem;
+  color: var(--color-fg-muted);
+  margin: 0;
+}
