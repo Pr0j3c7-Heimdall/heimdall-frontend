@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icons } from '@/components/icons';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/contexts/AuthContext';
-import { profileMock } from '@/data/mypage';
+import { getMeApi } from '@/lib/auth';
 
 const profileFields = [
   { key: 'name', label: '이름', icon: 'user' },
@@ -13,14 +13,64 @@ const profileFields = [
 ];
 
 export default function MypageProfilePage() {
-  const data = profileMock;
   const { withdraw } = useAuth();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await getMeApi();
+        if (res?.success && res?.data) {
+          const user = res.data;
+          setData({
+            name: user.name ?? '-',
+            email: user.email ?? '-',
+            createdAt: user.createdAt ?? user.created_at ?? '-'
+          });
+        } else {
+          setData({ name: '-', email: '-', createdAt: '-' });
+        }
+      } catch (err) {
+        const detail = err?.response?.data?.detail;
+        const msg = Array.isArray(detail) ? detail[0]?.msg : detail;
+        setError(msg || err?.message || '회원정보를 불러오지 못했습니다.');
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, []);
   const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
 
   const handleWithdraw = () => {
     withdraw();
     setShowWithdrawConfirm(false);
   };
+
+  if (loading) {
+    return (
+      <div className="mypage-section">
+        <h1 className="mypage-section__title">회원정보</h1>
+        <p className="mypage-section__desc">등록된 회원 정보를 확인할 수 있습니다.</p>
+        <p className="profile-loading">불러오는 중...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mypage-section">
+        <h1 className="mypage-section__title">회원정보</h1>
+        <p className="mypage-section__desc">등록된 회원 정보를 확인할 수 있습니다.</p>
+        <p className="profile-error">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mypage-section">
@@ -32,7 +82,7 @@ export default function MypageProfilePage() {
           <li key={key} className="profile-list__item">
             <span className="profile-list__icon">{Icons[icon]}</span>
             <span className="profile-list__label">{label}</span>
-            <span className="profile-list__value">{data[key]}</span>
+            <span className="profile-list__value">{data?.[key] ?? '-'}</span>
           </li>
         ))}
       </ul>
