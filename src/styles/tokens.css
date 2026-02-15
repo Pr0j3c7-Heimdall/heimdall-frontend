@@ -41,9 +41,17 @@
   --opacity-disabled: 0.5;
   --opacity-muted: 0.7;
 
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.2);
+
   /* Shadow */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* Hero gradient */
+  --color-hero-start: #f1f5f9;
+  --color-hero-mid: #f8fafc;
 
   /* Radius */
   --radius-sm: 6px;
@@ -59,8 +67,14 @@
   --nav-height: 64px;
 
   /* Spacing */
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
   --spacing-24: 24px;
   --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
 
   /* Interaction */
   --interaction-hover-opacity: 0.94;

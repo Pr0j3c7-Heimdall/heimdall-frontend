@@ -12,24 +12,14 @@ export default function MypageLayout({ children }) {
   const pathname = usePathname();
 
   return (
-    <Layout
-      mainClassName="layout__main--mypage"
-      header={
-        <NavbarWithAuth navItems={navItems} />
-      }
-      footer={<Footer links={footerLinks} />}
-    >
+    <Layout mainClassName="layout__main--mypage" header={<NavbarWithAuth navItems={navItems} />} footer={<Footer links={footerLinks} />}>
       <div className="mypage">
         <aside className="mypage-snb">
           <nav className="mypage-snb__nav">
             {snbItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/mypage' && pathname.startsWith(item.href));
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`mypage-snb__link ${isActive ? 'mypage-snb__link--active' : ''}`}
-                >
+                <Link key={item.href} href={item.href} className={`mypage-snb__link ${isActive ? 'mypage-snb__link--active' : ''}`}>
                   {item.label}
                 </Link>
               );

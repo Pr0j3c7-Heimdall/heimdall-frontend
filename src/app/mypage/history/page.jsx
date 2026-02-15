@@ -47,9 +47,7 @@ export default function MypageHistoryPage() {
   return (
     <div className="mypage-section">
       <h1 className="mypage-section__title">검증 내역</h1>
-      <p className="mypage-section__desc">
-        AI 검증한 결과 목록입니다. 검색·필터·삭제가 가능합니다.
-      </p>
+      <p className="mypage-section__desc">AI 검증한 결과 목록입니다. 검색·필터·삭제가 가능합니다.</p>
 
       {items.length === 0 ? (
         <div className="history-empty">
@@ -76,20 +74,12 @@ export default function MypageHistoryPage() {
               />
             </div>
             <div className="history-toolbar__filters">
-              <select
-                className="history-toolbar__select"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-              >
+              <select className="history-toolbar__select" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
                 <option value="all">전체 타입</option>
                 <option value="image">이미지</option>
                 <option value="audio">음성</option>
               </select>
-              <select
-                className="history-toolbar__select"
-                value={filterResult}
-                onChange={(e) => setFilterResult(e.target.value)}
-              >
+              <select className="history-toolbar__select" value={filterResult} onChange={(e) => setFilterResult(e.target.value)}>
                 <option value="all">전체 결과</option>
                 <option value="자연">자연</option>
                 <option value="AI생성">AI생성</option>
@@ -108,12 +98,7 @@ export default function MypageHistoryPage() {
               <thead>
                 <tr>
                   <th className="history-table__th history-table__th--check">
-                    <input
-                      type="checkbox"
-                      checked={allSelected}
-                      onChange={handleSelectAll}
-                      aria-label="전체 선택"
-                    />
+                    <input type="checkbox" checked={allSelected} onChange={handleSelectAll} aria-label="전체 선택" />
                   </th>
                   <th className="history-table__th">파일명</th>
                   <th className="history-table__th">타입</th>
@@ -147,9 +132,7 @@ export default function MypageHistoryPage() {
                         </span>
                       </td>
                       <td className="history-table__td">
-                        <span
-                          className={`history-table__result history-table__result--${item.result.replace(/\s/g, '')}`}
-                        >
+                        <span className={`history-table__result history-table__result--${item.result.replace(/\s/g, '')}`}>
                           {item.result}
                         </span>
                       </td>

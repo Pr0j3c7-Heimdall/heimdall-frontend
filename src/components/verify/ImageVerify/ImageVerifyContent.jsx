@@ -5,11 +5,7 @@ import ImageDropzone from './ImageDropzone';
 import Button from '@/components/ui/Button';
 import Loader from '@/components/ui/Loader';
 import { Icons } from '@/components/icons';
-import {
-  imageAnalysisMethodsData,
-  imageCriteriaData,
-  supportedModelsData
-} from '@/data/imageVerify';
+import { imageAnalysisMethodsData, imageCriteriaData, supportedModelsData } from '@/data/imageVerify';
 
 export default function ImageVerifyContent() {
   const [file, setFile] = useState(null);

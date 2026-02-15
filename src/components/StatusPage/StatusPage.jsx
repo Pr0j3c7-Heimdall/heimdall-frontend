@@ -20,12 +20,7 @@ function ActionButton({ action, variant }) {
 
 export default function StatusPage({ statusCode, title, message, primaryAction = { label: '홈으로', href: '/' }, secondaryAction }) {
   return (
-    <Layout
-      header={
-        <NavbarWithAuth navItems={navItems} />
-      }
-      footer={<Footer links={footerLinks} />}
-    >
+    <Layout header={<NavbarWithAuth navItems={navItems} />} footer={<Footer links={footerLinks} />}>
       <div className="status-page">
         <div className="status-page__inner">
           {statusCode && <span className="status-page__code">{statusCode}</span>}

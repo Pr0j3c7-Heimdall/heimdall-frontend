@@ -5,11 +5,7 @@ import AudioDropzone from './AudioDropzone';
 import Button from '@/components/ui/Button';
 import Loader from '@/components/ui/Loader';
 import { Icons } from '@/components/icons';
-import {
-  audioAnalysisMethodsData,
-  audioCriteriaData,
-  audioSupportedModelsData
-} from '@/data/audioVerify';
+import { audioAnalysisMethodsData, audioCriteriaData, audioSupportedModelsData } from '@/data/audioVerify';
 
 export default function AudioVerifyContent() {
   const [file, setFile] = useState(null);
