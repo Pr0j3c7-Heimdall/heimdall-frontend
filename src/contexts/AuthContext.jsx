@@ -6,8 +6,8 @@ import { getAccessToken, getRefreshToken, clearTokens, logoutApi, withdrawApi } 
 const AuthContext = createContext(null);
 
 const LOGGED_OUT_BUTTONS = {
-  secondaryBtn: { href: '/login', label: '로그인', isAuthAction: true },
-  primaryBtn: { href: '/register', label: '회원가입', isAuthAction: true }
+  secondaryBtn: { href: '/login', label: '로그인', action: 'login' },
+  primaryBtn: { href: '/register', label: '회원가입', action: 'register' }
 };
 
 const LOGGED_IN_BUTTONS = {
