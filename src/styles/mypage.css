@@ -208,6 +208,18 @@
   color: var(--color-fg-muted);
 }
 
+.profile-loading {
+  font-size: 0.9375rem;
+  color: var(--color-fg-muted);
+  padding: var(--spacing-24);
+}
+
+.profile-error {
+  font-size: 0.9375rem;
+  color: var(--color-error);
+  padding: var(--spacing-24);
+}
+
 /* 프로필 - 회원탈퇴 */
 .profile-withdraw {
   margin-top: var(--spacing-32);
