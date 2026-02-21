@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import ImageDropzone from './ImageDropzone';
+import ImageVerifyResult from './ImageVerifyResult';
 import Button from '@/components/ui/Button';
-import Loader from '@/components/ui/Loader';
 import { Icons } from '@/components/icons';
 import { imageAnalysisMethodsData, imageCriteriaData, supportedModelsData } from '@/data/imageVerify';
 
@@ -11,6 +11,7 @@ export default function ImageVerifyContent() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState(null);
 
   const handleSelect = (selectedFile) => {
     if (!selectedFile) return;
@@ -23,14 +24,97 @@ export default function ImageVerifyContent() {
   const handleReset = () => {
     setFile(null);
     setPreview(null);
+    setResultData(null);
   };
 
   const handleVerify = async () => {
     if (!file) return;
     setLoading(true);
+    setResultData(null);
     try {
       // TODO: API 연동
+      // const formData = new FormData();
+      // formData.append('image', file);
+      // const response = await fetch('/api/verify/image', { method: 'POST', body: formData });
+      // const data = await response.json();
+      // setResultData({ ...data, image: preview });
+
+      // 임시 더미 데이터 (API 연동 후 제거)
       await new Promise((r) => setTimeout(r, 2000));
+      setResultData({
+        image: preview,
+        c2pa: {
+          model: 'Midjourney',
+          hashMatch: true,
+          platform: 'Midjourney Web',
+          details: {
+            '디코딩 값': 'MJv6-2024-01-15',
+            '플랫폼 정보': 'Midjourney Web Platform'
+          }
+        },
+        binary: {
+          result: 'AI',
+          confidence: 85,
+          methods: [
+            {
+              name: '분석 방법 1',
+              threshold: 0.7,
+              value: 0.85,
+              result: 'AI',
+              weight: 0.4
+            },
+            {
+              name: '분석 방법 2',
+              threshold: 0.6,
+              value: 0.82,
+              result: 'AI',
+              weight: 0.3
+            },
+            {
+              name: '분석 방법 3',
+              threshold: 0.65,
+              value: 0.88,
+              result: 'AI',
+              weight: 0.3
+            }
+          ]
+        },
+        multiclass: {
+          model: 'Midjourney v6',
+          confidence: 92,
+          methods: [
+            {
+              name: '다중 분석 방법 1',
+              threshold: 0.75,
+              value: 0.92,
+              result: 'Midjourney v6',
+              weight: 0.5
+            },
+            {
+              name: '다중 분석 방법 2',
+              threshold: 0.7,
+              value: 0.89,
+              result: 'Midjourney v6',
+              weight: 0.3
+            },
+            {
+              name: '다중 분석 방법 3',
+              threshold: 0.8,
+              value: 0.95,
+              result: 'Midjourney v6',
+              weight: 0.2
+            }
+          ]
+        },
+        final: {
+          result: 'AI 생성 이미지',
+          model: 'Midjourney v6',
+          confidence: 88
+        }
+      });
+    } catch (error) {
+      console.error('검증 실패:', error);
+      // TODO: 에러 처리
     } finally {
       setLoading(false);
     }
@@ -41,6 +125,11 @@ export default function ImageVerifyContent() {
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
+
+  // 결과가 있으면 결과 페이지만 표시
+  if (resultData && !loading) {
+    return <ImageVerifyResult resultData={resultData} onReset={handleReset} />;
+  }
 
   return (
     <>
@@ -83,23 +172,7 @@ export default function ImageVerifyContent() {
         </div>
       </section>
 
-      {/* 2. 검사 진행/대기 */}
-      {loading && (
-        <section className="section section--white verify-progress">
-          <div className="section__inner">
-            <div className="verify-progress__inner">
-              <Loader size={56} variant="shield" />
-              <h2 className="verify-progress__title">검사 진행 중</h2>
-              <p className="verify-progress__desc">이미지를 분석하고 있습니다. 잠시만 기다려 주세요.</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 3. 결과 상세 도출 - TODO: API 연동 후 표시 */}
-      {/* <section className="section section--gray verify-result-section">...</section> */}
-
-      {/* 4. 분석 방법 설명 */}
+      {/* 2. 분석 방법 설명 */}
       <section id="methods" className="section section--white">
         <div className="section__inner">
           <div className="section__header">
@@ -118,7 +191,7 @@ export default function ImageVerifyContent() {
         </div>
       </section>
 
-      {/* 5. 독자적 기준 설명 */}
+      {/* 3. 독자적 기준 설명 */}
       <section id="criteria" className="intro intro--dark">
         <div className="intro__inner">
           <h2 className="intro__title">{imageCriteriaData.title}</h2>
@@ -131,7 +204,7 @@ export default function ImageVerifyContent() {
         </div>
       </section>
 
-      {/* 6. 지원 모델 설명 */}
+      {/* 4. 지원 모델 설명 */}
       <section id="models" className="section section--gray">
         <div className="section__inner">
           <div className="section__header">
