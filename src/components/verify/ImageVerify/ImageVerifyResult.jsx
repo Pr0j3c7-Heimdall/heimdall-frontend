@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 
@@ -33,7 +34,39 @@ import Button from '@/components/ui/Button';
  * }
  */
 export default function ImageVerifyResult({ resultData, onReset }) {
+  const [shareFeedback, setShareFeedback] = useState(null);
   const { image, c2pa, binary, multiclass, final } = resultData || {};
+
+  const handleShare = async () => {
+    const text = `이미지 분석 결과: ${final?.result}${final?.model ? ` (${final.model})` : ''}${final?.confidence !== undefined ? ` - 신뢰도 ${final.confidence}%` : ''}`;
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Heimdall 이미지 분석 결과',
+          text
+        });
+        setShareFeedback('공유 완료');
+        setTimeout(() => setShareFeedback(null), 2000);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          setShareFeedback('공유 실패');
+          setTimeout(() => setShareFeedback(null), 2000);
+        }
+      }
+    } else if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setShareFeedback('클립보드에 복사됨');
+        setTimeout(() => setShareFeedback(null), 2000);
+      } catch {
+        setShareFeedback('복사 실패');
+        setTimeout(() => setShareFeedback(null), 2000);
+      }
+    } else {
+      setShareFeedback('공유 기능을 사용할 수 없습니다');
+      setTimeout(() => setShareFeedback(null), 2000);
+    }
+  };
 
   if (!resultData) return null;
 
@@ -227,8 +260,8 @@ export default function ImageVerifyResult({ resultData, onReset }) {
               <Button variant="outline" size="lg" onClick={onReset}>
                 다시 분석하기
               </Button>
-              <Button variant="primary" size="lg" onClick={() => window.navigator.share?.({ text: `이미지 분석 결과: ${final?.result}` })}>
-                결과 공유하기
+              <Button variant="primary" size="lg" onClick={handleShare}>
+                {shareFeedback || '결과 공유하기'}
               </Button>
             </div>
           </div>
