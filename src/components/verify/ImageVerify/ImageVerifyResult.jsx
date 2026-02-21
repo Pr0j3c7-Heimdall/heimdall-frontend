@@ -1,7 +1,7 @@
 'use client';
 
+import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import { Icons } from '@/components/icons';
 
 /**
  * 분석 결과 데이터 구조 예시:
@@ -43,7 +43,14 @@ export default function ImageVerifyResult({ resultData, onReset }) {
         {/* 분석된 이미지 */}
         <div className="verify-result__image-section">
           <div className="verify-result__image-wrap">
-            <img src={image} alt="분석된 이미지" className="verify-result__image" />
+            <Image
+              src={image}
+              alt="분석된 이미지"
+              fill
+              className="verify-result__image"
+              unoptimized
+              sizes="(max-width: 768px) 100vw, 800px"
+            />
           </div>
         </div>
 
