@@ -19,11 +19,13 @@ export default function MypageProfilePage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchProfile = async () => {
       try {
         setLoading(true);
         setError(null);
         const res = await getMeApi();
+        if (!isMounted) return;
         if (res?.success && res?.data) {
           const user = res.data;
           setData({
@@ -35,15 +37,19 @@ export default function MypageProfilePage() {
           setData({ name: '-', email: '-', createdAt: '-' });
         }
       } catch (err) {
+        if (!isMounted) return;
         const detail = err?.response?.data?.detail;
         const msg = Array.isArray(detail) ? detail[0]?.msg : detail;
         setError(msg || err?.message || '회원정보를 불러오지 못했습니다.');
         setData(null);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     fetchProfile();
+    return () => {
+      isMounted = false;
+    };
   }, []);
   const [showWithdrawConfirm, setShowWithdrawConfirm] = useState(false);
 
