@@ -313,9 +313,25 @@
   text-align: center;
 }
 
+.history-table__th--no,
+.history-table__td--no {
+  width: 56px;
+  text-align: center;
+}
+
 .history-table__row:last-child .history-table__td {
   border-bottom: none;
 }
+
+.history-table__row--clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.history-table__row--clickable:hover {
+  background: var(--color-bg-muted);
+}
+
 
 .history-table__td--name {
   max-width: 200px;
