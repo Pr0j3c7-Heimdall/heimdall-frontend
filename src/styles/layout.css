@@ -74,6 +74,11 @@
   opacity: var(--interaction-pressed-opacity);
 }
 
+.navbar__link--active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
 /* Footer */
 .footer {
   background: var(--color-footer-bg);
