@@ -50,12 +50,24 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
         </Link>
         <ul className="navbar__links">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+            const isExternal = item.external || (item.href && item.href.startsWith('http'));
+            const isActive = !isExternal && (pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)));
             return (
-              <li key={item.href}>
-                <Link href={item.href} className={`navbar__link ${isActive ? 'navbar__link--active' : ''}`}>
-                  {item.label}
-                </Link>
+              <li key={item.href + item.label}>
+                {isExternal ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="navbar__link"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href} className={`navbar__link ${isActive ? 'navbar__link--active' : ''}`}>
+                    {item.label}
+                  </Link>
+                )}
               </li>
             );
           })}
