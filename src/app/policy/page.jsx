@@ -17,14 +17,23 @@ export default function PolicyPage() {
       <main className="policy-page">
         <section id="privacy" className="policy-page__section">
           <div className="section__inner">
-            <PolicyContent sections={privacySections} meta={privacyMeta} />
+            <PolicyContent sections={privacySections} meta={privacyMeta} showFooter={false} />
           </div>
         </section>
         <section id="terms" className="policy-page__section policy-page__section--alt">
           <div className="section__inner">
-            <PolicyContent sections={termsSections} meta={termsMeta} />
+            <PolicyContent sections={termsSections} meta={termsMeta} showFooter={false} />
           </div>
         </section>
+        <footer className="policy-page__meta">
+          <div className="section__inner">
+            <ul className="policy__meta">
+              <li><strong>적용 대상</strong> {privacyMeta.applyTarget}</li>
+              <li><strong>시행일</strong> {privacyMeta.effectiveDate}</li>
+              <li><strong>최종 업데이트</strong> {privacyMeta.lastUpdated}</li>
+            </ul>
+          </div>
+        </footer>
       </main>
     </Layout>
   );

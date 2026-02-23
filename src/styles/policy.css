@@ -166,6 +166,16 @@
   background: var(--color-bg-muted);
 }
 
+.policy-page__meta {
+  padding: var(--spacing-32) 0 var(--spacing-48);
+  background: var(--color-bg);
+}
+
+.policy-page__meta .policy__meta {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px) {
   .policy {
     padding: var(--spacing-32) var(--spacing-20) var(--spacing-40);

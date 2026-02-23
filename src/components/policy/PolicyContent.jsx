@@ -50,7 +50,7 @@ function Block({ block }) {
   return null;
 }
 
-export default function PolicyContent({ sections, meta }) {
+export default function PolicyContent({ sections, meta, showFooter = true }) {
   return (
     <article className="policy">
       <header className="policy__header">
@@ -76,13 +76,15 @@ export default function PolicyContent({ sections, meta }) {
         ))}
       </div>
 
-      <footer className="policy__footer">
-        <ul className="policy__meta">
-          <li><strong>적용 대상</strong> {meta.applyTarget}</li>
-          <li><strong>시행일</strong> {meta.effectiveDate}</li>
-          <li><strong>최종 업데이트</strong> {meta.lastUpdated}</li>
-        </ul>
-      </footer>
+      {showFooter && (
+        <footer className="policy__footer">
+          <ul className="policy__meta">
+            <li><strong>적용 대상</strong> {meta.applyTarget}</li>
+            <li><strong>시행일</strong> {meta.effectiveDate}</li>
+            <li><strong>최종 업데이트</strong> {meta.lastUpdated}</li>
+          </ul>
+        </footer>
+      )}
     </article>
   );
 }
