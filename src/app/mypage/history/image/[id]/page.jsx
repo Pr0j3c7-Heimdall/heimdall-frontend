@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
+import Button from '@/components/ui/Button';
 import ImageVerifyResult from '@/components/verify/ImageVerify/ImageVerifyResult';
 import { getHistoryDetail } from '@/data/mypage';
 
@@ -18,9 +19,9 @@ export default function HistoryImageDetailPage() {
     return (
       <div className="mypage-section">
         <p className="mypage-section__desc">해당 검증 내역을 찾을 수 없습니다.</p>
-        <a href="/mypage/history/image" className="btn btn--outline btn--md">
+        <Button href="/mypage/history/image" variant="outline" size="md">
           목록으로
-        </a>
+        </Button>
       </div>
     );
   }
