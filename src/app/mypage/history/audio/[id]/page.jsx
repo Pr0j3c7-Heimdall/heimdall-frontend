@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { useMemo } from 'react';
+import Button from '@/components/ui/Button';
 import AudioVerifyResult from '@/components/mypage/AudioVerifyResult';
 import { getHistoryDetail } from '@/data/mypage';
 
@@ -18,9 +19,9 @@ export default function HistoryAudioDetailPage() {
     return (
       <div className="mypage-section">
         <p className="mypage-section__desc">해당 검증 내역을 찾을 수 없습니다.</p>
-        <a href="/mypage/history/audio" className="btn btn--outline btn--md">
+        <Button href="/mypage/history/audio" variant="outline" size="md">
           목록으로
-        </a>
+        </Button>
       </div>
     );
   }
