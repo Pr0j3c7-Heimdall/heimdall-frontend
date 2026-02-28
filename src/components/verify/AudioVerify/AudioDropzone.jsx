@@ -3,8 +3,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Icons } from '@/components/icons';
 
-const ACCEPT = 'audio/mpeg,audio/wav,audio/mp4,audio/x-m4a';
-44;
+const ACCEPT = 'audio/mpeg,audio/wav,audio/mp3';
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
 
 export default function AudioDropzone({ onSelect, disabled }) {
@@ -14,10 +13,10 @@ export default function AudioDropzone({ onSelect, disabled }) {
 
   const validateFile = (file) => {
     setError('');
-    const validTypes = ['audio/mpeg', 'audio/wav', 'audio/mp4', 'audio/x-m4a', 'audio/mp3'];
-    const isValidType = validTypes.includes(file.type) || file.name.match(/\.(mp3|wav|m4a)$/i);
+    const validTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3'];
+    const isValidType = validTypes.includes(file.type) || file.name.match(/\.(mp3|wav)$/i);
     if (!isValidType) {
-      setError('MP3, WAV, M4A 형식만 지원합니다.');
+      setError('MP3, WAV 형식만 지원합니다.');
       return false;
     }
     if (file.size > MAX_SIZE) {
@@ -86,7 +85,7 @@ export default function AudioDropzone({ onSelect, disabled }) {
       />
       <span className="verify-dropzone__icon">{Icons.mic}</span>
       <p className="verify-dropzone__text">음성 파일을 드래그하거나 클릭하여 업로드</p>
-      <p className="verify-dropzone__hint">MP3, WAV, M4A · 최대 50MB</p>
+      <p className="verify-dropzone__hint">10초 이상 1분 이하 · MP3, WAV · 최대 50MB</p>
       {error && <p className="verify-dropzone__error">{error}</p>}
     </div>
   );

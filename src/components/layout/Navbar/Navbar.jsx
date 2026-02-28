@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { useAuthModal } from '@/contexts/AuthModalContext';
 
 export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, secondaryBtn, cta }) {
+  const pathname = usePathname();
   const { openAuthModal } = useAuthModal();
   const mainCta = primaryBtn || cta;
 
@@ -47,13 +49,28 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
           {logo}
         </Link>
         <ul className="navbar__links">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} className="navbar__link">
-                {item.label}
-              </a>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const isExternal = item.external || (item.href && item.href.startsWith('http'));
+            const isActive = !isExternal && (pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)));
+            return (
+              <li key={item.href + item.label}>
+                {isExternal ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="navbar__link"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link href={item.href} className={`navbar__link ${isActive ? 'navbar__link--active' : ''}`}>
+                    {item.label}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
         <div className="navbar__actions">
           {renderBtn(secondaryBtn, 'ghost')}

@@ -74,6 +74,11 @@
   opacity: var(--interaction-pressed-opacity);
 }
 
+.navbar__link--active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
 /* Footer */
 .footer {
   background: var(--color-footer-bg);
@@ -113,6 +118,16 @@
   font-size: 0.8125rem;
   color: var(--color-fg-muted);
   margin-top: 8px;
+}
+
+.footer__credit-link {
+  color: var(--color-fg-muted);
+  text-decoration: none;
+}
+
+.footer__credit-link:hover {
+  text-decoration: underline;
+  opacity: var(--interaction-hover-opacity);
 }
 
 .footer__copyright {

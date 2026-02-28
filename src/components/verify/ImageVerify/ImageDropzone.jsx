@@ -3,8 +3,10 @@
 import { useCallback, useState } from 'react';
 import { Icons } from '@/components/icons';
 
-const ACCEPT = 'image/jpeg,image/png,image/webp';
-const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const ACCEPT = 'image/jpeg,image/png';
+const MAX_SIZE = 20 * 1024 * 1024; // 20MB
+const MIN_WIDTH = 256;
+const MIN_HEIGHT = 256;
 
 export default function ImageDropzone({ onSelect, disabled }) {
   const [isDragging, setIsDragging] = useState(false);
@@ -12,22 +14,44 @@ export default function ImageDropzone({ onSelect, disabled }) {
 
   const validateFile = (file) => {
     setError('');
-    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
-      setError('JPG, PNG, WebP 형식만 지원합니다.');
+    if (!file.type.match(/^image\/(jpeg|png)$/)) {
+      setError('JPG, PNG 형식만 지원합니다.');
       return false;
     }
     if (file.size > MAX_SIZE) {
-      setError('파일 크기는 10MB 이하여야 합니다.');
+      setError('파일 크기는 20MB 이하여야 합니다.');
       return false;
     }
     return true;
+  };
+
+  const validateDimensions = (file, callback) => {
+    const img = new window.Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      if (img.naturalWidth < MIN_WIDTH || img.naturalHeight < MIN_HEIGHT) {
+        setError('사진 크기는 256×256 이상이어야 합니다.');
+        callback(false);
+      } else {
+        callback(true);
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      setError('이미지 크기를 확인할 수 없습니다.');
+      callback(false);
+    };
+    img.src = url;
   };
 
   const handleFile = useCallback(
     (file) => {
       if (!file || disabled) return;
       if (!validateFile(file)) return;
-      onSelect?.(file);
+      validateDimensions(file, (ok) => {
+        if (ok) onSelect?.(file);
+      });
     },
     [onSelect, disabled]
   );
@@ -74,7 +98,7 @@ export default function ImageDropzone({ onSelect, disabled }) {
       <input
         id="image-verify-input"
         type="file"
-        accept={ACCEPT}
+        accept="image/jpeg,image/png"
         onChange={handleChange}
         className="verify-dropzone__input"
         aria-hidden
@@ -82,7 +106,7 @@ export default function ImageDropzone({ onSelect, disabled }) {
       />
       <span className="verify-dropzone__icon">{Icons.image}</span>
       <p className="verify-dropzone__text">이미지를 드래그하거나 클릭하여 업로드</p>
-      <p className="verify-dropzone__hint">JPG, PNG, WebP · 최대 10MB</p>
+      <p className="verify-dropzone__hint">JPG, PNG · 256×256 이상 · 최대 20MB</p>
       {error && <p className="verify-dropzone__error">{error}</p>}
     </div>
   );
