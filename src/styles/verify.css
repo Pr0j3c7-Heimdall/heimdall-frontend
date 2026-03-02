@@ -777,6 +777,13 @@ section#framework .section__header {
   margin: 0;
 }
 
+/* Dark mode - 검증 가이드 카드들도 컬러감을 줄인 단색 톤으로 정리 */
+[data-theme='dark'] .verify-methods-card,
+[data-theme='dark'] .verify-framework-card,
+[data-theme='dark'] .verify-support-card {
+  background: var(--color-bg);
+}
+
 .verify-support-criteria__row {
   display: flex;
   align-items: baseline;
