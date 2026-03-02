@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Icons } from '@/components/icons';
 import {
   imageAnalysisMethodsData,
@@ -33,12 +34,34 @@ export default function ImageVerifyGuide() {
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{imageFrameworkCardsData.title}</h2>
-            <p className="section__desc">{imageFrameworkCardsData.description}</p>
           </div>
           <div className="verify-framework-diagram">
-            <div className="verify-framework-diagram__placeholder">
-              <span className="verify-framework-diagram__label">시스템 구성도</span>
-              <p className="verify-framework-diagram__text">C2PA → 이진분류 → 다중분류 → 메타데이터 → 최종 판별</p>
+            <p className="verify-framework-diagram__caption">
+              <span className="verify-framework-diagram__text">
+                {imageFrameworkCardsData.description}
+              </span>
+            </p>
+            <div className="verify-framework-diagram__images">
+              <div className="verify-framework-diagram__image-wrap">
+                <Image
+                  src="/assets/images/framework/flow.png"
+                  alt="로그인과 이미지 업로드부터 C2PA·이진·다중분류·메타데이터를 거쳐 최종 결과가 마이페이지에 저장되는 과정"
+                  width={800}
+                  height={500}
+                  className="verify-framework-diagram__img"
+                  unoptimized
+                />
+              </div>
+              <div className="verify-framework-diagram__image-wrap">
+                <Image
+                  src="/assets/images/framework/system.png"
+                  alt="이미지 업로드 후 C2PA·이진·다중분류·메타데이터 분석을 거쳐 최종 판단이 나오는 구조"
+                  width={800}
+                  height={500}
+                  className="verify-framework-diagram__img"
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
           <h3 className="verify-framework-subtitle">{imageFrameworkCardsData.subtitle}</h3>
