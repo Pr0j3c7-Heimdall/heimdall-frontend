@@ -71,7 +71,7 @@ export default function ImageVerifyResult({ resultData, onReset, backHref, backL
   if (!resultData) return null;
 
   return (
-    <section className="section section--gray verify-result-section">
+    <section className="section verify-result-section">
       <div className="section__inner">
         {/* 최종 판별 결과 (맨 앞) */}
         <div className="verify-result__final verify-result__final--top">

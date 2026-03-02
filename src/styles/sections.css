@@ -253,7 +253,7 @@
 
 .intro__text {
   font-size: 1.0625rem;
-  color: var(--color-fg-muted);
+  color: var(--color-fg);
   line-height: 1.7;
   margin-bottom: 24px;
   white-space: pre-line;
