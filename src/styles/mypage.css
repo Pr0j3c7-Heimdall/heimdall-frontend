@@ -208,6 +208,18 @@
   color: var(--color-fg-muted);
 }
 
+.profile-loading {
+  font-size: 0.9375rem;
+  color: var(--color-fg-muted);
+  padding: var(--spacing-24);
+}
+
+.profile-error {
+  font-size: 0.9375rem;
+  color: var(--color-error);
+  padding: var(--spacing-24);
+}
+
 /* 프로필 - 회원탈퇴 */
 .profile-withdraw {
   margin-top: var(--spacing-32);
@@ -301,9 +313,25 @@
   text-align: center;
 }
 
+.history-table__th--no,
+.history-table__td--no {
+  width: 56px;
+  text-align: center;
+}
+
 .history-table__row:last-child .history-table__td {
   border-bottom: none;
 }
+
+.history-table__row--clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.history-table__row--clickable:hover {
+  background: var(--color-bg-muted);
+}
+
 
 .history-table__td--name {
   max-width: 200px;
@@ -353,19 +381,76 @@
   color: var(--color-fg-muted);
 }
 
-/* 검증 내역 없음 */
+/* 검증 내역 없음 - empty 뷰 */
 .history-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-16);
-  padding: var(--spacing-48) var(--spacing-24);
+  justify-content: center;
+  min-height: 300px;
+  padding: var(--spacing-40) var(--spacing-24);
   text-align: center;
+}
+
+.history-empty__card {
+  width: 100%;
+  max-width: 520px;
+  padding: var(--spacing-48) var(--spacing-40);
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl, 12px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.history-empty__icon {
+  color: var(--color-fg-muted);
+  margin-bottom: var(--spacing-16);
+  line-height: 0;
+}
+
+.history-empty__icon svg {
+  display: block;
+}
+
+.history-empty__title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  margin: 0 0 var(--spacing-12);
+  letter-spacing: -0.01em;
+}
+
+.history-empty__desc {
+  font-size: 1rem;
+  color: var(--color-fg-muted);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  margin: 0 0 var(--spacing-24);
+  max-width: 420px;
+}
+
+.history-empty__cta {
+  min-width: 180px;
+}
+
+@media (max-width: 480px) {
+  .history-empty__card {
+    padding: var(--spacing-32) var(--spacing-20);
+  }
 }
 
 .history-empty__text {
   font-size: 0.9375rem;
   color: var(--color-fg-muted);
+  margin: 0;
+}
+
+.history-empty__text--error {
+  color: var(--color-error, #b91c1c);
 }
 
 .history-empty__actions {
@@ -373,4 +458,9 @@
   gap: var(--spacing-12);
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: var(--spacing-8);
+}
+
+.history-empty__card .history-empty__cta {
+  margin-top: 0;
 }

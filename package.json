@@ -28,7 +28,7 @@
     "framer-motion": "12.23.12",
     "lodash-es": "4.17.21",
     "motion": "12.23.12",
-    "next": "^15.4.2",
+    "next": "^15.4.8",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "7.60.0",
@@ -42,13 +42,14 @@
     "@storybook/nextjs-vite": "^10.2",
     "@types/node": "24.2.0",
     "eslint": "9.31.0",
-    "eslint-config-next": "15.4.3",
+    "eslint-config-next": "^15.4.8",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-prettier": "5.5.3",
     "eslint-plugin-react-hooks": "5.2.0",
     "openapi-typescript": "^7.10.1",
     "prettier": "3.6.2",
+    "sharp": "^0.34.5",
     "storybook": "^10.2"
   }
 }

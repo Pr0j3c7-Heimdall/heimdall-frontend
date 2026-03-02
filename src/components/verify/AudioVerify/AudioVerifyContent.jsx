@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import AudioDropzone from './AudioDropzone';
+import AudioVerifyGuide from './AudioVerifyGuide';
 import Button from '@/components/ui/Button';
 import Loader from '@/components/ui/Loader';
-import { Icons } from '@/components/icons';
-import { audioAnalysisMethodsData, audioCriteriaData, audioSupportedModelsData } from '@/data/audioVerify';
 
 export default function AudioVerifyContent() {
   const [file, setFile] = useState(null);
@@ -54,8 +53,8 @@ export default function AudioVerifyContent() {
       <section className="verify-section section section--gray">
         <div className="section__inner">
           <div className="section__header">
-            <h1 className="section__title">음성 검증</h1>
-            <p className="section__desc">업로드한 음성 파일이 AI로 합성되었는지, 실제 녹음인지 판별합니다.</p>
+            <h1 className="section__title">음성 검사</h1>
+            <p className="section__desc">음성을 업로드하여 AI 합성 여부, 사용 모델, 녹음 정보 등을 검사하세요. 초 단위로 구간 분석(10초 이상 1분 이하 권장)을 지원합니다.</p>
           </div>
 
           <div className="verify-content">
@@ -102,62 +101,10 @@ export default function AudioVerifyContent() {
         </section>
       )}
 
-      {/* 3. 결과 상세 도출 - TODO: API 연동 후 표시 */}
+      {/* 결과 상세 - TODO: API 연동 후 표시 */}
       {/* <section className="section section--gray verify-result-section">...</section> */}
 
-      {/* 4. 분석 방법 설명 */}
-      <section id="methods" className="section section--white">
-        <div className="section__inner">
-          <div className="section__header">
-            <h2 className="section__title">{audioAnalysisMethodsData.title}</h2>
-            <p className="section__desc">{audioAnalysisMethodsData.description}</p>
-          </div>
-          <div className="analysis-grid">
-            {audioAnalysisMethodsData.items.map((item) => (
-              <div key={item.id} className="analysis-card">
-                <span className="analysis-card__icon">{Icons[item.icon]}</span>
-                <h3 className="analysis-card__title">{item.title}</h3>
-                <p className="analysis-card__desc">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. 독자적 기준 설명 */}
-      <section id="criteria" className="intro intro--dark">
-        <div className="intro__inner">
-          <h2 className="intro__title">{audioCriteriaData.title}</h2>
-          <p className="intro__text">{audioCriteriaData.description}</p>
-          <ul className="intro__list">
-            {audioCriteriaData.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 6. 지원 모델 설명 */}
-      <section id="models" className="section section--gray">
-        <div className="section__inner">
-          <div className="section__header">
-            <h2 className="section__title">{audioSupportedModelsData.title}</h2>
-            <p className="section__desc">{audioSupportedModelsData.description}</p>
-          </div>
-          <div className="tech-grid">
-            {audioSupportedModelsData.categories.map((cat) => (
-              <div key={cat.name} className="tech-card">
-                <h3 className="tech-card__title">{cat.name}</h3>
-                <ul className="tech-card__list">
-                  {cat.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <AudioVerifyGuide />
     </>
   );
 }

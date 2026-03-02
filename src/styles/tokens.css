@@ -2,11 +2,11 @@
  * Design tokens - 다크모드 시 [data-theme="dark"] 에서 override
  */
 :root {
-  /* Background */
-  --color-bg: #fafafa;
-  --color-bg-alt: #ffffff;
-  --color-bg-muted: #f9fafb;
-  --color-bg-inverse: #0f172a;
+  /* Background - 라이트: 히어로 배경 톤과 맞춘 계열 */
+  --color-bg: #f8f9fb;       /* 페이지 전체 (히어로 상단과 동일 계열) */
+  --color-bg-alt: #ffffff;   /* 카드/흰색 섹션 */
+  --color-bg-muted: #e5e9f0; /* 회색 섹션 / 보조 배경 */
+  --color-bg-inverse: #111827;
 
   /* Foreground (text) */
   --color-fg: #111827;
@@ -14,10 +14,10 @@
   --color-fg-on-inverse: #ffffff;
   --color-fg-muted-on-inverse: rgba(255, 255, 255, 0.8);
 
-  /* Primary */
-  --color-primary: #374151;
-  --color-primary-hover: #1f2937;
-  --color-primary-light: #f3f4f6;
+  /* Primary - 차분한 딥 슬레이트 블루 */
+  --color-primary: #1f2937;
+  --color-primary-hover: #111827;
+  --color-primary-light: #e5e7eb;
   --color-on-primary: #ffffff;
 
   /* Border */
@@ -32,10 +32,18 @@
   --color-info-bg: rgba(59, 130, 246, 0.1);
   --color-success-fg: #16a34a;
   --color-success-bg: rgba(34, 197, 94, 0.1);
+  --color-warn-bg: #fffbeb;
+  --color-warn-border: #eab308;
 
-  /* Surface */
-  --color-nav-bg: rgba(255, 255, 255, 0.9);
-  --color-footer-bg: var(--color-bg-muted);
+  /* Surface - 전역 네비와 동일 */
+  --color-nav-bg: #ffffff;
+  --color-footer-bg: #ffffff;
+
+  /* CTA - 홈 '지금 바로 검사하세요' 배경 (완전 검정) */
+  --color-cta-bg: #000000;
+  --color-cta-fg: #f9fafb;
+  --color-cta-fg-muted: rgba(249, 250, 251, 0.85);
+  --color-cta-border: rgba(255, 255, 255, 0.12);
 
   /* Opacity */
   --opacity-disabled: 0.5;
@@ -49,9 +57,9 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
 
-  /* Hero gradient */
-  --color-hero-start: #f1f5f9;
-  --color-hero-mid: #f8fafc;
+  /* Hero - 라이트: 살짝 그라데이션 */
+  --color-hero-start: #f8f9fb;
+  --color-hero-mid: #ffffff;
 
   /* Radius */
   --radius-sm: 6px;
@@ -80,4 +88,53 @@
   --interaction-hover-opacity: 0.94;
   --interaction-pressed-opacity: 0.88;
   --transition-hover: 0.15s ease;
+}
+
+/* 다크모드 - Heimdall 보안 대시보드 느낌 (딥 네이비 + 차분한 블루 포인트) */
+[data-theme='dark'] {
+  /* Backgrounds - 다크모드 전역을 완전 검정으로 통일 */
+  --color-bg: #000000;        /* 페이지 전체 배경 */
+  --color-bg-alt: #000000;    /* 카드/섹션 기본 배경 */
+  --color-bg-muted: #000000;  /* 번갈아 쓰는 섹션 배경도 동일 톤 */
+  --color-bg-inverse: #000000;
+
+  /* Text */
+  --color-fg: #e5e7eb;
+  --color-fg-muted: #9ca3af;
+  --color-fg-on-inverse: #f9fafb;
+  --color-fg-muted-on-inverse: rgba(249, 250, 251, 0.75);
+
+  /* Primary / Accent (차분한 블루 계열) */
+  --color-primary: #60a5fa;
+  --color-primary-hover: #3b82f6;
+  --color-primary-light: #1f2937;
+  --color-on-primary: #020617;
+
+  /* Border */
+  --color-border: #1f2937;
+  --color-border-on-inverse: rgba(148, 163, 184, 0.8);
+
+  /* Surface - 네비·푸터 */
+  --color-nav-bg: #000000;
+  --color-footer-bg: #000000;
+
+  /* Overlay / Shadows */
+  --color-overlay: rgba(15, 23, 42, 0.75);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.85);
+  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(148, 163, 184, 0.3);
+
+  /* Hero */
+  --color-hero-start: #000000;
+  --color-hero-mid: #000000;
+
+  /* CTA - 다크에서도 완전 검정 배경 */
+  --color-cta-bg: #000000;
+  --color-cta-fg: #e5e7eb;
+  --color-cta-fg-muted: rgba(209, 213, 219, 0.9);
+  --color-cta-border: rgba(255, 255, 255, 0.1);
+
+  /* Warn / Semantic */
+  --color-warn-bg: rgba(234, 179, 8, 0.12);
+  --color-warn-border: rgba(234, 179, 8, 0.7);
 }

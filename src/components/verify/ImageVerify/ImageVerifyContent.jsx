@@ -2,19 +2,25 @@
 
 import { useState } from 'react';
 import ImageDropzone from './ImageDropzone';
+import ImageVerifyResult from './ImageVerifyResult';
+import ImageVerifyGuide from './ImageVerifyGuide';
 import Button from '@/components/ui/Button';
-import Loader from '@/components/ui/Loader';
-import { Icons } from '@/components/icons';
-import { imageAnalysisMethodsData, imageCriteriaData, supportedModelsData } from '@/data/imageVerify';
+import { uploadImage, getDetectionStatus, getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
+
+const POLL_INTERVAL_MS = 2000;
+const POLL_MAX_ATTEMPTS = 60;
 
 export default function ImageVerifyContent() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSelect = (selectedFile) => {
     if (!selectedFile) return;
     setFile(selectedFile);
+    setErrorMessage(null);
     const reader = new FileReader();
     reader.onload = (e) => setPreview(e.target?.result);
     reader.readAsDataURL(selectedFile);
@@ -23,14 +29,59 @@ export default function ImageVerifyContent() {
   const handleReset = () => {
     setFile(null);
     setPreview(null);
+    setResultData(null);
+    setErrorMessage(null);
   };
 
   const handleVerify = async () => {
     if (!file) return;
     setLoading(true);
+    setResultData(null);
+    setErrorMessage(null);
     try {
-      // TODO: API 연동
-      await new Promise((r) => setTimeout(r, 2000));
+      const uploadRes = await uploadImage(file);
+      if (!uploadRes?.success || !uploadRes?.data?.image_id) {
+        setErrorMessage(uploadRes?.data?.result || '업로드에 실패했습니다.');
+        return;
+      }
+      const { image_id: imageId } = uploadRes.data;
+
+      let attempts = 0;
+      while (attempts < POLL_MAX_ATTEMPTS) {
+        const statusRes = await getDetectionStatus(imageId);
+        const status = statusRes?.data?.analysis_status?.toLowerCase?.();
+        if (status === 'completed' || status === 'done' || status === 'success') {
+          break;
+        }
+        if (status === 'failed' || status === 'error') {
+          setErrorMessage('분석에 실패했습니다.');
+          return;
+        }
+        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+        attempts += 1;
+      }
+      if (attempts >= POLL_MAX_ATTEMPTS) {
+        setErrorMessage('분석 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.');
+        return;
+      }
+
+      const resultRes = await getDetectionResult(imageId);
+      if (!resultRes?.success || !resultRes?.data) {
+        setErrorMessage('결과를 불러오지 못했습니다.');
+        return;
+      }
+      const mapped = mapDetectionResultToUI(resultRes.data);
+      if (mapped) {
+        setResultData(mapped);
+      } else {
+        setErrorMessage('결과 변환에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('검증 실패:', error);
+      const msg = error?.response?.data?.detail
+        ? (Array.isArray(error.response.data.detail) ? error.response.data.detail[0]?.msg : error.response.data.detail)
+        : error?.message || '검증 요청에 실패했습니다.';
+      setErrorMessage(typeof msg === 'string' ? msg : '검증 요청에 실패했습니다.');
     } finally {
       setLoading(false);
     }
@@ -42,14 +93,19 @@ export default function ImageVerifyContent() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  // 결과가 있으면 결과 페이지만 표시
+  if (resultData && !loading) {
+    return <ImageVerifyResult resultData={resultData} onReset={handleReset} />;
+  }
+
   return (
     <>
       {/* 1. 검사 (이미지 업로드) */}
       <section className="verify-section section section--gray">
         <div className="section__inner">
           <div className="section__header">
-            <h1 className="section__title">이미지 검증</h1>
-            <p className="section__desc">업로드한 이미지가 AI로 생성되었는지, 실제 촬영된 것인지 판별합니다.</p>
+            <h1 className="section__title">이미지 검사</h1>
+            <p className="section__desc">이미지를 업로드하여 AI 생성 여부, AI 생성 모델, 사진 정보 등을 검사하세요.</p>
           </div>
 
           <div className="verify-content">
@@ -72,86 +128,27 @@ export default function ImageVerifyContent() {
               )}
             </div>
 
-            {preview && !loading && (
+            {preview && (
               <div className="verify-actions">
-                <Button variant="primary" size="lg" onClick={handleVerify}>
-                  검증하기
-                </Button>
+                {errorMessage && (
+                  <p className="verify-error" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
+                {loading ? (
+                  <p className="verify-loading">분석 중입니다. 잠시만 기다려 주세요.</p>
+                ) : (
+                  <Button variant="primary" size="lg" onClick={handleVerify}>
+                    검증하기
+                  </Button>
+                )}
               </div>
             )}
           </div>
         </div>
       </section>
 
-      {/* 2. 검사 진행/대기 */}
-      {loading && (
-        <section className="section section--white verify-progress">
-          <div className="section__inner">
-            <div className="verify-progress__inner">
-              <Loader size={56} variant="shield" />
-              <h2 className="verify-progress__title">검사 진행 중</h2>
-              <p className="verify-progress__desc">이미지를 분석하고 있습니다. 잠시만 기다려 주세요.</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 3. 결과 상세 도출 - TODO: API 연동 후 표시 */}
-      {/* <section className="section section--gray verify-result-section">...</section> */}
-
-      {/* 4. 분석 방법 설명 */}
-      <section id="methods" className="section section--white">
-        <div className="section__inner">
-          <div className="section__header">
-            <h2 className="section__title">{imageAnalysisMethodsData.title}</h2>
-            <p className="section__desc">{imageAnalysisMethodsData.description}</p>
-          </div>
-          <div className="analysis-grid">
-            {imageAnalysisMethodsData.items.map((item) => (
-              <div key={item.id} className="analysis-card">
-                <span className="analysis-card__icon">{Icons[item.icon]}</span>
-                <h3 className="analysis-card__title">{item.title}</h3>
-                <p className="analysis-card__desc">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. 독자적 기준 설명 */}
-      <section id="criteria" className="intro intro--dark">
-        <div className="intro__inner">
-          <h2 className="intro__title">{imageCriteriaData.title}</h2>
-          <p className="intro__text">{imageCriteriaData.description}</p>
-          <ul className="intro__list">
-            {imageCriteriaData.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 6. 지원 모델 설명 */}
-      <section id="models" className="section section--gray">
-        <div className="section__inner">
-          <div className="section__header">
-            <h2 className="section__title">{supportedModelsData.title}</h2>
-            <p className="section__desc">{supportedModelsData.description}</p>
-          </div>
-          <div className="tech-grid">
-            {supportedModelsData.categories.map((cat) => (
-              <div key={cat.name} className="tech-card">
-                <h3 className="tech-card__title">{cat.name}</h3>
-                <ul className="tech-card__list">
-                  {cat.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ImageVerifyGuide />
     </>
   );
 }

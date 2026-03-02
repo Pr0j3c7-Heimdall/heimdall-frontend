@@ -2,7 +2,6 @@ import Layout from '@/components/layout/Layout';
 import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
-import Chip from '@/components/ui/Chip';
 import FaqItem from '@/components/FaqItem';
 import ShowcaseAnimate from '@/components/ShowcaseAnimate';
 import StepAnimate from '@/components/StepAnimate';
@@ -27,10 +26,14 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero__inner">
-          <h1 className="hero__title" style={{ whiteSpace: 'pre-line' }}>
-            {heroData.title}
+          <h1 className="hero__title">
+            <span className="hero__title-line">{heroData.titleLine1}</span>
+            <span className="hero__title-line">{heroData.titleLine2}</span>
           </h1>
-          <p className="hero__desc">{heroData.description}</p>
+          <p className="hero__desc">
+            <span className="hero__desc-line">{heroData.descriptionLine1}</span>
+            <span className="hero__desc-line">{heroData.descriptionLine2}</span>
+          </p>
           <div className="hero__actions">
             {heroData.ctas.map((cta) => (
               <Button key={cta.label} href={cta.href} variant={cta.variant} size="lg">
@@ -41,51 +44,54 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 서비스 소개 */}
-      <section id="intro" className="intro intro--dark">
+      {/* 서비스 소개 (section02) */}
+      <section id="intro" className="intro intro--dark intro--bg">
         <div className="intro__inner">
           <h2 className="intro__title">{introData.title}</h2>
           <p className="intro__text">{introData.description}</p>
-          <ul className="intro__list">
-            {introData.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
+          {introData.description2 && <p className="intro__text">{introData.description2}</p>}
+          {introData.points?.length > 0 && (
+            <ul className="intro__list">
+              {introData.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
-      {/* 이미지/음성/문서 교차 카드 */}
+      {/* 이미지/음성 검사 소개 */}
       <section id="showcase" className="showcase section--gray">
         {showcaseData.map((item, i) => (
           <ShowcaseAnimate key={item.id} reverse={item.reverse} index={i}>
             <div className="showcase__media">
-              <div className="showcase__placeholder">
-                {item.id === 'image' && '🖼️'}
-                {item.id === 'audio' && '🎙️'}
-                {item.id === 'document' && '📄'}
-              </div>
+              {item.gif ? (
+                <img src={item.gif} alt="" className="showcase__gif" />
+              ) : (
+                <div className="showcase__placeholder">
+                  {item.id === 'image' && '🖼️'}
+                  {item.id === 'audio' && '🎙️'}
+                </div>
+              )}
             </div>
             <div className="showcase__content">
               <h3 className="showcase__title">{item.title}</h3>
               <p className="showcase__desc">{item.description}</p>
-              <Button href={item.href} variant="outline" size="sm">
-                시연하기
-              </Button>
             </div>
           </ShowcaseAnimate>
         ))}
       </section>
 
-      {/* 탐지 & 분석 메커니즘 */}
-      <section id="analysis" className="section section--white">
+      {/* Heimdall 프레임워크 메커니즘 */}
+      <section id="analysis" className="section section--white section--mechanism">
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{analysisData.title}</h2>
             <p className="section__desc">{analysisData.description}</p>
           </div>
-          <div className="analysis-grid">
+          <div className="analysis-grid analysis-grid--cards">
             {analysisData.items.map((item) => (
-              <div key={item.id} className="analysis-card">
+              <div key={item.id} className="analysis-card analysis-card--feature">
                 <span className="analysis-card__icon">{Icons[item.icon]}</span>
                 <h3 className="analysis-card__title">{item.title}</h3>
                 <p className="analysis-card__desc">{item.description}</p>
@@ -109,13 +115,6 @@ export default function HomePage() {
                 <h3 className="feature-card__title">{item.title}</h3>
                 <p className="feature-card__desc">{item.description}</p>
               </div>
-            ))}
-          </div>
-          <div className="features-formats">
-            {featuresData.formatChips.map((format) => (
-              <Chip key={format} variant="outline" size="sm">
-                {format}
-              </Chip>
             ))}
           </div>
         </div>
@@ -169,7 +168,7 @@ export default function HomePage() {
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">자주 묻는 질문</h2>
-            <p className="section__desc">Heimdall 이용과 관련해 자주 받는 질문을 정리했습니다.</p>
+            <p className="section__desc">Heimdall 서비스 이용과 관련해 자주 받는 질문을 정리했습니다.</p>
           </div>
           <div className="faq-list faq-list--home">
             {faqData.map((item) => (
@@ -188,7 +187,12 @@ export default function HomePage() {
           </div>
           <div className="cta-actions">
             {ctaData.buttons.map((btn) => (
-              <Button key={btn.label} href={btn.href} variant={btn.href.startsWith('http') ? 'outline' : 'primary'} size="lg">
+              <Button
+                key={btn.label}
+                href={btn.href}
+                variant={btn.href.startsWith('http') ? 'outline' : 'primary'}
+                size="lg"
+              >
                 {btn.label}
               </Button>
             ))}

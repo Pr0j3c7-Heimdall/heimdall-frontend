@@ -4,398 +4,865 @@
  */
 
 export interface paths {
-  '/api/v1/auth/login': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Login
+         * @description 구글 로그인 (겸 가입)
+         */
+        post: operations["login_api_v1_auth_login_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Login
-     * @description 구글 로그인 (겸 가입)
-     */
-    post: operations['login_api_v1_auth_login_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/me': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Withdraw
+         * @description 회원 탈퇴 (status=DELETED, deleted_at 기록)
+         */
+        delete: operations["withdraw_api_v1_auth_me_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    post?: never;
-    /**
-     * Withdraw
-     * @description 회원 탈퇴 (status=DELETED, deleted_at 기록)
-     */
-    delete: operations['withdraw_api_v1_auth_me_delete'];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/logout': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Logout
+         * @description 로그아웃 (인증 필요, refresh token 삭제, access token 블랙리스트 등록)
+         */
+        post: operations["logout_api_v1_auth_logout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Logout
-     * @description 로그아웃 (refresh token 삭제, access token 블랙리스트 등록)
-     */
-    post: operations['logout_api_v1_auth_logout_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/api/v1/auth/refresh': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh
+         * @description 액세스 토큰 재발급 (리프레시 토큰 사용, 토큰 로테이션)
+         */
+        post: operations["refresh_api_v1_auth_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get?: never;
-    put?: never;
-    /**
-     * Refresh
-     * @description 액세스 토큰 재발급 (리프레시 토큰 사용, 토큰 로테이션)
-     */
-    post: operations['refresh_api_v1_auth_refresh_post'];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Me
+         * @description 마이페이지 회원정보 조회
+         */
+        get: operations["get_me_api_v1_users_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Root
-     * @description 루트 엔드포인트
-     */
-    get: operations['root__get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/health': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/users/me/history/image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Image History
+         * @description 마이페이지 이미지 검증 내역 조회
+         */
+        get: operations["get_my_image_history_api_v1_users_me_history_image_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Health Check
-     * @description 서버 상태 확인용 health check
-     */
-    get: operations['health_check_health_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  '/db-health': {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/v1/images/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Image
+         * @description 이미지 파일을 업로드하고 AI 검증을 비동기로 시작함.
+         */
+        post: operations["upload_image_api_v1_images_upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    /**
-     * Db Health Check
-     * @description DB 연결 상태 확인
-     */
-    get: operations['db_health_check_db_health_get'];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+    "/api/v1/detection/image/{image_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Detection Status
+         * @description AI 검증 파이프라인의 현재 상태 및 최종 결과를 조회함.
+         */
+        get: operations["get_detection_status_api_v1_detection_image__image_id__status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/detection/image/{image_id}/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Detection Result
+         * @description AI 검증 파이프라인 분석이 완료된 후 상세 결과를 조회함.
+         */
+        get: operations["get_detection_result_api_v1_detection_image__image_id__result_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Root
+         * @description 루트 엔드포인트
+         */
+        get: operations["root__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Health Check
+         * @description 서버 상태 확인용 health check
+         */
+        get: operations["health_check_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/db-health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Db Health Check
+         * @description DB 연결 상태 확인
+         */
+        get: operations["db_health_check_db_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    /** HTTPValidationError */
-    HTTPValidationError: {
-      /** Detail */
-      detail?: components['schemas']['ValidationError'][];
+    schemas: {
+        /** BinaryResultSchema */
+        BinaryResultSchema: {
+            /**
+             * Binary Id
+             * @description Binary detection result ID
+             */
+            binary_id: number;
+            /**
+             * Detection Method
+             * @description Method used for binary detection
+             */
+            detection_method: string;
+            /**
+             * Confidence Score
+             * @description Confidence score for this detection
+             */
+            confidence_score?: number | null;
+            /**
+             * Result Json
+             * @description 상세 결과 JSON
+             */
+            result_json?: unknown | null;
+        };
+        /** Body_upload_image_api_v1_images_upload_post */
+        Body_upload_image_api_v1_images_upload_post: {
+            /** File */
+            file: string;
+        };
+        /** C2PAResultSchema */
+        C2PAResultSchema: {
+            /**
+             * C2Pa Id
+             * @description C2PA verification result ID
+             */
+            c2pa_id: number;
+            /**
+             * Is C2Pa Compliant
+             * @description Whether the image is C2PA compliant
+             */
+            is_c2pa_compliant: boolean;
+            /**
+             * Created Model
+             * @description 생성 모델명 1
+             */
+            created_model?: string | null;
+            /**
+             * Converted Model
+             * @description 생성 모델명 2
+             */
+            converted_model?: string | null;
+            /**
+             * Created Description
+             * @description 생성 모델명 3
+             */
+            created_description?: string | null;
+            /**
+             * Claim Generator
+             * @description 서명한 주체 1
+             */
+            claim_generator?: string | null;
+            /**
+             * Claim Generator Info Name
+             * @description 서명한 주체 2
+             */
+            claim_generator_info_name?: string | null;
+            /**
+             * Synth Id
+             * @description Google SynthID Watermark
+             */
+            synth_id?: string | null;
+            /**
+             * Visible Watermark
+             * @description Google Visible Watermark
+             */
+            visible_watermark?: string | null;
+            /**
+             * Total Digital Source Type
+             * @description 디지털 콘텐츠 제작 방식 라벨
+             */
+            total_digital_source_type?: string | null;
+            /**
+             * Synth Id Digital Source Type
+             * @description synthID 생성 방식 라벨
+             */
+            synth_id_digital_source_type?: string | null;
+            /**
+             * Visible Watermark Digital Source Type
+             * @description visible watermark 생성 방식 라벨
+             */
+            visible_watermark_digital_source_type?: string | null;
+        };
+        /** DetectionResultData */
+        DetectionResultData: {
+            /**
+             * Image Id
+             * @description Image ID
+             */
+            image_id: number;
+            /**
+             * Image Url
+             * @description Original image URL
+             */
+            image_url: string;
+            /**
+             * Final Is Ai
+             * @description Final determination if the image is AI-generated
+             */
+            final_is_ai?: boolean | null;
+            /**
+             * Final Ai Probability
+             * @description Final probability that the image is AI-generated
+             */
+            final_ai_probability?: number | null;
+            /**
+             * Final Generator Model
+             * @description Final identified generator model
+             */
+            final_generator_model?: string | null;
+            /**
+             * Completed At
+             * @description Time when the analysis was completed
+             */
+            completed_at?: string | null;
+            /** @description C2PA verification result */
+            c2pa?: components["schemas"]["C2PAResultSchema"] | null;
+            /**
+             * Binary
+             * @description List of binary detection results
+             */
+            binary?: components["schemas"]["BinaryResultSchema"][];
+            /**
+             * Multi
+             * @description List of multiclass detection results
+             */
+            multi?: components["schemas"]["MultiResultSchema"][];
+        };
+        /** DetectionResultResponse */
+        DetectionResultResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["DetectionResultData"];
+        };
+        /** DetectionStatusData */
+        DetectionStatusData: {
+            /**
+             * Image Id
+             * @description ID of the image
+             */
+            image_id: number;
+            /**
+             * Analysis Status
+             * @description Current status of the analysis pipeline
+             */
+            analysis_status: string;
+        };
+        /** DetectionStatusResponse */
+        DetectionStatusResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["DetectionStatusData"];
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** ImageUploadData */
+        ImageUploadData: {
+            /**
+             * Image Id
+             * @description Unique ID of the uploaded image
+             */
+            image_id: number;
+            /**
+             * Image Url
+             * @description Full URL to access the uploaded image
+             */
+            image_url: string;
+            /**
+             * Result
+             * @description Result message from AI validation (if any)
+             */
+            result?: string | null;
+        };
+        /** ImageUploadResponse */
+        ImageUploadResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["ImageUploadData"];
+        };
+        /** LoginRequest */
+        LoginRequest: {
+            /**
+             * Provider
+             * @description 소셜 로그인 제공자 (google)
+             */
+            provider: string;
+            /**
+             * Idtoken
+             * @description 구글 ID Token
+             */
+            idToken: string;
+        };
+        /** LogoutRequest */
+        LogoutRequest: {
+            /**
+             * Refreshtoken
+             * @description 리프레시 토큰
+             */
+            refreshToken: string;
+        };
+        /** MultiResultSchema */
+        MultiResultSchema: {
+            /**
+             * Multi Id
+             * @description Multiclass detection result ID
+             */
+            multi_id: number;
+            /**
+             * Detection Method
+             * @description Method used for multiclass detection
+             */
+            detection_method: string;
+            /**
+             * Predicted Model
+             * @description Predicted generator model
+             */
+            predicted_model?: string | null;
+            /**
+             * Confidence Score
+             * @description Confidence score for this prediction
+             */
+            confidence_score?: number | null;
+            /**
+             * Result Json
+             * @description 상세 결과 JSON
+             */
+            result_json?: unknown | null;
+        };
+        /** RefreshRequest */
+        RefreshRequest: {
+            /**
+             * Refreshtoken
+             * @description 리프레시 토큰
+             */
+            refreshToken: string;
+        };
+        /** SuccessResponse */
+        SuccessResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            /** Data */
+            data?: unknown;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
+        };
     };
-    /** LoginRequest */
-    LoginRequest: {
-      /**
-       * Provider
-       * @description 소셜 로그인 제공자 (google)
-       */
-      provider: string;
-      /**
-       * Idtoken
-       * @description 구글 ID Token
-       */
-      idToken: string;
-    };
-    /** LogoutRequest */
-    LogoutRequest: {
-      /**
-       * Refreshtoken
-       * @description 리프레시 토큰
-       */
-      refreshToken: string;
-      /**
-       * Accesstoken
-       * @description 액세스 토큰 (블랙리스트용, 선택)
-       */
-      accessToken?: string | null;
-    };
-    /** RefreshRequest */
-    RefreshRequest: {
-      /**
-       * Refreshtoken
-       * @description 리프레시 토큰
-       */
-      refreshToken: string;
-    };
-    /** SuccessResponse */
-    SuccessResponse: {
-      /**
-       * Success
-       * @default true
-       */
-      success: boolean;
-      /** Data */
-      data?: unknown;
-    };
-    /** ValidationError */
-    ValidationError: {
-      /** Location */
-      loc: (string | number)[];
-      /** Message */
-      msg: string;
-      /** Error Type */
-      type: string;
-      /** Input */
-      input?: unknown;
-      /** Context */
-      ctx?: Record<string, never>;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  login_api_v1_auth_login_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    login_api_v1_auth_login_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['LoginRequest'];
-      };
+    withdraw_api_v1_auth_me_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+        };
     };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    logout_api_v1_auth_logout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LogoutRequest"];
+            };
         };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
     };
-  };
-  withdraw_api_v1_auth_me_delete: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    refresh_api_v1_auth_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefreshRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    get_me_api_v1_users_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  logout_api_v1_auth_logout_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    get_my_image_history_api_v1_users_me_history_image_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                keyword?: string | null;
+                file_type?: string | null;
+                result_type?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['LogoutRequest'];
-      };
+    upload_image_api_v1_images_upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_image_api_v1_images_upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImageUploadResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    get_detection_status_api_v1_detection_image__image_id__status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                image_id: number;
+            };
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectionStatusResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
     };
-  };
-  refresh_api_v1_auth_refresh_post: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    get_detection_result_api_v1_detection_image__image_id__result_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                image_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DetectionResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
     };
-    requestBody: {
-      content: {
-        'application/json': components['schemas']['RefreshRequest'];
-      };
+    root__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+        };
     };
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    health_check_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
         };
-      };
-      /** @description Validation Error */
-      422: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['HTTPValidationError'];
-        };
-      };
     };
-  };
-  root__get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
+    db_health_check_db_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
         };
-      };
     };
-  };
-  health_check_health_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
-        };
-      };
-    };
-  };
-  db_health_check_db_health_get: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful Response */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          'application/json': components['schemas']['SuccessResponse'];
-        };
-      };
-    };
-  };
 }
