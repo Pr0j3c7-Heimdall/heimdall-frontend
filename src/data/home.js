@@ -14,8 +14,10 @@ export const footerLinks = [
 
 export const heroData = {
   badge: 'AI 콘텐츠 검증',
-  title: '이미지, 음성.\nAI 생성 여부를 검사하세요',
-  description: 'AI가 생성한 콘텐츠가 일상에 넘쳐나는 시대. Heimdall로 신뢰할 수 있는 검증 결과를 확인하세요.',
+  titleLine1: 'AI 생성 콘텐츠 시대',
+  titleLine2: 'AI 생성물로 인한 피해를 사전에 방지하세요',
+  descriptionLine1: '북유럽 신화 속 아스가르드의 수문장 Heimdall처럼,',
+  descriptionLine2: '신뢰도 높은 Heimdall 서비스를 통해 AI 생성 여부를 꿰뚫어보세요.',
   ctas: [
     { href: '/#showcase', label: '검사하기', variant: 'primary' },
     { href: 'https://github.com/Pr0j3c7-Heimdall', label: 'GitHub', variant: 'outline' }
@@ -25,9 +27,9 @@ export const heroData = {
 export const introData = {
   title: 'Heimdall이란?',
   description:
-    'Heimdall은 이미지와 음성의 AI 생성 여부를 판별하고, 부가 정보까지 제공하는 검증 서비스입니다. 여러분을 위해 만들었습니다. 다수의 딥러닝 모델과 C2PA로 구성한 Heimdall만의 프레임워크로 결과를 제공하며, 웹에서 바로 이용할 수 있습니다.',
+    'Heimdall은 이미지, 음성의 AI 생성 여부를 판별하고, 부가적인 정보들을 제공하는 검증 서비스입니다. 다수의 딥러닝 기반 모델 및 C2PA로 개발된, Heimdall의 독자적인 프레임워크를 통해 결과를 제공하며, 웹 서비스를 통해 쉽게 활용할 수 있습니다.',
   description2:
-    '단순 판별을 넘어 이미지·음성의 다각도 분석이 가능하여, 논문 연구는 물론 일상에서도 편하게 활용하실 수 있습니다. 논문에서도, 일반인도 그대로 사용할 수 있도록 일반화·상용화하였고, 기존 연구와는 다르게 실생활과 상용화를 전제로 설계했습니다. 논문·연구부터 일상 사용까지 한 곳에서 활용하실 수 있으며, 실제 서비스로 쓰이도록 맞춰 두었습니다.',
+    '딥러닝 기반 판별을 넘어 이미지와 음성을 다각도로 분석하여, 연구 환경은 물론 실생활에서도 활용할 수 있도록 설계했습니다. 전문적인 분석이 필요한 연구자부터 일상에서 콘텐츠의 신뢰성을 확인하고 싶은 사용자까지, 누구나 부담 없이 사용할 수 있는 범용성과 상용성을 지향합니다.',
   points: []
 };
 
@@ -111,8 +113,7 @@ export const featuresData = {
       title: '검사 이력 저장',
       description: '사용자별 분석 결과를 저장해, 재검토·비교·사후 추적에 활용할 수 있습니다.'
     }
-  ],
-  formatChips: ['JPG', 'PNG', 'MP3', 'WAV']
+  ]
 };
 
 export const howItWorksData = {
