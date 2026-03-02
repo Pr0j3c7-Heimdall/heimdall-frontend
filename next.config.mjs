@@ -25,11 +25,19 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'flagcdn.com',
-        pathname: '**'
-      }
+      { protocol: 'https', hostname: 'flagcdn.com', pathname: '**' },
+      { protocol: 'http', hostname: 'localhost', pathname: '/**' },
+      { protocol: 'http', hostname: '127.0.0.1', pathname: '/**' },
+      ...(typeof apiBaseUrl === 'string' && apiBaseUrl
+        ? (() => {
+            try {
+              const u = new URL(apiBaseUrl);
+              return [{ protocol: u.protocol.replace(':', ''), hostname: u.hostname, pathname: '/**' }];
+            } catch {
+              return [];
+            }
+          })()
+        : [])
     ]
   },
   async headers() {
