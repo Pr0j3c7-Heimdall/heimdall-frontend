@@ -2,7 +2,6 @@ import Layout from '@/components/layout/Layout';
 import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
-import Chip from '@/components/ui/Chip';
 import FaqItem from '@/components/FaqItem';
 import ShowcaseAnimate from '@/components/ShowcaseAnimate';
 import StepAnimate from '@/components/StepAnimate';
@@ -27,10 +26,14 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero__inner">
-          <h1 className="hero__title" style={{ whiteSpace: 'pre-line' }}>
-            {heroData.title}
+          <h1 className="hero__title">
+            <span className="hero__title-line">{heroData.titleLine1}</span>
+            <span className="hero__title-line">{heroData.titleLine2}</span>
           </h1>
-          <p className="hero__desc">{heroData.description}</p>
+          <p className="hero__desc">
+            <span className="hero__desc-line">{heroData.descriptionLine1}</span>
+            <span className="hero__desc-line">{heroData.descriptionLine2}</span>
+          </p>
           <div className="hero__actions">
             {heroData.ctas.map((cta) => (
               <Button key={cta.label} href={cta.href} variant={cta.variant} size="lg">
@@ -41,8 +44,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 서비스 소개 */}
-      <section id="intro" className="intro intro--dark">
+      {/* 서비스 소개 (section02) */}
+      <section id="intro" className="intro intro--dark intro--bg">
         <div className="intro__inner">
           <h2 className="intro__title">{introData.title}</h2>
           <p className="intro__text">{introData.description}</p>
@@ -112,13 +115,6 @@ export default function HomePage() {
                 <h3 className="feature-card__title">{item.title}</h3>
                 <p className="feature-card__desc">{item.description}</p>
               </div>
-            ))}
-          </div>
-          <div className="features-formats">
-            {featuresData.formatChips.map((format) => (
-              <Chip key={format} variant="outline" size="sm">
-                {format}
-              </Chip>
             ))}
           </div>
         </div>
