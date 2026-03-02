@@ -93,7 +93,8 @@ export const featuresData = {
       id: 'criteria',
       icon: 'check',
       title: '엄격한 판단 기준',
-      description: '다수의 분석 결과를 Heimdall의 가중치 기반 판정 로직으로 통합해, 일관된 기준으로 판정합니다. 이를 통해 실전 환경에서의 판정 신뢰도를 높입니다.'
+      description:
+        '다수의 분석 결과를 Heimdall의 가중치 기반 판정 로직으로 통합해, 일관된 기준으로 판정합니다. 이를 통해 실전 환경에서의 판정 신뢰도를 높입니다.'
     },
     {
       id: 'realtime',
