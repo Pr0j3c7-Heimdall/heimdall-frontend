@@ -7,13 +7,29 @@ import { historyMock } from '@/data/mypage';
 import { getImageHistory } from '@/api/imageDetection';
 
 function mapImageHistoryToItems(apiData) {
-  const raw = Array.isArray(apiData) ? apiData : apiData?.items ?? [];
+  // API 응답 형태:
+  // { total_count, total_pages, current_page, histories: [ { history_id, image_id, filename, file_type, analysis_status, is_ai, ai_probability, created_at } ] }
+  const raw = Array.isArray(apiData) ? apiData : apiData?.histories ?? apiData?.items ?? [];
+  const toPercent = (value) => {
+    if (value == null) return 0;
+    const num = Number(value);
+    if (Number.isNaN(num)) return 0;
+    return num <= 1 ? Math.round(num * 100) : Math.round(num);
+  };
   return raw.map((item) => ({
-    id: String(item.image_id ?? item.id ?? ''),
-    type: 'image',
-    fileName: item.file_name ?? item.fileName ?? item.original_filename ?? '-',
-    result: item.result ?? (item.final_is_ai ? 'AI생성' : '자연'),
-    confidence: item.confidence ?? item.final_ai_probability ?? 0,
+    id: String(item.image_id ?? item.history_id ?? item.id ?? ''),
+    type: item.file_type ?? 'image',
+    fileName: item.filename ?? item.file_name ?? item.fileName ?? item.original_filename ?? '-',
+    result:
+      item.result ??
+      (item.is_ai != null
+        ? item.is_ai
+          ? 'AI생성'
+          : '자연'
+        : item.final_is_ai
+          ? 'AI생성'
+          : '자연'),
+    confidence: toPercent(item.ai_probability ?? item.confidence ?? item.final_ai_probability ?? 0),
     date: item.created_at ?? item.completed_at ?? item.date ?? '-'
   }));
 }
@@ -86,36 +102,27 @@ export default function HistoryContent({ type }) {
         </div>
       ) : items.length === 0 ? (
         <div className="history-empty" role="status" aria-label="검증 내역 없음">
-          <div className="history-empty__card">
-            <div className="history-empty__icon" aria-hidden>
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="12" width="32" height="28" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.4" />
-                <path d="M8 20h32" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-                <circle cx="24" cy="26" r="4" stroke="currentColor" strokeWidth="1.5" fill="none" opacity="0.35" />
-              </svg>
-            </div>
-            <p className="history-empty__title">검증 내역이 없습니다</p>
-            <p className="history-empty__desc">
-              {type === 'image'
-                ? (
-                    <>
-                      아직 검사한 내역이 없어요.
-                      <br />
-                      이미지를 업로드해 첫 검사를 시작해 보세요.
-                    </>
-                  )
-                : (
-                    <>
-                      아직 검사한 내역이 없어요.
-                      <br />
-                      음성 파일을 업로드해 첫 검사를 시작해 보세요.
-                    </>
-                  )}
-            </p>
-            <Button href={verifyHref} variant="primary" size="lg" className="history-empty__cta">
-              {verifyLabel}
-            </Button>
-          </div>
+          <p className="history-empty__title">검증 내역이 없습니다</p>
+          <p className="history-empty__desc">
+            {type === 'image'
+              ? (
+                  <>
+                    아직 검사한 내역이 없어요.
+                    <br />
+                    이미지를 업로드해 첫 검사를 시작해 보세요.
+                  </>
+                )
+              : (
+                  <>
+                    아직 검사한 내역이 없어요.
+                    <br />
+                    음성 파일을 업로드해 첫 검사를 시작해 보세요.
+                  </>
+                )}
+          </p>
+          <Button href={verifyHref} variant="primary" size="lg" className="history-empty__cta">
+            {verifyLabel}
+          </Button>
         </div>
       ) : (
         <div className="history-table-wrap">
