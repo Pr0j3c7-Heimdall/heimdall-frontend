@@ -273,10 +273,7 @@ export interface components {
         };
         /** Body_upload_image_api_v1_images_upload_post */
         Body_upload_image_api_v1_images_upload_post: {
-            /**
-             * File
-             * Format: binary
-             */
+            /** File */
             file: string;
         };
         /** C2PAResultSchema */
