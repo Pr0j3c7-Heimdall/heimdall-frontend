@@ -74,6 +74,14 @@ export async function getDetectionResult(imageId) {
 export function mapDetectionResultToUI(apiData) {
   if (!apiData) return null;
 
+  const toPercent = (value) => {
+    if (value == null) return 0;
+    const num = Number(value);
+    if (Number.isNaN(num)) return 0;
+    // 0~1 사이 값이면 퍼센트로, 그 외에는 그대로 사용
+    return num <= 1 ? Math.round(num * 100) : Math.round(num);
+  };
+
   const c2pa = apiData.c2pa
     ? {
         model: apiData.c2pa.created_model || apiData.c2pa.converted_model || '-',
@@ -96,7 +104,7 @@ export function mapDetectionResultToUI(apiData) {
   const binaryResult = apiData.final_is_ai != null ? (apiData.final_is_ai ? 'AI' : 'Real') : null;
   const binary = {
     result: binaryResult || (binaryList[0]?.result_json?.result ?? '-'),
-    confidence: apiData.final_ai_probability ?? binaryConfidence ?? 0,
+    confidence: toPercent(apiData.final_ai_probability ?? binaryConfidence ?? 0),
     methods: binaryList.map((b, i) => ({
       name: b.detection_method || `분석 방법 ${i + 1}`,
       threshold: b.result_json?.threshold ?? '-',
@@ -109,7 +117,7 @@ export function mapDetectionResultToUI(apiData) {
   const multiList = apiData.multi || [];
   const multiclass = {
     model: apiData.final_generator_model || multiList[0]?.predicted_model || '-',
-    confidence: multiList[0]?.confidence_score ?? 0,
+    confidence: toPercent(multiList[0]?.confidence_score ?? 0),
     methods: multiList.map((m, i) => ({
       name: m.detection_method || `분석 방법 ${i + 1}`,
       threshold: m.result_json?.threshold ?? '-',
@@ -127,7 +135,7 @@ export function mapDetectionResultToUI(apiData) {
           : '실제 촬영 이미지'
         : '분석 결과 없음',
     model: apiData.final_generator_model ?? '-',
-    confidence: Math.round(apiData.final_ai_probability ?? 0)
+    confidence: toPercent(apiData.final_ai_probability)
   };
 
   const imageUrl = apiData.image_url?.startsWith('http')
