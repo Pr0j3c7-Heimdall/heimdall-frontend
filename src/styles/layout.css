@@ -101,10 +101,21 @@
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--color-fg-muted);
+  padding: 8px 12px;
+  margin: 0 -12px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-hover), color var(--transition-hover), opacity var(--transition-hover);
 }
 
 .navbar__link:hover {
-  opacity: var(--interaction-hover-opacity);
+  background: #ffffff;
+  color: var(--color-fg);
+  opacity: 1;
+}
+
+[data-theme='dark'] .navbar__link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-fg);
 }
 
 .navbar__link:active {
