@@ -13,8 +13,8 @@ export const imageAnalysisMethodsData = {
 /** Heimdall 판별 프레임워크 - 4단계 소개 */
 export const imageFrameworkCardsData = {
   title: 'Heimdall 이미지 판별 프레임워크',
-  subtitle: '프레임워크 구성',
-  description: '이미지의 출처와 생성 여부를 네 단계에 걸쳐 검증합니다.',
+  subtitle: 'AI 검증 아키텍처',
+  description: '이미지의 출처와 AI 생성 여부를 C2PA, 이진·다중분류, 메타데이터를 거쳐 네 단계로 검증합니다.',
   cards: [
     {
       id: 'c2pa',
