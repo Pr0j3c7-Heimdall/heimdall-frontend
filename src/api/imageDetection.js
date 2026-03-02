@@ -88,19 +88,21 @@ export function mapDetectionResultToUI(apiData) {
         hashMatch: apiData.c2pa.is_c2pa_compliant ?? false,
         platform: apiData.c2pa.claim_generator || apiData.c2pa.claim_generator_info_name || '-',
         details: {
-          ...(apiData.c2pa.created_description && { '설명': apiData.c2pa.created_description }),
-          ...(apiData.c2pa.total_digital_source_type && { '디지털 소스': apiData.c2pa.total_digital_source_type })
+          ...(apiData.c2pa.created_description && { 설명: apiData.c2pa.created_description }),
+          ...(apiData.c2pa.total_digital_source_type && {
+            '디지털 소스': apiData.c2pa.total_digital_source_type
+          }),
+          ...(apiData.c2pa.synth_id && { SynthID: apiData.c2pa.synth_id }),
+          ...(apiData.c2pa.synth_id_digital_source_type && {
+            'SynthID 디지털 소스': apiData.c2pa.synth_id_digital_source_type
+          })
         }
       }
     : undefined;
 
   const binaryList = apiData.binary || [];
   const binaryConfidence =
-    binaryList.length > 0
-      ? Math.round(
-          binaryList.reduce((sum, b) => sum + (b.confidence_score ?? 0), 0) / binaryList.length
-        )
-      : null;
+    binaryList.length > 0 ? Math.round(binaryList.reduce((sum, b) => sum + (b.confidence_score ?? 0), 0) / binaryList.length) : null;
   const binaryResult = apiData.final_is_ai != null ? (apiData.final_is_ai ? 'AI' : 'Real') : null;
   const binary = {
     result: binaryResult || (binaryList[0]?.result_json?.result ?? '-'),
@@ -128,21 +130,29 @@ export function mapDetectionResultToUI(apiData) {
   };
 
   const final = {
-    result:
-      apiData.final_is_ai != null
-        ? apiData.final_is_ai
-          ? 'AI 생성 이미지'
-          : '실제 촬영 이미지'
-        : '분석 결과 없음',
+    result: apiData.final_is_ai != null ? (apiData.final_is_ai ? 'AI 생성 이미지' : '실제 촬영 이미지') : '분석 결과 없음',
     model: apiData.final_generator_model ?? '-',
     confidence: toPercent(apiData.final_ai_probability)
   };
 
-  const imageUrl = apiData.image_url?.startsWith('http')
-    ? apiData.image_url
-    : apiData.image_url
-      ? `${API_BASE_URL.replace(/\/$/, '')}${apiData.image_url.startsWith('/') ? '' : '/'}${apiData.image_url}`
-      : null;
+  let imageUrl = null;
+  const rawImageUrl = apiData.image_url;
+
+  if (rawImageUrl) {
+    // 1) 완전한 URL인 경우 (http/https): 그대로 사용 (Vercel 도메인에서 원격 이미지로 로드)
+    if (rawImageUrl.startsWith('http://') || rawImageUrl.startsWith('https://')) {
+      imageUrl = rawImageUrl;
+    }
+    // 2) 프로토콜 없이 도메인부터 시작하는 경우 (예: heimdall.ai.kr/uploads/...)
+    else if (rawImageUrl.startsWith('heimdall.ai.kr/')) {
+      imageUrl = `https://${rawImageUrl}`;
+    }
+    // 3) 그 외 상대 경로는 API_BASE_URL 기준으로 조합
+    else {
+      const base = API_BASE_URL.replace(/\/$/, '');
+      imageUrl = `${base}${rawImageUrl.startsWith('/') ? '' : '/'}${rawImageUrl}`;
+    }
+  }
 
   return {
     image: imageUrl,
