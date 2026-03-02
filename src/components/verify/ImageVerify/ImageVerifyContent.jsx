@@ -5,16 +5,22 @@ import ImageDropzone from './ImageDropzone';
 import ImageVerifyResult from './ImageVerifyResult';
 import ImageVerifyGuide from './ImageVerifyGuide';
 import Button from '@/components/ui/Button';
+import { uploadImage, getDetectionStatus, getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
+
+const POLL_INTERVAL_MS = 2000;
+const POLL_MAX_ATTEMPTS = 60;
 
 export default function ImageVerifyContent() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSelect = (selectedFile) => {
     if (!selectedFile) return;
     setFile(selectedFile);
+    setErrorMessage(null);
     const reader = new FileReader();
     reader.onload = (e) => setPreview(e.target?.result);
     reader.readAsDataURL(selectedFile);
@@ -24,96 +30,58 @@ export default function ImageVerifyContent() {
     setFile(null);
     setPreview(null);
     setResultData(null);
+    setErrorMessage(null);
   };
 
   const handleVerify = async () => {
     if (!file) return;
     setLoading(true);
     setResultData(null);
+    setErrorMessage(null);
     try {
-      // TODO: API 연동
-      // const formData = new FormData();
-      // formData.append('image', file);
-      // const response = await fetch('/api/verify/image', { method: 'POST', body: formData });
-      // const data = await response.json();
-      // setResultData({ ...data, image: preview });
+      const uploadRes = await uploadImage(file);
+      if (!uploadRes?.success || !uploadRes?.data?.image_id) {
+        setErrorMessage(uploadRes?.data?.result || '업로드에 실패했습니다.');
+        return;
+      }
+      const { image_id: imageId } = uploadRes.data;
 
-      // 임시 더미 데이터 (API 연동 후 제거)
-      await new Promise((r) => setTimeout(r, 2000));
-      setResultData({
-        image: preview,
-        c2pa: {
-          model: 'Midjourney',
-          hashMatch: true,
-          platform: 'Midjourney Web',
-          details: {
-            '디코딩 값': 'MJv6-2024-01-15',
-            '플랫폼 정보': 'Midjourney Web Platform'
-          }
-        },
-        binary: {
-          result: 'AI',
-          confidence: 85,
-          methods: [
-            {
-              name: '분석 방법 1',
-              threshold: 0.7,
-              value: 0.85,
-              result: 'AI',
-              weight: 0.4
-            },
-            {
-              name: '분석 방법 2',
-              threshold: 0.6,
-              value: 0.82,
-              result: 'AI',
-              weight: 0.3
-            },
-            {
-              name: '분석 방법 3',
-              threshold: 0.65,
-              value: 0.88,
-              result: 'AI',
-              weight: 0.3
-            }
-          ]
-        },
-        multiclass: {
-          model: 'Midjourney v6',
-          confidence: 92,
-          methods: [
-            {
-              name: '다중 분석 방법 1',
-              threshold: 0.75,
-              value: 0.92,
-              result: 'Midjourney v6',
-              weight: 0.5
-            },
-            {
-              name: '다중 분석 방법 2',
-              threshold: 0.7,
-              value: 0.89,
-              result: 'Midjourney v6',
-              weight: 0.3
-            },
-            {
-              name: '다중 분석 방법 3',
-              threshold: 0.8,
-              value: 0.95,
-              result: 'Midjourney v6',
-              weight: 0.2
-            }
-          ]
-        },
-        final: {
-          result: 'AI 생성 이미지',
-          model: 'Midjourney v6',
-          confidence: 88
+      let attempts = 0;
+      while (attempts < POLL_MAX_ATTEMPTS) {
+        const statusRes = await getDetectionStatus(imageId);
+        const status = statusRes?.data?.analysis_status?.toLowerCase?.();
+        if (status === 'completed' || status === 'done' || status === 'success') {
+          break;
         }
-      });
+        if (status === 'failed' || status === 'error') {
+          setErrorMessage('분석에 실패했습니다.');
+          return;
+        }
+        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+        attempts += 1;
+      }
+      if (attempts >= POLL_MAX_ATTEMPTS) {
+        setErrorMessage('분석 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.');
+        return;
+      }
+
+      const resultRes = await getDetectionResult(imageId);
+      if (!resultRes?.success || !resultRes?.data) {
+        setErrorMessage('결과를 불러오지 못했습니다.');
+        return;
+      }
+      const mapped = mapDetectionResultToUI(resultRes.data);
+      if (mapped) {
+        setResultData(mapped);
+      } else {
+        setErrorMessage('결과 변환에 실패했습니다.');
+      }
     } catch (error) {
       console.error('검증 실패:', error);
-      // TODO: 에러 처리
+      const msg = error?.response?.data?.detail
+        ? (Array.isArray(error.response.data.detail) ? error.response.data.detail[0]?.msg : error.response.data.detail)
+        : error?.message || '검증 요청에 실패했습니다.';
+      setErrorMessage(typeof msg === 'string' ? msg : '검증 요청에 실패했습니다.');
     } finally {
       setLoading(false);
     }
@@ -160,11 +128,20 @@ export default function ImageVerifyContent() {
               )}
             </div>
 
-            {preview && !loading && (
+            {preview && (
               <div className="verify-actions">
-                <Button variant="primary" size="lg" onClick={handleVerify}>
-                  검증하기
-                </Button>
+                {errorMessage && (
+                  <p className="verify-error" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
+                {loading ? (
+                  <p className="verify-loading">분석 중입니다. 잠시만 기다려 주세요.</p>
+                ) : (
+                  <Button variant="primary" size="lg" onClick={handleVerify}>
+                    검증하기
+                  </Button>
+                )}
               </div>
             )}
           </div>
