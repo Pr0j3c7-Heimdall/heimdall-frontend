@@ -59,6 +59,48 @@
   color: var(--color-fg-muted);
 }
 
+/* 다크모드 - 버튼: 토큰과 일관 */
+[data-theme='dark'] .btn--primary {
+  background: #ffffff;
+  color: var(--color-on-primary);
+}
+
+[data-theme='dark'] .btn--primary:hover:not(:disabled) {
+  background: #f0f0f0;
+  opacity: 1;
+}
+
+[data-theme='dark'] .btn--secondary {
+  background: var(--color-primary-light);
+  color: var(--color-fg);
+}
+
+[data-theme='dark'] .btn--secondary:hover:not(:disabled) {
+  background: #3f3f46;
+  opacity: 1;
+}
+
+[data-theme='dark'] .btn--outline {
+  color: var(--color-fg);
+  border-color: var(--color-border);
+}
+
+[data-theme='dark'] .btn--outline:hover:not(:disabled) {
+  border-color: var(--color-fg-muted);
+  background: var(--color-primary-light);
+  opacity: 1;
+}
+
+[data-theme='dark'] .btn--ghost {
+  color: var(--color-fg-muted);
+}
+
+[data-theme='dark'] .btn--ghost:hover:not(:disabled) {
+  color: var(--color-fg);
+  background: var(--color-primary-light);
+  opacity: 1;
+}
+
 /* Container */
 .container {
   max-width: var(--max-width);
