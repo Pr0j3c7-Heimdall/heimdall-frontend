@@ -10,12 +10,26 @@ function mapImageHistoryToItems(apiData) {
   // API 응답 형태:
   // { total_count, total_pages, current_page, histories: [ { history_id, image_id, filename, file_type, analysis_status, is_ai, ai_probability, created_at } ] }
   const raw = Array.isArray(apiData) ? apiData : apiData?.histories ?? apiData?.items ?? [];
+
   const toPercent = (value) => {
     if (value == null) return 0;
     const num = Number(value);
     if (Number.isNaN(num)) return 0;
     return num <= 1 ? Math.round(num * 100) : Math.round(num);
   };
+
+  const formatDateTime = (value) => {
+    if (!value) return '-';
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return value;
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${y}-${m}-${day} ${hh}:${mm}`;
+  };
+
   return raw.map((item) => ({
     id: String(item.image_id ?? item.history_id ?? item.id ?? ''),
     type: item.file_type ?? 'image',
@@ -30,7 +44,7 @@ function mapImageHistoryToItems(apiData) {
           ? 'AI생성'
           : '자연'),
     confidence: toPercent(item.ai_probability ?? item.confidence ?? item.final_ai_probability ?? 0),
-    date: item.created_at ?? item.completed_at ?? item.date ?? '-'
+    date: formatDateTime(item.created_at ?? item.completed_at ?? item.date)
   }));
 }
 
