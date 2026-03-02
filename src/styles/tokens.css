@@ -2,10 +2,10 @@
  * Design tokens - 다크모드 시 [data-theme="dark"] 에서 override
  */
 :root {
-  /* Background */
-  --color-bg: #fafafa;
+  /* Background - 네비와 동일한 색으로 통일 */
+  --color-bg: #ffffff;
   --color-bg-alt: #ffffff;
-  --color-bg-muted: #f9fafb;
+  --color-bg-muted: #ffffff;
   --color-bg-inverse: #0f172a;
 
   /* Foreground (text) */
@@ -32,10 +32,12 @@
   --color-info-bg: rgba(59, 130, 246, 0.1);
   --color-success-fg: #16a34a;
   --color-success-bg: rgba(34, 197, 94, 0.1);
+  --color-warn-bg: #fffbeb;
+  --color-warn-border: #eab308;
 
-  /* Surface */
-  --color-nav-bg: rgba(255, 255, 255, 0.9);
-  --color-footer-bg: var(--color-bg-muted);
+  /* Surface - 전역 네비와 동일 */
+  --color-nav-bg: #ffffff;
+  --color-footer-bg: #ffffff;
 
   /* Opacity */
   --opacity-disabled: 0.5;
@@ -49,9 +51,9 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
 
-  /* Hero gradient */
-  --color-hero-start: #f1f5f9;
-  --color-hero-mid: #f8fafc;
+  /* Hero - 네비와 동일 */
+  --color-hero-start: #ffffff;
+  --color-hero-mid: #ffffff;
 
   /* Radius */
   --radius-sm: 6px;
@@ -80,4 +82,40 @@
   --interaction-hover-opacity: 0.94;
   --interaction-pressed-opacity: 0.88;
   --transition-hover: 0.15s ease;
+}
+
+/* 다크모드 - 네비와 동일한 색으로 통일 */
+[data-theme='dark'] {
+  --color-bg: #121212;
+  --color-bg-alt: #121212;
+  --color-bg-muted: #121212;
+  --color-bg-inverse: #121212;
+
+  --color-fg: #e4e4e7;
+  --color-fg-muted: #a1a1aa;
+  --color-fg-on-inverse: #fafafa;
+  --color-fg-muted-on-inverse: rgba(250, 250, 250, 0.75);
+
+  --color-primary: #e4e4e7;
+  --color-primary-hover: #f4f4f5;
+  --color-primary-light: #27272a;
+  --color-on-primary: #121212;
+
+  --color-border: #27272a;
+  --color-border-on-inverse: rgba(255, 255, 255, 0.2);
+
+  --color-nav-bg: #121212;
+  --color-footer-bg: #121212;
+
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  --color-hero-start: #121212;
+  --color-hero-mid: #121212;
+
+  --color-warn-bg: rgba(234, 179, 8, 0.12);
+  --color-warn-border: rgba(234, 179, 8, 0.6);
 }
