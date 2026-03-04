@@ -2,7 +2,7 @@
 
 export const termsMeta = {
   title: '이용약관 (Heimdall)',
-  applyTarget: 'https://heimdall.or.kr/',
+  applyTarget: 'https://heimdall.ai.kr/',
   effectiveDate: '2026년 3월 7일(토) KST',
   lastUpdated: '2026년 3월 7일(토) KST'
 };
