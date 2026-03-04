@@ -8,6 +8,26 @@ import {
   imageSupportTableData
 } from '@/data/imageVerify';
 
+/** body[] 블록 렌더링 (p|h3|ul) */
+function FrameworkCardBlock({ block }) {
+  if (block.type === 'p') {
+    return <p className="verify-framework-card__p">{block.text}</p>;
+  }
+  if (block.type === 'h3') {
+    return <h3 className="verify-framework-card__h3">{block.text}</h3>;
+  }
+  if (block.type === 'ul') {
+    return (
+      <ul className="verify-framework-card__ul">
+        {block.items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+  return null;
+}
+
 /** 이미지 검사 페이지에서 업로드 섹션 아래에 나오는 '분석 방법 / 프레임워크 / 지원 모델 및 업로드 가이드' 블록. 홈·검증 페이지 공용 */
 export default function ImageVerifyGuide() {
   return (
@@ -69,7 +89,11 @@ export default function ImageVerifyGuide() {
             {imageFrameworkCardsData.cards.map((card) => (
               <div key={card.id} className="verify-framework-card">
                 <h4 className="verify-framework-card__title">{card.title}</h4>
-                <p className="verify-framework-card__desc">{card.longDescription}</p>
+                <div className="verify-framework-card__body">
+                  {card.body.map((block, i) => (
+                    <FrameworkCardBlock key={i} block={block} />
+                  ))}
+                </div>
               </div>
             ))}
           </div>
