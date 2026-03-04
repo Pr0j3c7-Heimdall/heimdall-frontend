@@ -361,10 +361,11 @@
   font-weight: 500;
 }
 
-.history-table__result--자연 {
+.history-table__result--Real {
   color: var(--color-success-fg);
 }
 
+.history-table__result--AI,
 .history-table__result--AI생성,
 .history-table__result--AI합성 {
   color: var(--color-error);
