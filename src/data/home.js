@@ -62,7 +62,8 @@ export const analysisData = {
       id: 'binary',
       icon: 'image',
       title: 'AI 생성 여부 판별',
-      description: '배열화, DCT, DWT 등 다수 분석 결과를 종합하여 AI 생성 여부를 판단합니다.'
+      description:
+        '특징 벡터화(임베딩), DCT 기반 주파수 분석, 공간 아티팩트 분석 등 다수 분석 결과를 종합하여 AI 생성 여부를 판단합니다.'
     },
     {
       id: 'generation',
@@ -144,10 +145,39 @@ export const techStackData = {
   title: '기술 스택',
   description: 'Heimdall 프레임워크와 검증된 딥러닝 모델로 안정적인 검증 서비스를 제공합니다.',
   categories: [
-    { name: '이미지 분석', items: ['내용은 추후 기입'] },
-    { name: '음성 분석', items: ['내용은 추후 기입'] },
-    { name: '인프라', items: ['내용은 추후 기입'] },
-    { name: '사용 언어', items: ['내용은 추후 기입'] }
+    {
+      name: '이미지 분석',
+      items: [
+        'C2PA 분석을 통한 AI 생성 여부 판정 및 C2PA 내부 값 추출',
+        'DINOv3 임베딩 기반 특징 추출',
+        'F3Net 기반 주파수(DCT) 아티팩트 분석',
+        'U-Net 기반 공간 아티팩트 분석',
+        '실제 사진 메타데이터 정보 추출',
+        'Softmax 기반 앙상블 가중치로 이진 분류 결과를 결합하여 AI 생성 여부 판정',
+        '다중 분석 결과(모델별 점수) 합산을 통한 AI 생성 모델 추정'
+      ]
+    },
+    {
+      name: '음성 분석',
+      items: ['준비중']
+    },
+    {
+      name: '인프라',
+      items: [
+        'Server: FastAPI + Uvicorn',
+        'Database: MySQL (SQLAlchemy Async ORM)',
+        'CI/CD: GitHub Actions (Self-hosted Runner)',
+        'Deployment: Linux (Ubuntu) 기반 배포 환경',
+        'AI Inference: PyTorch 기반 딥러닝 모델 파이프라인'
+      ]
+    },
+    {
+      name: '사용 언어',
+      groups: [
+        { label: 'BE', items: ['Python 3.10+', 'SQL (MySQL)'] },
+        { label: 'FE', items: ['JavaScript (Next.js, React)'] }
+      ]
+    }
   ]
 };
 

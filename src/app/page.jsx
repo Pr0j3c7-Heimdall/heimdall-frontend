@@ -34,13 +34,6 @@ export default function HomePage() {
             <span className="hero__desc-line">{heroData.descriptionLine1}</span>
             <span className="hero__desc-line">{heroData.descriptionLine2}</span>
           </p>
-          <div className="hero__actions">
-            {heroData.ctas.map((cta) => (
-              <Button key={cta.label} href={cta.href} variant={cta.variant} size="lg">
-                {cta.label}
-              </Button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -152,11 +145,26 @@ export default function HomePage() {
             {techStackData.categories.map((cat) => (
               <div key={cat.name} className="tech-card">
                 <h3 className="tech-card__title">{cat.name}</h3>
-                <ul className="tech-card__list">
-                  {cat.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
+                {cat.groups ? (
+                  <div className="tech-card__groups">
+                    {cat.groups.map((g) => (
+                      <div key={g.label} className="tech-card__group">
+                        <h4 className="tech-card__group-label">{g.label}</h4>
+                        <ul className="tech-card__list">
+                          {g.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <ul className="tech-card__list">
+                    {cat.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
