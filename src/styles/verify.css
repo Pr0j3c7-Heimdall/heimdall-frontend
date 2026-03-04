@@ -717,11 +717,38 @@ section#framework .section__header {
   display: inline-block;
 }
 
-.verify-framework-card__desc {
+.verify-framework-card__body {
   font-size: 0.9375rem;
   line-height: 1.75;
   color: var(--color-fg);
+}
+
+.verify-framework-card__body > * + * {
+  margin-top: var(--spacing-12);
+}
+
+.verify-framework-card__p {
   margin: 0;
+}
+
+.verify-framework-card__h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: var(--spacing-16) 0 var(--spacing-8) 0;
+  color: var(--color-primary);
+}
+
+.verify-framework-card__ul {
+  margin: 0 0 0 var(--spacing-20);
+  padding-left: var(--spacing-8);
+}
+
+.verify-framework-card__ul li {
+  margin-bottom: var(--spacing-4);
+}
+
+.verify-framework-card__ul li:last-child {
+  margin-bottom: 0;
 }
 
 /* 지원 모델 및 업로드 가이드 - 카드 2열 */
