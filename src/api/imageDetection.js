@@ -66,9 +66,17 @@ export async function getDetectionResult(imageId) {
   return data;
 }
 
+/** 이진분류 앙상블 가중치 (DINOv3, F3Net, UNet) */
+const BINARY_WEIGHTS = [
+  { name: 'DINOv3', weight: 0.3495, percent: 34.95 },
+  { name: 'F3-Net', weight: 0.4628, percent: 46.28 },
+  { name: 'UNet', weight: 0.1877, percent: 18.77 }
+];
+
 /**
  * API 검출 결과를 ImageVerifyResult용 resultData 형식으로 변환
- * @param {object} apiData - DetectionResultData (image_url, final_is_ai, c2pa, binary[], multi[] 등)
+ * 일반인 이해 가능한 문구로 매핑
+ * @param {object} apiData - DetectionResultData
  * @returns {object} - { image, c2pa, binary, multiclass, final }
  */
 export function mapDetectionResultToUI(apiData) {
@@ -78,61 +86,89 @@ export function mapDetectionResultToUI(apiData) {
     if (value == null) return 0;
     const num = Number(value);
     if (Number.isNaN(num)) return 0;
-    // 0~1 사이 값이면 퍼센트로, 그 외에는 그대로 사용
     return num <= 1 ? Math.round(num * 100) : Math.round(num);
   };
 
-  const c2pa = apiData.c2pa
-    ? {
-        model: apiData.c2pa.created_model || apiData.c2pa.converted_model || '-',
-        hashMatch: apiData.c2pa.is_c2pa_compliant ?? false,
-        platform: apiData.c2pa.claim_generator || apiData.c2pa.claim_generator_info_name || '-',
-        details: {
-          ...(apiData.c2pa.created_description && { 설명: apiData.c2pa.created_description }),
-          ...(apiData.c2pa.total_digital_source_type && {
-            '디지털 소스': apiData.c2pa.total_digital_source_type
-          }),
-          ...(apiData.c2pa.synth_id && { SynthID: apiData.c2pa.synth_id }),
-          ...(apiData.c2pa.synth_id_digital_source_type && {
-            'SynthID 디지털 소스': apiData.c2pa.synth_id_digital_source_type
-          })
+  const rawC2pa = apiData.c2pa;
+  const c2pa =
+    rawC2pa && rawC2pa.c2pa_id != null
+      ? {
+          isCompliant: rawC2pa.is_c2pa_compliant ?? false,
+          details: {
+            ...(rawC2pa.created_model != null && rawC2pa.created_model !== '' && { '모델명 1': rawC2pa.created_model }),
+            ...(rawC2pa.converted_model != null && rawC2pa.converted_model !== '' && { '모델명 2': rawC2pa.converted_model }),
+            ...(rawC2pa.created_description != null &&
+              rawC2pa.created_description !== '' && { '모델명 3': rawC2pa.created_description }),
+            ...(rawC2pa.claim_generator != null &&
+              rawC2pa.claim_generator !== '' && { '플랫폼 1': rawC2pa.claim_generator }),
+            ...(rawC2pa.claim_generator_info_name != null &&
+              rawC2pa.claim_generator_info_name !== '' && { '플랫폼 2': rawC2pa.claim_generator_info_name }),
+            ...(rawC2pa.synth_id != null && rawC2pa.synth_id !== '' && { SynthID: rawC2pa.synth_id }),
+            ...(rawC2pa.visible_watermark != null &&
+              rawC2pa.visible_watermark !== '' && { 워터마크: rawC2pa.visible_watermark }),
+            ...(rawC2pa.total_digital_source_type != null &&
+              rawC2pa.total_digital_source_type !== '' && {
+                '디지털 소스': rawC2pa.total_digital_source_type
+              }),
+            ...(rawC2pa.synth_id_digital_source_type != null &&
+              rawC2pa.synth_id_digital_source_type !== '' && {
+                'SynthID 디지털 소스': rawC2pa.synth_id_digital_source_type
+              }),
+            ...(rawC2pa.visible_watermark_digital_source_type != null &&
+              rawC2pa.visible_watermark_digital_source_type !== '' && {
+                '워터마크 디지털 소스': rawC2pa.visible_watermark_digital_source_type
+              })
+          }
         }
-      }
-    : undefined;
+      : undefined;
+
+  const getBinaryWeight = (methodName) => {
+    const w = BINARY_WEIGHTS.find(
+      (x) => methodName && (x.name === methodName || methodName.includes(x.name) || x.name.includes(methodName))
+    );
+    return w?.percent ?? null;
+  };
 
   const binaryList = apiData.binary || [];
-  const binaryConfidence =
-    binaryList.length > 0 ? Math.round(binaryList.reduce((sum, b) => sum + (b.confidence_score ?? 0), 0) / binaryList.length) : null;
   const binaryResult = apiData.final_is_ai != null ? (apiData.final_is_ai ? 'AI' : 'Real') : null;
   const binary = {
-    result: binaryResult || (binaryList[0]?.result_json?.result ?? '-'),
-    confidence: toPercent(apiData.final_ai_probability ?? binaryConfidence ?? 0),
-    methods: binaryList.map((b, i) => ({
-      name: b.detection_method || `분석 방법 ${i + 1}`,
-      threshold: b.result_json?.threshold ?? '-',
-      value: b.confidence_score ?? b.result_json?.value ?? '-',
-      result: b.result_json?.result ?? (b.confidence_score > 0.5 ? 'AI' : 'Real'),
-      weight: b.result_json?.weight ?? '-'
-    }))
+    result: binaryResult || '-',
+    aiProbability: toPercent(apiData.final_ai_probability ?? 0),
+    methods: binaryList.map((b, i) => {
+      const score = b.confidence_score ?? b.result_json?.fake_prob ?? 0;
+      const methodName = b.detection_method || `분석 ${i + 1}`;
+      return {
+        name: methodName,
+        aiProbability: toPercent(score),
+        result: b.confidence_score > 0.5 ? 'AI' : '실제 사진',
+        weight: getBinaryWeight(b.detection_method)
+      };
+    })
   };
 
   const multiList = apiData.multi || [];
   const multiclass = {
     model: apiData.final_generator_model || multiList[0]?.predicted_model || '-',
-    confidence: toPercent(multiList[0]?.confidence_score ?? 0),
-    methods: multiList.map((m, i) => ({
-      name: m.detection_method || `분석 방법 ${i + 1}`,
-      threshold: m.result_json?.threshold ?? '-',
-      value: m.confidence_score ?? m.result_json?.value ?? '-',
-      result: m.predicted_model ?? m.result_json?.result ?? '-',
-      weight: m.result_json?.weight ?? '-'
-    }))
+    aiProbability: toPercent(apiData.final_ai_probability ?? multiList[0]?.confidence_score ?? 0),
+    methods: multiList.map((m, i) => {
+      const allProbs = m.result_json?.all_probabilities || {};
+      const sorted = Object.entries(allProbs)
+        .sort((a, b) => (b[1] ?? 0) - (a[1] ?? 0))
+        .slice(0, 3)
+        .map(([model, score]) => ({ model, score: toPercent(score) }));
+      return {
+        name: m.detection_method || `분석 ${i + 1}`,
+        predictedModel: m.predicted_model ?? '-',
+        aiProbability: toPercent(m.confidence_score ?? 0),
+        top3: sorted
+      };
+    })
   };
 
   const final = {
     result: apiData.final_is_ai != null ? (apiData.final_is_ai ? 'AI 생성 이미지' : '실제 촬영 이미지') : '분석 결과 없음',
     model: apiData.final_generator_model ?? '-',
-    confidence: toPercent(apiData.final_ai_probability)
+    aiProbability: toPercent(apiData.final_ai_probability)
   };
 
   let imageUrl = null;
