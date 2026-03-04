@@ -30,22 +30,25 @@ function mapImageHistoryToItems(apiData) {
     return `${y}-${m}-${day} ${hh}:${mm}`;
   };
 
-  return raw.map((item) => ({
-    id: String(item.image_id ?? item.history_id ?? item.id ?? ''),
-    type: item.file_type ?? 'image',
-    fileName: item.filename ?? item.file_name ?? item.fileName ?? item.original_filename ?? '-',
-    result:
+  const toResultLabel = (val) => {
+    if (val === 'AI' || val === 'AI생성' || val === true) return 'AI';
+    if (val === 'Real' || val === '자연' || val === false) return 'Real';
+    return val ?? '-';
+  };
+
+  return raw.map((item) => {
+    const rawResult =
       item.result ??
-      (item.is_ai != null
-        ? item.is_ai
-          ? 'AI생성'
-          : '자연'
-        : item.final_is_ai
-          ? 'AI생성'
-          : '자연'),
-    confidence: toPercent(item.ai_probability ?? item.confidence ?? item.final_ai_probability ?? 0),
-    date: formatDateTime(item.created_at ?? item.completed_at ?? item.date)
-  }));
+      (item.is_ai != null ? item.is_ai : item.final_is_ai != null ? item.final_is_ai : null);
+    return {
+      id: String(item.image_id ?? item.history_id ?? item.id ?? ''),
+      type: item.file_type ?? 'image',
+      fileName: item.filename ?? item.file_name ?? item.fileName ?? item.original_filename ?? '-',
+      result: toResultLabel(rawResult),
+      confidence: toPercent(item.ai_probability ?? item.confidence ?? item.final_ai_probability ?? 0),
+      date: formatDateTime(item.created_at ?? item.completed_at ?? item.date)
+    };
+  });
 }
 
 export default function HistoryContent({ type }) {
@@ -146,7 +149,7 @@ export default function HistoryContent({ type }) {
                 <th className="history-table__th history-table__th--no">No</th>
                 <th className="history-table__th">파일명</th>
                 <th className="history-table__th">결과</th>
-                <th className="history-table__th">신뢰도</th>
+                <th className="history-table__th">AI일 확률</th>
                 <th className="history-table__th">날짜</th>
               </tr>
             </thead>
