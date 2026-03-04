@@ -2,7 +2,7 @@
 
 export const privacyMeta = {
   title: '개인정보처리방침 (Heimdall)',
-  applyTarget: 'https://heimdall.or.kr/',
+  applyTarget: 'https://heimdall.ai.kr/',
   effectiveDate: '2026년 3월 7일(토) KST',
   lastUpdated: '2026년 3월 7일(토) KST'
 };
