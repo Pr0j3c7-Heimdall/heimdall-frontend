@@ -15,7 +15,7 @@ export const footerLinks = [
 export const heroData = {
   badge: 'AI 콘텐츠 검증',
   titleLine1: 'AI 생성 콘텐츠 시대',
-  titleLine2: 'AI 생성물로 인한 피해를 사전에 방지하세요',
+  titleLine2: 'AI로 인한 피해를 사전에 방지하세요',
   descriptionLine1: '북유럽 신화 속 아스가르드의 수문장 Heimdall처럼,',
   descriptionLine2: '신뢰도 높은 Heimdall 서비스를 통해 AI 생성 여부를 꿰뚫어보세요.',
   ctas: [
