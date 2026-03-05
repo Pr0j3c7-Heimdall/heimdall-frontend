@@ -85,6 +85,28 @@
   color: var(--color-error);
 }
 
+/* 비로그인 시 로그인 유도 블록 */
+.verify-dropzone--login-prompt {
+  cursor: pointer;
+}
+
+.verify-dropzone--login-prompt .verify-dropzone__hint {
+  margin-bottom: var(--spacing-20);
+}
+
+.verify-dropzone__login-btn {
+  margin-top: var(--spacing-8);
+}
+
+.verify-dropzone__icon--lock {
+  color: var(--color-fg-muted);
+}
+
+.verify-dropzone__icon--lock svg {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+}
+
 .verify-preview {
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);

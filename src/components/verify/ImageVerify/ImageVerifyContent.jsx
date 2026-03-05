@@ -5,12 +5,16 @@ import ImageDropzone from './ImageDropzone';
 import ImageVerifyResult from './ImageVerifyResult';
 import ImageVerifyGuide from './ImageVerifyGuide';
 import Button from '@/components/ui/Button';
+import { useAuth } from '@/contexts/AuthContext';
+import { useAuthModal } from '@/contexts/AuthModalContext';
 import { uploadImage, getDetectionStatus, getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 60;
 
 export default function ImageVerifyContent() {
+  const { isLoggedIn } = useAuth();
+  const { openAuthModal } = useAuthModal();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -110,7 +114,37 @@ export default function ImageVerifyContent() {
 
           <div className="verify-content">
             <div className="verify-upload">
-              {!preview ? (
+              {!isLoggedIn ? (
+                <div
+                  className="verify-dropzone verify-dropzone--login-prompt"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openAuthModal('login')}
+                  onKeyDown={(e) => e.key === 'Enter' && openAuthModal('login')}
+                  aria-label="로그인하고 이미지 검사하기"
+                >
+                  <span className="verify-dropzone__icon verify-dropzone__icon--lock" aria-hidden>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  </span>
+                  <p className="verify-dropzone__text">이미지 검사를 사용하려면 로그인이 필요해요</p>
+                  <p className="verify-dropzone__hint">로그인하면 이미지를 업로드하고 AI 생성 여부를 검사할 수 있습니다.</p>
+                  <Button
+                    type="button"
+                    variant="primary"
+                    size="md"
+                    className="verify-dropzone__login-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openAuthModal('login');
+                    }}
+                  >
+                    로그인하고 검사하기
+                  </Button>
+                </div>
+              ) : !preview ? (
                 <ImageDropzone onSelect={handleSelect} disabled={loading} />
               ) : (
                 <div className="verify-preview">
