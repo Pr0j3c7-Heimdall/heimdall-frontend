@@ -226,6 +226,7 @@ export function mapDetectionResultToUI(apiData) {
     c2pa,
     binary,
     multiclass,
-    final
+    final,
+    metadata: apiData.metadata && Object.keys(apiData.metadata).length > 0 ? apiData.metadata : null
   };
 }

@@ -505,6 +505,50 @@
   color: var(--color-success-fg);
 }
 
+/* 메타데이터 카드: 가로 다단 배치로 세로 길이 축소 */
+.verify-result-card__details--metadata {
+  padding: var(--spacing-24) var(--spacing-32);
+}
+
+.verify-result-metadata-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-16) var(--spacing-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verify-result-metadata-item {
+  display: block;
+  padding: var(--spacing-8) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9375rem;
+}
+
+.verify-result-metadata-item__label {
+  display: block;
+  margin: 0 0 var(--spacing-4) 0;
+  color: var(--color-fg-muted);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.verify-result-metadata-item__value {
+  display: block;
+  margin: 0;
+  color: var(--color-fg);
+  font-weight: 500;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 900px) {
+  .verify-result-metadata-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* 최종 결과 */
 .verify-result__final {
   max-width: 640px;

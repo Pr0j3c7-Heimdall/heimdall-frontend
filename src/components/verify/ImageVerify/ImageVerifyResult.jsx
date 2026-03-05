@@ -30,12 +30,13 @@ import Button from '@/components/ui/Button';
  *     result: string,
  *     model: string,
  *     confidence: number
- *   }
+ *   },
+ *   metadata?: Record<string, string | number | null>  // API에서 내려주면 EXIF 등 키-값 그대로 표시
  * }
  */
 export default function ImageVerifyResult({ resultData, onReset, backHref, backLabel = '목록으로' }) {
   const [shareFeedback, setShareFeedback] = useState(null);
-  const { image, c2pa, binary, multiclass, final } = resultData || {};
+  const { image, c2pa, binary, multiclass, final, metadata } = resultData || {};
 
   const handleShare = async () => {
     const confText =
@@ -206,69 +207,92 @@ export default function ImageVerifyResult({ resultData, onReset, backHref, backL
               )}
             </div>
 
-            {/* 다중분류 */}
-            <div className="verify-result-card">
-              <div className="verify-result-card__header">
-                <h3 className="verify-result-card__title">다중분류</h3>
-                <div className="verify-result-card__summary">
-                  <div className="verify-result-card__summary-row">
-                    <span className="verify-result-card__label">최종 모델</span>
-                    <span className="verify-result-card__value">{multiclass?.model || '-'}</span>
+            {/* 다중분류: 실제 사진(Real)인 경우에는 진행하지 않으므로 카드 미표시 */}
+            {binary?.result === 'AI' && (
+              <div className="verify-result-card">
+                <div className="verify-result-card__header">
+                  <h3 className="verify-result-card__title">다중분류</h3>
+                  <div className="verify-result-card__summary">
+                    <div className="verify-result-card__summary-row">
+                      <span className="verify-result-card__label">최종 모델</span>
+                      <span className="verify-result-card__value">{multiclass?.model || '-'}</span>
+                    </div>
+                    <div className="verify-result-card__summary-row">
+                      <span className="verify-result-card__label">최종 추정 확률</span>
+                      <span className="verify-result-card__value">{multiclass?.aiProbability ?? 0}%</span>
+                    </div>
                   </div>
-                  <div className="verify-result-card__summary-row">
-                    <span className="verify-result-card__label">최종 추정 확률</span>
-                    <span className="verify-result-card__value">{multiclass?.aiProbability ?? 0}%</span>
+                </div>
+                {multiclass?.methods && multiclass.methods.length > 0 && (
+                  <div className="verify-result-card__details">
+                    {multiclass.methods.map((method, idx) => (
+                      <div key={idx} className="verify-result-method">
+                        <h4 className="verify-result-method__title">{method.name}</h4>
+                        {method.top3 && method.top3.length > 0 && (
+                          <dl className="verify-result-method__items">
+                            {method.top3.map((t, i) => (
+                              <div key={i} className="verify-result-detail">
+                                <dt className="verify-result-detail__label">상위 {i + 1}</dt>
+                                <dd className="verify-result-detail__value">
+                                  {t.model} ({t.score}%)
+                                </dd>
+                              </div>
+                            ))}
+                            <div className="verify-result-detail">
+                              <dt className="verify-result-detail__label">결과</dt>
+                              <dd className="verify-result-detail__value">{method.predictedModel}</dd>
+                            </div>
+                          </dl>
+                        )}
+                        {(!method.top3 || method.top3.length === 0) && (
+                          <dl className="verify-result-method__items">
+                            <div className="verify-result-detail">
+                              <dt className="verify-result-detail__label">결과</dt>
+                              <dd className="verify-result-detail__value">{method.predictedModel}</dd>
+                            </div>
+                            <div className="verify-result-detail">
+                              <dt className="verify-result-detail__label">AI 사진일 확률</dt>
+                              <dd className="verify-result-detail__value">{method.aiProbability}%</dd>
+                            </div>
+                          </dl>
+                        )}
+                      </div>
+                    ))}
+                    <div className="verify-result-method verify-result-method--final">
+                      <div className="verify-result-detail">
+                        <dt className="verify-result-detail__label">최종 모델</dt>
+                        <dd className="verify-result-detail__value verify-result-detail__value--bold">{multiclass.model}</dd>
+                      </div>
+                      <div className="verify-result-detail">
+                        <dt className="verify-result-detail__label">최종 추정 확률</dt>
+                        <dd className="verify-result-detail__value verify-result-detail__value--bold">{multiclass.aiProbability}%</dd>
+                      </div>
+                    </div>
                   </div>
+                )}
+              </div>
+            )}
+
+            {/* 메타데이터: API에서 내려주는 경우에만 표시 (다른 카드와 동일한 카드 섹션) */}
+            {metadata && Object.keys(metadata).length > 0 && (
+              <div className="verify-result-card">
+                <div className="verify-result-card__header">
+                  <h3 className="verify-result-card__title">메타데이터</h3>
+                </div>
+                <div className="verify-result-card__details verify-result-card__details--metadata">
+                  <dl className="verify-result-metadata-list">
+                    {Object.entries(metadata).map(([key, value]) => (
+                      <div key={key} className="verify-result-metadata-item">
+                        <dt className="verify-result-metadata-item__label">{key}</dt>
+                        <dd className="verify-result-metadata-item__value">
+                          {value != null && value !== '' ? String(value) : '-'}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
               </div>
-              {multiclass?.methods && multiclass.methods.length > 0 && (
-                <div className="verify-result-card__details">
-                  {multiclass.methods.map((method, idx) => (
-                    <div key={idx} className="verify-result-method">
-                      <h4 className="verify-result-method__title">{method.name}</h4>
-                      {method.top3 && method.top3.length > 0 && (
-                        <dl className="verify-result-method__items">
-                          {method.top3.map((t, i) => (
-                            <div key={i} className="verify-result-detail">
-                              <dt className="verify-result-detail__label">상위 {i + 1}</dt>
-                              <dd className="verify-result-detail__value">
-                                {t.model} ({t.score}%)
-                              </dd>
-                            </div>
-                          ))}
-                          <div className="verify-result-detail">
-                            <dt className="verify-result-detail__label">결과</dt>
-                            <dd className="verify-result-detail__value">{method.predictedModel}</dd>
-                          </div>
-                        </dl>
-                      )}
-                      {(!method.top3 || method.top3.length === 0) && (
-                        <dl className="verify-result-method__items">
-                          <div className="verify-result-detail">
-                            <dt className="verify-result-detail__label">결과</dt>
-                            <dd className="verify-result-detail__value">{method.predictedModel}</dd>
-                          </div>
-                          <div className="verify-result-detail">
-                            <dt className="verify-result-detail__label">AI 사진일 확률</dt>
-                            <dd className="verify-result-detail__value">{method.aiProbability}%</dd>
-                          </div>
-                        </dl>
-                      )}
-                    </div>
-                  ))}
-                  <div className="verify-result-method verify-result-method--final">
-                    <div className="verify-result-detail">
-                      <dt className="verify-result-detail__label">최종 모델</dt>
-                      <dd className="verify-result-detail__value verify-result-detail__value--bold">{multiclass.model}</dd>
-                    </div>
-                    <div className="verify-result-detail">
-                      <dt className="verify-result-detail__label">최종 추정 확률</dt>
-                      <dd className="verify-result-detail__value verify-result-detail__value--bold">{multiclass.aiProbability}%</dd>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
