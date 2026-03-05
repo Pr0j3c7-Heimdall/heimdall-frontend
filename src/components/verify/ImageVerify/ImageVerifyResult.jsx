@@ -212,11 +212,11 @@ export default function ImageVerifyResult({ resultData, onReset, backHref, backL
                 <h3 className="verify-result-card__title">다중분류</h3>
                 <div className="verify-result-card__summary">
                   <div className="verify-result-card__summary-row">
-                    <span className="verify-result-card__label">생성 모델</span>
+                    <span className="verify-result-card__label">최종 모델</span>
                     <span className="verify-result-card__value">{multiclass?.model || '-'}</span>
                   </div>
                   <div className="verify-result-card__summary-row">
-                    <span className="verify-result-card__label">AI 사진일 확률</span>
+                    <span className="verify-result-card__label">최종 추정 확률</span>
                     <span className="verify-result-card__value">{multiclass?.aiProbability ?? 0}%</span>
                   </div>
                 </div>
