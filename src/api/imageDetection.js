@@ -147,9 +147,40 @@ export function mapDetectionResultToUI(apiData) {
   };
 
   const multiList = apiData.multi || [];
+  const multiComputed = (() => {
+    if (multiList.length === 0) return { model: null, probability: null };
+    const modelSums = {};
+    for (const m of multiList) {
+      const probs = m.result_json?.all_probabilities || {};
+      for (const [name, score] of Object.entries(probs)) {
+        modelSums[name] = (modelSums[name] ?? 0) + Number(score);
+      }
+    }
+    const n = multiList.length;
+    let bestModel = null;
+    let bestAvg = -1;
+    for (const [name, sum] of Object.entries(modelSums)) {
+      const avg = sum / n;
+      if (avg > bestAvg) {
+        bestAvg = avg;
+        bestModel = name;
+      }
+    }
+    return { model: bestModel, probability: bestAvg };
+  })();
+
   const multiclass = {
-    model: apiData.final_generator_model || multiList[0]?.predicted_model || '-',
-    aiProbability: toPercent(apiData.final_ai_probability ?? multiList[0]?.confidence_score ?? 0),
+    model:
+      multiComputed.model ??
+      apiData.final_generator_model ??
+      multiList[0]?.predicted_model ??
+      '-',
+    aiProbability: toPercent(
+      multiComputed.probability ??
+        apiData.final_ai_probability ??
+        multiList[0]?.confidence_score ??
+        0
+    ),
     methods: multiList.map((m, i) => {
       const allProbs = m.result_json?.all_probabilities || {};
       const sorted = Object.entries(allProbs)
