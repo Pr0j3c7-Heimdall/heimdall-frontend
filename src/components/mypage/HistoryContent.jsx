@@ -89,9 +89,9 @@ export default function HistoryContent({ type }) {
   }, [type]);
 
   const title = type === 'image' ? '이미지 검증 내역' : '음성 검증 내역';
-  const verifyHref = type === 'image' ? '/verify/image' : '/verify/audio';
+  const verifyHref = type === 'image' ? '/verify/image' : '/verify/videos';
   const verifyLabel = type === 'image' ? '이미지 검사하기' : '음성 검사하기';
-  const detailBase = type === 'image' ? '/mypage/history/image' : '/mypage/history/audio';
+  const detailBase = type === 'image' ? '/mypage/history/image' : '/mypage/history/videos';
 
   const handleRowClick = (id) => {
     router.push(`${detailBase}/${id}`);
