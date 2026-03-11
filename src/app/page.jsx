@@ -58,12 +58,26 @@ export default function HomePage() {
         {showcaseData.map((item, i) => (
           <ShowcaseAnimate key={item.id} reverse={item.reverse} index={i}>
             <div className="showcase__media">
-              {item.gif ? (
+              {item.video ? (
+                <video
+                  className="showcase__gif"
+                  src={item.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : item.gif ? (
                 <img src={item.gif} alt="" className="showcase__gif" />
               ) : (
                 <div className="showcase__placeholder">
                   {item.id === 'image' && '🖼️'}
-                  {item.id === 'audio' && '🎙️'}
+                  {item.id === 'audio' && (
+                    <div className="showcase__placeholder-audio">
+                      <span className="showcase__placeholder-audio-icon">🎙️</span>
+                      <span className="showcase__placeholder-audio-text">음성 검사는 준비 중입니다</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

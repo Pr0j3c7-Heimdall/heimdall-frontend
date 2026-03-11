@@ -383,6 +383,13 @@ export interface components {
              * @description List of multiclass detection results
              */
             multi?: components["schemas"]["MultiResultSchema"][];
+            /**
+             * Metadata
+             * @description Metadata for real photos
+             */
+            metadata?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** DetectionResultResponse */
         DetectionResultResponse: {
