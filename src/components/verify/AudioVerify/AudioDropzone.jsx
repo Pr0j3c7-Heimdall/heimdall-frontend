@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Icons } from '@/components/icons';
 
-const ACCEPT = 'audio/mpeg,audio/wav,audio/mp3';
+const ACCEPT = 'videos/mpeg,videos/wav,videos/mp3';
 const MAX_SIZE = 50 * 1024 * 1024; // 50MB
 
 export default function AudioDropzone({ onSelect, disabled }) {
@@ -13,7 +13,7 @@ export default function AudioDropzone({ onSelect, disabled }) {
 
   const validateFile = (file) => {
     setError('');
-    const validTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3'];
+    const validTypes = ['videos/mpeg', 'videos/wav', 'videos/mp3'];
     const isValidType = validTypes.includes(file.type) || file.name.match(/\.(mp3|wav)$/i);
     if (!isValidType) {
       setError('MP3, WAV 형식만 지원합니다.');

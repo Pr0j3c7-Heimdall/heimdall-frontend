@@ -3,7 +3,7 @@
 export const snbItems = [
   { href: '/mypage/profile', label: '회원정보', icon: 'profile' },
   { href: '/mypage/history/image', label: '이미지 검증 내역', icon: 'history' },
-  { href: '/mypage/history/audio', label: '음성 검증 내역', icon: 'history' }
+  { href: '/mypage/history/videos', label: '음성 검증 내역', icon: 'history' }
 ];
 
 export const profileMock = {
