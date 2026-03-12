@@ -1,6 +1,6 @@
 export const navItems = [
   { href: '/verify/image', label: '이미지' },
-  { href: '/verify/videos', label: '음성' },
+  { href: '/verify/audio', label: '음성' },
   { href: '/docs', label: '가이드' },
   { href: '/policy', label: '정책' },
   { href: 'https://github.com/Pr0j3c7-Heimdall', label: '깃허브', external: true },
@@ -50,7 +50,7 @@ export const showcaseData = [
     description:
       '업로드한 음성의 AI 생성 여부를 분석합니다. 음성 속 사람 목소리가 AI로 생성되었는지, 실제 목소리인지 판별합니다. 노이즈가 있는 음성, 저음질 음성, 배경음이 있는 음성, 특정 부분만 AI 음성으로 치환된 음성 등 어떠한 상태의 음성 파일이어도 판별이 가능합니다. 음성 변조 여부, 생성된 회사/플랫폼 분석, 메타데이터 추출을 통해 신뢰할 수 있는 종합적인 결과를 제공합니다.',
     reverse: true,
-    href: '/verify/videos'
+    href: '/verify/audio'
     // gif: '/assets/images/showcase-videos.gif'
   }
 ];
@@ -202,7 +202,7 @@ export const demoData = [
     id: 'audio',
     title: '음성 검사',
     description: '음성 파일의 AI 합성 여부를 분석합니다. 보이스 클로닝, TTS 생성 음성과 실제 녹음을 구분해 드립니다.',
-    href: '/verify/videos'
+    href: '/verify/audio'
   }
 ];
 
