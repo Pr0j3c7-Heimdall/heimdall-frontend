@@ -119,6 +119,7 @@ export default function ImageVerifyGuide() {
             </div>
             <div className="verify-support-card">
               <h3 className="verify-support-card__title">업로드 가이드</h3>
+              <h4 className="verify-support-card__subtitle">업로드 기준</h4>
               <dl className="verify-support-card__criteria">
                 <div className="verify-support-criteria__row">
                   <dt>형식</dt>
@@ -133,6 +134,19 @@ export default function ImageVerifyGuide() {
                   <dd>{imageSupportTableData.fileCriteria.maxFileSize}</dd>
                 </div>
               </dl>
+              <div className="verify-support-card__divider" aria-hidden />
+              <h4 className="verify-support-card__subtitle">주의사항</h4>
+              <ul className="verify-support-card__list">
+                <li className="verify-support-card__item verify-support-card__item--notice">
+                  본 이미지 판별 서비스는 Text-to-Image(T2I)로 생성된 AI 이미지 및 실제 사진에 최적화되어 있습니다.
+                </li>
+                <li className="verify-support-card__item verify-support-card__item--notice">
+                  따라서 Image-to-Image(I2I)로 생성된 AI 이미지 중에서는 다소 판별 성능이 저하되는 개체가 있을 수 있습니다.
+                </li>
+                <li className="verify-support-card__item verify-support-card__item--notice">
+                  다수의 변조를 거치거나, AI 이미지를 스크린샷한 사진 등 AI 이미지와 실제 사진의 정의를 명확히 할 수 없는 이미지는 정확한 판별이 불가능합니다. (예를 들어 AI 이미지를 여러 번 스크린샷한 사진 등은 본 서비스의 이용에 부합하지 않습니다.)
+                </li>
+              </ul>
             </div>
           </div>
         </div>

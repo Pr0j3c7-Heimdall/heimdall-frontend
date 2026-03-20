@@ -838,7 +838,7 @@ section#framework .section__header {
   margin-bottom: 0;
 }
 
-/* 지원 모델 및 업로드 가이드 - 카드 2열 */
+/* 지원 모델 및 업로드 가이드 - 카드 2열 (SNB 환경에서 가독성 유지) */
 .verify-support-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -862,6 +862,21 @@ section#framework .section__header {
   margin: 0 0 var(--spacing-24) 0;
   padding-bottom: var(--spacing-12);
   border-bottom: 2px solid var(--color-primary);
+}
+
+.verify-support-card__subtitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-fg);
+  margin: 0 0 var(--spacing-12) 0;
+}
+
+.verify-support-card__divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  margin: var(--spacing-20) 0;
 }
 
 .verify-support-card__list {
