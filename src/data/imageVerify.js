@@ -1,7 +1,7 @@
 /** 이미지 검사 페이지 - 분석 방법 (4단계, 검정색 강조용) */
 export const imageAnalysisMethodsData = {
   title: '이미지 분석 방법',
-  description: 'Heimdall 프레임워크는 4단계의 판별로 AI 생성 여부를 판별합니다.',
+  description: 'Heimdall 이미지 판별 프레임워크는 4단계의 판별로 AI 생성 여부를 판별합니다.',
   items: [
     {
       id: 'c2pa',
@@ -36,7 +36,7 @@ export const imageAnalysisMethodsData = {
 export const imageFrameworkCardsData = {
   title: 'Heimdall 이미지 판별 프레임워크',
   subtitle: 'AI 검증 아키텍처',
-  description: 'Heimdall 프레임워크는 4단계의 판별로 AI 생성 여부를 판별합니다.',
+  description: 'Heimdall 이미지 판별 프레임워크에 대한 상세 설명입니다.',
   cards: [
     {
       id: 'c2pa',
