@@ -146,6 +146,9 @@ export default function ImageVerifyGuide() {
                 <li className="verify-support-card__item verify-support-card__item--notice">
                   다수의 변조를 거치거나, AI 이미지를 스크린샷한 사진 등 AI 이미지와 실제 사진의 정의를 명확히 할 수 없는 이미지는 정확한 판별이 불가능합니다. (예를 들어 AI 이미지를 여러 번 스크린샷한 사진 등은 본 서비스의 이용에 부합하지 않습니다.)
                 </li>
+                <li className="verify-support-card__item verify-support-card__item--notice">
+                  본 서비스는 AI 생성 여부를 확률적으로 판별하는 보조 도구이며, 법적·수사적 판단의 단독 근거로 사용하기에는 한계가 있습니다.
+                </li>
               </ul>
             </div>
           </div>
