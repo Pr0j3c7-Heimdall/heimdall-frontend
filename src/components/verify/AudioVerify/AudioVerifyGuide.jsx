@@ -7,11 +7,29 @@ import {
   audioSupportTableData
 } from '@/data/audioVerify';
 
-/** 음성 검사 페이지에서 업로드 섹션 아래에 나오는 '분석 방법 / 프레임워크 / 지원 모델 및 업로드 가이드' 블록. 홈·검증 페이지 공용 */
+function FrameworkCardBlock({ block }) {
+  if (block.type === 'p') {
+    return <p className="verify-framework-card__p">{block.text}</p>;
+  }
+  if (block.type === 'h3') {
+    return <h3 className="verify-framework-card__h3">{block.text}</h3>;
+  }
+  if (block.type === 'ul') {
+    return (
+      <ul className="verify-framework-card__ul">
+        {block.items.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+  return null;
+}
+
 export default function AudioVerifyGuide() {
   return (
     <>
-      <section id="methods" className="section section--white verify-methods-section">
+      <section id="audio-methods" className="section section--white verify-methods-section">
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{audioAnalysisMethodsData.title}</h2>
@@ -29,7 +47,7 @@ export default function AudioVerifyGuide() {
         </div>
       </section>
 
-      <section id="framework" className="section section--gray">
+      <section id="audio-framework" className="section section--gray">
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{audioFrameworkCardsData.title}</h2>
@@ -38,7 +56,7 @@ export default function AudioVerifyGuide() {
           <div className="verify-framework-diagram">
             <div className="verify-framework-diagram__placeholder">
               <span className="verify-framework-diagram__label">시스템 구성도</span>
-              <p className="verify-framework-diagram__text">C2PA → 이진분류 → 다중분류 → 메타데이터 → 최종 판별</p>
+              <p className="verify-framework-diagram__text">C2PA → 음성 유형 분석 → 이진분류 → 메타데이터 → 최종 판별</p>
             </div>
           </div>
           <h3 className="verify-framework-subtitle">{audioFrameworkCardsData.subtitle}</h3>
@@ -46,25 +64,30 @@ export default function AudioVerifyGuide() {
             {audioFrameworkCardsData.cards.map((card) => (
               <div key={card.id} className="verify-framework-card">
                 <h4 className="verify-framework-card__title">{card.title}</h4>
-                <p className="verify-framework-card__desc">{card.longDescription}</p>
+                <div className="verify-framework-card__body">
+                  {card.body.map((block, i) => (
+                    <FrameworkCardBlock key={i} block={block} />
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="support" className="section section--white">
+      <section id="audio-support" className="section section--white">
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{audioSupportTableData.title}</h2>
-            <p className="section__desc">{audioSupportTableData.description}</p>
           </div>
           <div className="verify-support-cards">
             <div className="verify-support-card">
-              <h3 className="verify-support-card__title">지원 모델 (10가지)</h3>
+              <h3 className="verify-support-card__title">주의사항</h3>
               <ul className="verify-support-card__list">
-                {audioSupportTableData.supportedModels.map((name) => (
-                  <li key={name} className="verify-support-card__item">{name}</li>
+                {audioSupportTableData.notices.map((notice, i) => (
+                  <li key={i} className="verify-support-card__item verify-support-card__item--notice">
+                    {notice}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -84,6 +107,13 @@ export default function AudioVerifyGuide() {
                   <dd>{audioSupportTableData.fileCriteria.maxFileSize}</dd>
                 </div>
               </dl>
+              <div className="verify-support-card__divider" aria-hidden />
+              <h3 className="verify-support-card__title">분석 엔진</h3>
+              <ul className="verify-support-card__list">
+                {audioSupportTableData.engines.map((engine, i) => (
+                  <li key={i} className="verify-support-card__item">{engine}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
