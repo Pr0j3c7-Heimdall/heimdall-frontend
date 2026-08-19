@@ -146,16 +146,21 @@
 }
 
 .policy__blockquote--warn {
-  background: #fffbeb;
-  border-left: 3px solid #eab308;
+  background: var(--color-warn-bg);
+  border-left: 3px solid var(--color-warn-border);
   color: var(--color-fg);
   font-size: 0.9375rem;
 }
 
-/* 정책 통합 페이지 (개인정보처리방침 + 이용약관) */
+/* 정책 통합 페이지 - 네비·푸터와 동일한 배경으로 통일 (개인정보처리방침 + 이용약관 + 하단 메타) */
+.policy-page {
+  background: var(--color-footer-bg);
+}
+
 .policy-page__section {
   padding: var(--spacing-40) 0;
   scroll-margin-top: 80px;
+  background: var(--color-footer-bg);
 }
 
 .policy-page__section:first-child {
@@ -163,12 +168,13 @@
 }
 
 .policy-page__section--alt {
-  background: var(--color-bg-muted);
+  background: var(--color-footer-bg);
 }
 
 .policy-page__meta {
   padding: var(--spacing-32) 0 var(--spacing-48);
-  background: var(--color-bg);
+  background: var(--color-footer-bg);
+  border-top: 1px solid var(--color-border);
 }
 
 .policy-page__meta .policy__meta {

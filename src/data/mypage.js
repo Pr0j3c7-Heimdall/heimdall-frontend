@@ -48,7 +48,11 @@ export const historyMock = [
 
 /** 히스토리 상세 분석 결과 (id별) - API 연동 시 교체 */
 const createImageDetail = (item) => ({
-  image: 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"><rect fill="#e5e7eb" width="800" height="500"/><text x="400" y="250" text-anchor="middle" fill="#9ca3af" font-size="24" font-family="sans-serif">${item.fileName}</text></svg>`),
+  image:
+    'data:image/svg+xml,' +
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500"><rect fill="#e5e7eb" width="800" height="500"/><text x="400" y="250" text-anchor="middle" fill="#9ca3af" font-size="24" font-family="sans-serif">${item.fileName}</text></svg>`
+    ),
   c2pa: {
     model: item.result === 'AI생성' ? 'Midjourney' : '-',
     hashMatch: item.result === '자연',
@@ -59,21 +63,40 @@ const createImageDetail = (item) => ({
     result: item.result === 'AI생성' ? 'AI' : 'Real',
     confidence: item.confidence,
     methods: [
-      { name: '분석 방법 1', threshold: 0.7, value: item.result === 'AI생성' ? 0.85 : 0.3, result: item.result === 'AI생성' ? 'AI' : 'Real', weight: 0.4 },
-      { name: '분석 방법 2', threshold: 0.6, value: item.result === 'AI생성' ? 0.82 : 0.25, result: item.result === 'AI생성' ? 'AI' : 'Real', weight: 0.3 },
-      { name: '분석 방법 3', threshold: 0.65, value: item.result === 'AI생성' ? 0.88 : 0.2, result: item.result === 'AI생성' ? 'AI' : 'Real', weight: 0.3 }
+      {
+        name: '분석 방법 1',
+        threshold: 0.7,
+        value: item.result === 'AI생성' ? 0.85 : 0.3,
+        result: item.result === 'AI생성' ? 'AI' : 'Real',
+        weight: 0.4
+      },
+      {
+        name: '분석 방법 2',
+        threshold: 0.6,
+        value: item.result === 'AI생성' ? 0.82 : 0.25,
+        result: item.result === 'AI생성' ? 'AI' : 'Real',
+        weight: 0.3
+      },
+      {
+        name: '분석 방법 3',
+        threshold: 0.65,
+        value: item.result === 'AI생성' ? 0.88 : 0.2,
+        result: item.result === 'AI생성' ? 'AI' : 'Real',
+        weight: 0.3
+      }
     ]
   },
   multiclass: {
     model: item.result === 'AI생성' ? 'Midjourney v6' : '-',
     confidence: item.confidence,
-    methods: item.result === 'AI생성'
-      ? [
-          { name: '다중 분석 1', threshold: 0.75, value: 0.92, result: 'Midjourney v6', weight: 0.5 },
-          { name: '다중 분석 2', threshold: 0.7, value: 0.89, result: 'Midjourney v6', weight: 0.3 },
-          { name: '다중 분석 3', threshold: 0.8, value: 0.95, result: 'Midjourney v6', weight: 0.2 }
-        ]
-      : []
+    methods:
+      item.result === 'AI생성'
+        ? [
+            { name: '다중 분석 1', threshold: 0.75, value: 0.92, result: 'Midjourney v6', weight: 0.5 },
+            { name: '다중 분석 2', threshold: 0.7, value: 0.89, result: 'Midjourney v6', weight: 0.3 },
+            { name: '다중 분석 3', threshold: 0.8, value: 0.95, result: 'Midjourney v6', weight: 0.2 }
+          ]
+        : []
   },
   final: {
     result: item.result === 'AI생성' ? 'AI 생성 이미지' : '자연 이미지',

@@ -2,7 +2,6 @@ import Layout from '@/components/layout/Layout';
 import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import Button from '@/components/ui/Button';
-import Chip from '@/components/ui/Chip';
 import FaqItem from '@/components/FaqItem';
 import ShowcaseAnimate from '@/components/ShowcaseAnimate';
 import StepAnimate from '@/components/StepAnimate';
@@ -27,22 +26,19 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero__inner">
-          <h1 className="hero__title" style={{ whiteSpace: 'pre-line' }}>
-            {heroData.title}
+          <h1 className="hero__title">
+            <span className="hero__title-line">{heroData.titleLine1}</span>
+            <span className="hero__title-line">{heroData.titleLine2}</span>
           </h1>
-          <p className="hero__desc">{heroData.description}</p>
-          <div className="hero__actions">
-            {heroData.ctas.map((cta) => (
-              <Button key={cta.label} href={cta.href} variant={cta.variant} size="lg">
-                {cta.label}
-              </Button>
-            ))}
-          </div>
+          <p className="hero__desc">
+            <span className="hero__desc-line">{heroData.descriptionLine1}</span>
+            <span className="hero__desc-line">{heroData.descriptionLine2}</span>
+          </p>
         </div>
       </section>
 
-      {/* 서비스 소개 */}
-      <section id="intro" className="intro intro--dark">
+      {/* 서비스 소개 (section02) */}
+      <section id="intro" className="intro intro--dark intro--bg">
         <div className="intro__inner">
           <h2 className="intro__title">{introData.title}</h2>
           <p className="intro__text">{introData.description}</p>
@@ -62,12 +58,26 @@ export default function HomePage() {
         {showcaseData.map((item, i) => (
           <ShowcaseAnimate key={item.id} reverse={item.reverse} index={i}>
             <div className="showcase__media">
-              {item.gif ? (
+              {item.video ? (
+                <video
+                  className="showcase__gif"
+                  src={item.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              ) : item.gif ? (
                 <img src={item.gif} alt="" className="showcase__gif" />
               ) : (
                 <div className="showcase__placeholder">
                   {item.id === 'image' && '🖼️'}
-                  {item.id === 'audio' && '🎙️'}
+                  {item.id === 'audio' && (
+                    <div className="showcase__placeholder-audio">
+                      <span className="showcase__placeholder-audio-icon">🎙️</span>
+                      <span className="showcase__placeholder-audio-text">음성 검사는 준비 중입니다</span>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -114,13 +124,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <div className="features-formats">
-            {featuresData.formatChips.map((format) => (
-              <Chip key={format} variant="outline" size="sm">
-                {format}
-              </Chip>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -156,11 +159,26 @@ export default function HomePage() {
             {techStackData.categories.map((cat) => (
               <div key={cat.name} className="tech-card">
                 <h3 className="tech-card__title">{cat.name}</h3>
-                <ul className="tech-card__list">
-                  {cat.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
+                {cat.groups ? (
+                  <div className="tech-card__groups">
+                    {cat.groups.map((g) => (
+                      <div key={g.label} className="tech-card__group">
+                        <h4 className="tech-card__group-label">{g.label}</h4>
+                        <ul className="tech-card__list">
+                          {g.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <ul className="tech-card__list">
+                    {cat.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>

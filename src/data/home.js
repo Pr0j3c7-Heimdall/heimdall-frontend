@@ -14,8 +14,10 @@ export const footerLinks = [
 
 export const heroData = {
   badge: 'AI 콘텐츠 검증',
-  title: '이미지, 음성.\nAI 생성 여부를 검사하세요',
-  description: 'AI가 생성한 콘텐츠가 일상에 넘쳐나는 시대. Heimdall로 신뢰할 수 있는 검증 결과를 확인하세요.',
+  titleLine1: 'AI 생성 콘텐츠 시대',
+  titleLine2: 'AI로 인한 피해를 사전에 방지하세요',
+  descriptionLine1: '북유럽 신화 속 아스가르드의 수문장 Heimdall처럼,',
+  descriptionLine2: '신뢰도 높은 Heimdall 서비스를 통해 AI 생성 여부를 꿰뚫어보세요.',
   ctas: [
     { href: '/#showcase', label: '검사하기', variant: 'primary' },
     { href: 'https://github.com/Pr0j3c7-Heimdall', label: 'GitHub', variant: 'outline' }
@@ -25,9 +27,9 @@ export const heroData = {
 export const introData = {
   title: 'Heimdall이란?',
   description:
-    'Heimdall은 이미지와 음성의 AI 생성 여부를 판별하고, 부가 정보까지 제공하는 검증 서비스입니다. 여러분을 위해 만들었습니다. 다수의 딥러닝 모델과 C2PA로 구성한 Heimdall만의 프레임워크로 결과를 제공하며, 웹에서 바로 이용할 수 있습니다.',
+    'Heimdall은 이미지, 음성의 AI 생성 여부를 판별하고, 부가적인 정보들을 제공하는 검증 서비스입니다.\n다수의 딥러닝 기반 모델 및 C2PA로 개발된, Heimdall의 독자적인 프레임워크를 통해 결과를 제공하며, 웹 서비스를 통해 쉽게 활용할 수 있습니다.',
   description2:
-    '단순 판별을 넘어 이미지·음성의 다각도 분석이 가능하여, 논문 연구는 물론 일상에서도 편하게 활용하실 수 있습니다. 논문에서도, 일반인도 그대로 사용할 수 있도록 일반화·상용화하였고, 기존 연구와는 다르게 실생활과 상용화를 전제로 설계했습니다. 논문·연구부터 일상 사용까지 한 곳에서 활용하실 수 있으며, 실제 서비스로 쓰이도록 맞춰 두었습니다.',
+    '딥러닝 기반 판별을 넘어 이미지와 음성을 다각도로 분석하여, 연구 환경은 물론 실생활에서도 활용할 수 있도록 설계했습니다. 전문적인 분석이 필요한 연구자부터 일상에서 콘텐츠의 신뢰성을 확인하고 싶은 사용자까지, 누구나 부담 없이 사용할 수 있는 범용성과 상용성을 지향합니다.',
   points: []
 };
 
@@ -38,8 +40,9 @@ export const showcaseData = [
     description:
       '업로드한 이미지가 AI로 생성되었는지, 실제 사진인지 판별합니다. 사진 변조 여부, AI 생성 모델 식별, 생성된 회사/플랫폼 분석, 메타데이터 추출을 통해 신뢰할 수 있는 종합적인 결과를 제공합니다.',
     reverse: false,
-    href: '/verify/image'
-    // gif: '/assets/images/showcase-image.gif'
+    href: '/verify/image',
+    // 이미지 검사 데모 영상 (홈 화면 카드 좌측에 표시)
+    video: '/assets/videos/images.mp4'
   },
   {
     id: 'audio',
@@ -48,7 +51,7 @@ export const showcaseData = [
       '업로드한 음성의 AI 생성 여부를 분석합니다. 음성 속 사람 목소리가 AI로 생성되었는지, 실제 목소리인지 판별합니다. 노이즈가 있는 음성, 저음질 음성, 배경음이 있는 음성, 특정 부분만 AI 음성으로 치환된 음성 등 어떠한 상태의 음성 파일이어도 판별이 가능합니다. 음성 변조 여부, 생성된 회사/플랫폼 분석, 메타데이터 추출을 통해 신뢰할 수 있는 종합적인 결과를 제공합니다.',
     reverse: true,
     href: '/verify/audio'
-    // gif: '/assets/images/showcase-audio.gif'
+    // gif: '/assets/images/showcase-videos.gif'
   }
 ];
 
@@ -60,7 +63,8 @@ export const analysisData = {
       id: 'binary',
       icon: 'image',
       title: 'AI 생성 여부 판별',
-      description: '배열화, DCT, DWT 등 다수 분석 결과를 종합하여 AI 생성 여부를 판단합니다.'
+      description:
+        '특징 벡터화(임베딩), DCT 기반 주파수 분석, 공간 아티팩트 분석 등 다수 분석 결과를 종합하여 AI 생성 여부를 판단합니다.'
     },
     {
       id: 'generation',
@@ -91,7 +95,8 @@ export const featuresData = {
       id: 'criteria',
       icon: 'check',
       title: '엄격한 판단 기준',
-      description: '다수의 분석 결과를 Heimdall의 가중치 기반 판정 로직으로 통합해, 일관된 기준으로 판정합니다. 이를 통해 실전 환경에서의 판정 신뢰도를 높입니다.'
+      description:
+        '다수의 분석 결과를 Heimdall의 가중치 기반 판정 로직으로 통합해, 일관된 기준으로 판정합니다. 이를 통해 실전 환경에서의 판정 신뢰도를 높입니다.'
     },
     {
       id: 'realtime',
@@ -111,8 +116,7 @@ export const featuresData = {
       title: '검사 이력 저장',
       description: '사용자별 분석 결과를 저장해, 재검토·비교·사후 추적에 활용할 수 있습니다.'
     }
-  ],
-  formatChips: ['JPG', 'PNG', 'MP3', 'WAV']
+  ]
 };
 
 export const howItWorksData = {
@@ -142,10 +146,39 @@ export const techStackData = {
   title: '기술 스택',
   description: 'Heimdall 프레임워크와 검증된 딥러닝 모델로 안정적인 검증 서비스를 제공합니다.',
   categories: [
-    { name: '이미지 분석', items: ['내용은 추후 기입'] },
-    { name: '음성 분석', items: ['내용은 추후 기입'] },
-    { name: '인프라', items: ['내용은 추후 기입'] },
-    { name: '사용 언어', items: ['내용은 추후 기입'] }
+    {
+      name: '이미지 분석',
+      items: [
+        'C2PA 분석을 통한 AI 생성 여부 판정 및 C2PA 내부 값 추출',
+        'DINOv3 임베딩 기반 특징 추출',
+        'F3Net 기반 주파수(DCT) 아티팩트 분석',
+        'U-Net 기반 공간 아티팩트 분석',
+        '실제 사진 메타데이터 정보 추출',
+        'Softmax 기반 앙상블 가중치로 이진 분류 결과를 결합하여 AI 생성 여부 판정',
+        '다중 분석 결과(모델별 점수) 합산을 통한 AI 생성 모델 추정'
+      ]
+    },
+    {
+      name: '음성 분석',
+      items: ['준비중']
+    },
+    {
+      name: '인프라',
+      items: [
+        'Server: FastAPI + Uvicorn',
+        'Database: MySQL (SQLAlchemy Async ORM)',
+        'CI/CD: GitHub Actions (Self-hosted Runner)',
+        'Deployment: Linux (Ubuntu) 기반 배포 환경',
+        'AI Inference: PyTorch 기반 딥러닝 모델 파이프라인'
+      ]
+    },
+    {
+      name: '사용 언어',
+      groups: [
+        { label: 'BE', items: ['Python 3.10+', 'SQL (MySQL)'] },
+        { label: 'FE', items: ['JavaScript (Next.js, React)'] }
+      ]
+    }
   ]
 };
 

@@ -1,0 +1,19 @@
+name: Trigger Deploy to Infra
+
+# 메인 브랜치에 코드가 Push될 때 작동합니다.
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  notify-infra:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: heimdall-infra에 배포 요청
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: Pr0j3c7-Heimdall/heimdall-infra
+          event-type: trigger-deploy
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "module": "frontend"}'

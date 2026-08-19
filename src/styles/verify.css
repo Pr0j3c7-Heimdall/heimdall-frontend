@@ -85,6 +85,28 @@
   color: var(--color-error);
 }
 
+/* 비로그인 시 로그인 유도 블록 */
+.verify-dropzone--login-prompt {
+  cursor: pointer;
+}
+
+.verify-dropzone--login-prompt .verify-dropzone__hint {
+  margin-bottom: var(--spacing-20);
+}
+
+.verify-dropzone__login-btn {
+  margin-top: var(--spacing-8);
+}
+
+.verify-dropzone__icon--lock {
+  color: var(--color-fg-muted);
+}
+
+.verify-dropzone__icon--lock svg {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+}
+
 .verify-preview {
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
@@ -159,7 +181,21 @@
 
 .verify-actions {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.verify-error {
+  color: var(--color-error, #b91c1c);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.verify-loading {
+  color: var(--color-fg-muted);
+  font-size: 0.9375rem;
+  margin: 0;
 }
 
 .verify-btn-content {
@@ -198,6 +234,8 @@
 .verify-result-section {
   padding-top: var(--spacing-48);
   padding-bottom: calc(2 * var(--spacing-40));
+  /* 결과 페이지는 순수 흰색(또는 라이트 기본 surface) 배경 사용 */
+  background: var(--color-bg-alt);
 }
 
 .verify-result__image-section {
@@ -208,13 +246,13 @@
 .verify-result__image-wrap {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: var(--color-bg-muted);
-  border-radius: var(--radius-md);
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-border);
+  border: none;
 }
 
 .verify-result__image {
@@ -267,15 +305,15 @@
 }
 
 .verify-result-card {
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: box-shadow var(--transition-hover);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
+  transition: none;
 }
 
 .verify-result-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
 }
 
 .verify-result-card__header {
@@ -295,11 +333,16 @@
 
 .verify-result-card__summary {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--spacing-8) var(--spacing-24);
+  flex-direction: column;
+  gap: var(--spacing-8);
   font-size: 1rem;
   margin-top: var(--spacing-12);
+}
+
+.verify-result-card__summary-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
 }
 
 .verify-result-card__label {
@@ -367,8 +410,8 @@
 
 .verify-result-method {
   padding: var(--spacing-20) var(--spacing-24);
-  background: var(--color-bg-muted);
-  border-radius: var(--radius-md);
+  background: transparent;
+  border-radius: 0;
   margin-bottom: var(--spacing-16);
 }
 
@@ -377,8 +420,24 @@
 }
 
 .verify-result-method--final {
-  background: var(--color-primary-light);
-  border: 1px solid var(--color-primary);
+  background: transparent;
+  border: none;
+}
+
+.verify-result-method--weights {
+  margin-top: var(--spacing-8);
+}
+
+.verify-result-weights {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-8) 0 0 0;
+  font-size: 0.9375rem;
+  color: var(--color-fg);
+}
+
+.verify-result-weights li {
+  padding: var(--spacing-4) 0;
 }
 
 .verify-result-method__title {
@@ -446,6 +505,50 @@
   color: var(--color-success-fg);
 }
 
+/* 메타데이터 카드: 가로 다단 배치로 세로 길이 축소 */
+.verify-result-card__details--metadata {
+  padding: var(--spacing-24) var(--spacing-32);
+}
+
+.verify-result-metadata-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-16) var(--spacing-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.verify-result-metadata-item {
+  display: block;
+  padding: var(--spacing-8) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9375rem;
+}
+
+.verify-result-metadata-item__label {
+  display: block;
+  margin: 0 0 var(--spacing-4) 0;
+  color: var(--color-fg-muted);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.verify-result-metadata-item__value {
+  display: block;
+  margin: 0;
+  color: var(--color-fg);
+  font-weight: 500;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (min-width: 900px) {
+  .verify-result-metadata-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* 최종 결과 */
 .verify-result__final {
   max-width: 640px;
@@ -468,10 +571,10 @@
 }
 
 .verify-result__final-card {
-  background: var(--color-bg-alt);
-  border: 2px solid var(--color-primary);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-40) var(--spacing-32);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0 0 var(--spacing-32);
   text-align: center;
 }
 
@@ -546,8 +649,8 @@
 }
 
 .verify-methods-card:hover {
-  border-color: rgba(55, 65, 81, 0.25);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
@@ -592,8 +695,59 @@
 }
 
 /* Heimdall 프레임워크 - 시스템 구성도 + 카드 */
+section#framework .section__header {
+  margin-bottom: var(--spacing-12);
+}
+
 .verify-framework-diagram {
   margin-bottom: var(--spacing-40);
+}
+
+.verify-framework-diagram__caption {
+  margin-bottom: var(--spacing-24);
+  margin-top: 0;
+  text-align: center;
+}
+
+.verify-framework-diagram__caption .verify-framework-diagram__label {
+  display: block;
+  margin-bottom: var(--spacing-4);
+}
+
+.verify-framework-diagram__caption .verify-framework-diagram__text {
+  display: block;
+  font-size: 0.9375rem;
+  color: var(--color-fg-muted);
+}
+
+.verify-framework-diagram__images {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+  align-items: center;
+}
+
+.verify-framework-diagram__image-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  width: 100%;
+  max-width: 900px;
+}
+
+.verify-framework-diagram__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  object-fit: contain;
+}
+
+.verify-framework-diagram__img-caption {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-fg-muted);
 }
 
 .verify-framework-diagram__placeholder {
@@ -650,14 +804,41 @@
   display: inline-block;
 }
 
-.verify-framework-card__desc {
+.verify-framework-card__body {
   font-size: 0.9375rem;
   line-height: 1.75;
   color: var(--color-fg);
+}
+
+.verify-framework-card__body > * + * {
+  margin-top: var(--spacing-12);
+}
+
+.verify-framework-card__p {
   margin: 0;
 }
 
-/* 지원 모델 및 업로드 가이드 - 카드 2열 */
+.verify-framework-card__h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: var(--spacing-16) 0 var(--spacing-8) 0;
+  color: var(--color-primary);
+}
+
+.verify-framework-card__ul {
+  margin: 0 0 0 var(--spacing-20);
+  padding-left: var(--spacing-8);
+}
+
+.verify-framework-card__ul li {
+  margin-bottom: var(--spacing-4);
+}
+
+.verify-framework-card__ul li:last-child {
+  margin-bottom: 0;
+}
+
+/* 지원 모델 및 업로드 가이드 - 카드 2열 (SNB 환경에서 가독성 유지) */
 .verify-support-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -681,6 +862,21 @@
   margin: 0 0 var(--spacing-24) 0;
   padding-bottom: var(--spacing-12);
   border-bottom: 2px solid var(--color-primary);
+}
+
+.verify-support-card__subtitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-fg);
+  margin: 0 0 var(--spacing-12) 0;
+}
+
+.verify-support-card__divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  margin: var(--spacing-20) 0;
 }
 
 .verify-support-card__list {
@@ -710,6 +906,13 @@
 
 .verify-support-card__criteria {
   margin: 0;
+}
+
+/* Dark mode - 검증 가이드 카드들도 컬러감을 줄인 단색 톤으로 정리 */
+[data-theme='dark'] .verify-methods-card,
+[data-theme='dark'] .verify-framework-card,
+[data-theme='dark'] .verify-support-card {
+  background: var(--color-bg);
 }
 
 .verify-support-criteria__row {

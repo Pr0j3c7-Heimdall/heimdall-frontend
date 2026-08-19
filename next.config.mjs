@@ -4,7 +4,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://accounts.google.com https://vercel.live https://va.vercel-scripts.com https://*.clarity.ms https://phpstack-207002-5085356.cloudwaysapps.com;
     style-src 'self' 'unsafe-inline' https://accounts.google.com https://phpstack-207002-5085356.cloudwaysapps.com https://fonts.googleapis.com;
-    img-src 'self' blob: data: https://www.googletagmanager.com https://flagcdn.com https://*.openstreetmap.org https://*.clarity.ms https://*.bing.com https://phpstack-207002-5085356.cloudwaysapps.com https://lh3.googleusercontent.com;
+    img-src 'self' blob: data: https://www.googletagmanager.com https://flagcdn.com https://*.openstreetmap.org https://*.clarity.ms https://*.bing.com https://phpstack-207002-5085356.cloudwaysapps.com https://lh3.googleusercontent.com https://heimdall.ai.kr;
     font-src 'self' https://*.gstatic.com;
     object-src 'self';
     base-uri 'self';
@@ -25,11 +25,19 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'flagcdn.com',
-        pathname: '**'
-      }
+      { protocol: 'https', hostname: 'flagcdn.com', pathname: '**' },
+      { protocol: 'http', hostname: 'localhost', pathname: '/**' },
+      { protocol: 'http', hostname: '127.0.0.1', pathname: '/**' },
+      ...(typeof apiBaseUrl === 'string' && apiBaseUrl
+        ? (() => {
+            try {
+              const u = new URL(apiBaseUrl);
+              return [{ protocol: u.protocol.replace(':', ''), hostname: u.hostname, pathname: '/**' }];
+            } catch {
+              return [];
+            }
+          })()
+        : [])
     ]
   },
   async headers() {
@@ -43,6 +51,18 @@ const nextConfig = {
           }
         ]
       }
+    ];
+  },
+  async rewrites() {
+    return [
+      {        
+        source: '/uploads/:path*',
+        destination: 'http://backend:8000/uploads/:path*',
+      },
+      {
+        source: '/api/:path*',
+        destination: 'http://backend:8000/:path*',
+      },
     ];
   }
 };
