@@ -3,6 +3,7 @@ import NavbarWithAuth from '@/components/layout/Navbar/NavbarWithAuth';
 import Footer from '@/components/layout/Footer';
 import GuideSnb from '@/components/guide/GuideSnb';
 import { ImageVerifyGuide } from '@/components/verify/ImageVerify';
+import AudioVerifyGuide from '@/components/verify/AudioVerify/AudioVerifyGuide';
 import { navItems, footerLinks } from '@/data/home';
 
 export default function GuidePage() {
@@ -13,6 +14,7 @@ export default function GuidePage() {
           <GuideSnb />
           <div className="guide-page-content home-verify-block home-verify-block--image">
             <ImageVerifyGuide />
+            <AudioVerifyGuide />
           </div>
         </div>
       </section>
