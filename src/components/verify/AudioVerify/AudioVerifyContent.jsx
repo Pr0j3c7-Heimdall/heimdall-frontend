@@ -58,7 +58,7 @@ export default function AudioVerifyContent() {
         <div className="section__inner">
           <div className="section__header">
             <h1 className="section__title">음성 검사</h1>
-            <p className="section__desc">음성을 업로드하여 AI 합성 여부, 사용 모델, 녹음 정보 등을 검사하세요. 초 단위로 구간 분석(10초 이상 1분 이하 권장)을 지원합니다.</p>
+            <p className="section__desc">음성을 업로드하여 AI 합성 여부, 사용 모델, 녹음 정보 등을 검사하세요.</p>
           </div>
 
           <div className="verify-content">
