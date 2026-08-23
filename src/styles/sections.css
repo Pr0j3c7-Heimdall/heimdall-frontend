@@ -33,6 +33,20 @@
   white-space: nowrap;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    padding: 56px var(--spacing-16) 72px;
+  }
+
+  .hero__title-line {
+    white-space: normal;
+  }
+
+  .hero__desc {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 480px) {
   .hero__title {
     font-size: clamp(1.15rem, 5vw, 1.5rem);

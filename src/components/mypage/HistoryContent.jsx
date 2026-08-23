@@ -177,46 +177,74 @@ export default function HistoryContent({ type }) {
           </Button>
         </div>
       ) : (
-        <div className="history-table-wrap">
-          <table className="history-table">
-            <thead>
-              <tr>
-                <th className="history-table__th history-table__th--no">No</th>
-                <th className="history-table__th">파일명</th>
-                <th className="history-table__th">결과</th>
-                <th className="history-table__th">AI일 확률</th>
-                <th className="history-table__th">날짜</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr
-                  key={item.id}
-                  className="history-table__row history-table__row--clickable"
-                  onClick={() => handleRowClick(item.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handleRowClick(item.id);
-                    }
-                  }}
-                >
-                  <td className="history-table__td history-table__td--no">{index + 1}</td>
-                  <td className="history-table__td history-table__td--name">{item.fileName}</td>
-                  <td className="history-table__td">
+        <>
+          <div className="history-table-wrap history-table-wrap--desktop">
+            <table className="history-table">
+              <thead>
+                <tr>
+                  <th className="history-table__th history-table__th--no">No</th>
+                  <th className="history-table__th">파일명</th>
+                  <th className="history-table__th">결과</th>
+                  <th className="history-table__th">AI일 확률</th>
+                  <th className="history-table__th">날짜</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className="history-table__row history-table__row--clickable"
+                    onClick={() => handleRowClick(item.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleRowClick(item.id);
+                      }
+                    }}
+                  >
+                    <td className="history-table__td history-table__td--no">{index + 1}</td>
+                    <td className="history-table__td history-table__td--name">{item.fileName}</td>
+                    <td className="history-table__td">
+                      <span className={`history-table__result history-table__result--${item.result.replace(/\s/g, '')}`}>
+                        {item.result}
+                      </span>
+                    </td>
+                    <td className="history-table__td">{item.confidence}%</td>
+                    <td className="history-table__td history-table__td--date">{item.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <ul className="history-cards">
+            {items.map((item, index) => (
+              <li key={item.id}>
+                <button type="button" className="history-card" onClick={() => handleRowClick(item.id)}>
+                  <div className="history-card__head">
+                    <span className="history-card__no">#{index + 1}</span>
                     <span className={`history-table__result history-table__result--${item.result.replace(/\s/g, '')}`}>
                       {item.result}
                     </span>
-                  </td>
-                  <td className="history-table__td">{item.confidence}%</td>
-                  <td className="history-table__td history-table__td--date">{item.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                  <p className="history-card__name">{item.fileName}</p>
+                  <dl className="history-card__meta">
+                    <div className="history-card__meta-row">
+                      <dt>AI일 확률</dt>
+                      <dd>{item.confidence}%</dd>
+                    </div>
+                    <div className="history-card__meta-row">
+                      <dt>날짜</dt>
+                      <dd>{item.date}</dd>
+                    </div>
+                  </dl>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   );
