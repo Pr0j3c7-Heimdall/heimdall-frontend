@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { Icons } from '@/components/icons';
+import VerifyFrameworkDiagram from '@/components/verify/VerifyFrameworkDiagram';
 import {
   imageAnalysisMethodsData,
   imageFrameworkCardsData,
@@ -28,7 +28,6 @@ function FrameworkCardBlock({ block }) {
   return null;
 }
 
-/** 이미지 검사 페이지에서 업로드 섹션 아래에 나오는 '분석 방법 / 프레임워크 / 지원 모델 및 업로드 가이드' 블록. 홈·검증 페이지 공용 */
 export default function ImageVerifyGuide() {
   return (
     <>
@@ -55,35 +54,10 @@ export default function ImageVerifyGuide() {
           <div className="section__header">
             <h2 className="section__title">{imageFrameworkCardsData.title}</h2>
           </div>
-          <div className="verify-framework-diagram">
-            <p className="verify-framework-diagram__caption">
-              <span className="verify-framework-diagram__text">
-                {imageFrameworkCardsData.description}
-              </span>
-            </p>
-            <div className="verify-framework-diagram__images">
-              <div className="verify-framework-diagram__image-wrap">
-                <Image
-                  src="/assets/images/framework/flow.png"
-                  alt="로그인과 이미지 업로드부터 C2PA·이진·다중분류·메타데이터를 거쳐 최종 결과가 마이페이지에 저장되는 과정"
-                  width={800}
-                  height={500}
-                  className="verify-framework-diagram__img"
-                  unoptimized
-                />
-              </div>
-              <div className="verify-framework-diagram__image-wrap">
-                <Image
-                  src="/assets/images/framework/system.png"
-                  alt="이미지 업로드 후 C2PA·이진·다중분류·메타데이터 분석을 거쳐 최종 판단이 나오는 구조"
-                  width={800}
-                  height={500}
-                  className="verify-framework-diagram__img"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </div>
+          <VerifyFrameworkDiagram
+            description={imageFrameworkCardsData.description}
+            diagrams={imageFrameworkCardsData.diagrams}
+          />
           <h3 className="verify-framework-subtitle">{imageFrameworkCardsData.subtitle}</h3>
           <div className="verify-framework-cards">
             {imageFrameworkCardsData.cards.map((card) => (

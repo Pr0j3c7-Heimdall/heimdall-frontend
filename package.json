@@ -6,7 +6,7 @@
     "name": "heimdall"
   },
   "scripts": {
-    "openapi:generate": "openapi-typescript http://localhost:8000/openapi.json -o src/api/api.ts",
+    "openapi:generate": "openapi-typescript http://localhost:8000/api/v1/openapi.json -o src/api/api.ts",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

@@ -39,6 +39,18 @@ export const audioFrameworkCardsData = {
   title: 'Heimdall 음성 판별 프레임워크',
   subtitle: 'AI 검증 아키텍처',
   description: 'Heimdall 음성 판별 프레임워크에 대한 상세 설명입니다.',
+  diagrams: [
+    {
+      src: '/assets/images/framework/audio_framework.png',
+      alt: '로그인과 음성 업로드부터 C2PA·음성 유형 분석·이진분류·메타데이터를 거쳐 최종 결과가 마이페이지에 저장되는 Heimdall 음성 판별 프레임워크 흐름도',
+      caption: '프레임워크 흐름도'
+    },
+    {
+      src: '/assets/images/framework/audio_system.png',
+      alt: '음성 업로드 후 C2PA·음성 유형 분석·이진분류·메타데이터 분석을 거쳐 최종 판단이 나오는 Heimdall 음성 판별 시스템 구성도',
+      caption: '시스템 구성도'
+    }
+  ],
   cards: [
     {
       id: 'c2pa',
@@ -190,7 +202,7 @@ export const audioSupportTableData = {
     '본 서비스는 AI 생성 여부를 확률적으로 판별하는 보조 도구이며, 법적·수사적 판단의 단독 근거로 사용하기에는 한계가 있습니다.'
   ],
   fileCriteria: {
-    formats: 'MP3, WAV, FLAC, M4A',
+    formats: 'MP3, WAV',
     duration: '10초 이상 10분 이하(파일 내 사람 목소리 5초 이상)',
     maxFileSize: '최대 200MB'
   },

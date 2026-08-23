@@ -5,8 +5,10 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { historyMock } from '@/data/mypage';
 import { getImageHistory } from '@/api/imageDetection';
+import { getAudioHistory } from '@/api/audioDetection';
+import { parseApiError } from '@/lib/parseApiError';
 
-function mapImageHistoryToItems(apiData) {
+function mapHistoryToItems(apiData, idKey) {
   // API 응답 형태:
   // { total_count, total_pages, current_page, histories: [ { history_id, image_id, filename, file_type, analysis_status, is_ai, ai_probability, created_at } ] }
   const raw = Array.isArray(apiData) ? apiData : apiData?.histories ?? apiData?.items ?? [];
@@ -41,8 +43,8 @@ function mapImageHistoryToItems(apiData) {
       item.result ??
       (item.is_ai != null ? item.is_ai : item.final_is_ai != null ? item.final_is_ai : null);
     return {
-      id: String(item.image_id ?? item.history_id ?? item.id ?? ''),
-      type: item.file_type ?? 'image',
+      id: String(item[idKey] ?? item.history_id ?? item.id ?? ''),
+      type: item.file_type ?? (idKey === 'audio_id' ? 'audio' : 'image'),
       fileName: item.filename ?? item.file_name ?? item.fileName ?? item.original_filename ?? '-',
       result: toResultLabel(rawResult),
       confidence: toPercent(item.ai_probability ?? item.confidence ?? item.final_ai_probability ?? 0),
@@ -54,13 +56,16 @@ function mapImageHistoryToItems(apiData) {
 export default function HistoryContent({ type }) {
   const router = useRouter();
   const [imageItems, setImageItems] = useState([]);
+  const [audioItems, setAudioItems] = useState([]);
   const [imageLoading, setImageLoading] = useState(type === 'image');
+  const [audioLoading, setAudioLoading] = useState(type === 'audio');
   const [imageError, setImageError] = useState(null);
+  const [audioError, setAudioError] = useState(null);
 
   const mockItems = useMemo(() => historyMock.filter((i) => i.type === type), [type]);
-  const items = type === 'image' ? imageItems : mockItems;
-  const loading = type === 'image' ? imageLoading : false;
-  const error = type === 'image' ? imageError : null;
+  const items = type === 'image' ? imageItems : type === 'audio' ? audioItems : mockItems;
+  const loading = type === 'image' ? imageLoading : type === 'audio' ? audioLoading : false;
+  const error = type === 'image' ? imageError : type === 'audio' ? audioError : null;
 
   useEffect(() => {
     if (type !== 'image') return;
@@ -71,21 +76,51 @@ export default function HistoryContent({ type }) {
       .then((res) => {
         if (cancelled) return;
         if (res?.success !== false && res?.data != null) {
-          setImageItems(mapImageHistoryToItems(res.data ?? res));
+          setImageItems(mapHistoryToItems(res.data ?? res, 'image_id'));
         } else {
           setImageItems([]);
         }
       })
       .catch((err) => {
         if (!cancelled) {
-          setImageError(err?.response?.data?.detail ?? err?.message ?? '목록을 불러오지 못했습니다.');
+          setImageError(parseApiError(err, '목록을 불러오지 못했습니다.'));
           setImageItems([]);
         }
       })
       .finally(() => {
         if (!cancelled) setImageLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
+  }, [type]);
+
+  useEffect(() => {
+    if (type !== 'audio') return;
+    let cancelled = false;
+    setAudioLoading(true);
+    setAudioError(null);
+    getAudioHistory()
+      .then((res) => {
+        if (cancelled) return;
+        if (res?.success !== false && res?.data != null) {
+          setAudioItems(mapHistoryToItems(res.data ?? res, 'audio_id'));
+        } else {
+          setAudioItems([]);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setAudioError(parseApiError(err, '목록을 불러오지 못했습니다.'));
+          setAudioItems([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setAudioLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [type]);
 
   const title = type === 'image' ? '이미지 검증 내역' : '음성 검증 내역';
