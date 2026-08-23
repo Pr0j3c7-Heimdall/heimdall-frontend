@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
 import ImageVerifyResult from '@/components/verify/ImageVerify/ImageVerifyResult';
 import { getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
+import { parseApiError } from '@/lib/parseApiError';
 
 export default function HistoryImageDetailPage() {
   const params = useParams();
@@ -34,7 +35,7 @@ export default function HistoryImageDetailPage() {
       .catch((err) => {
         if (!cancelled) {
           const status = err?.response?.status;
-          setError(status === 404 ? '해당 검증 내역을 찾을 수 없습니다.' : err?.response?.data?.detail ?? err?.message ?? '검증 결과를 불러오지 못했습니다.');
+          setError(status === 404 ? '해당 검증 내역을 찾을 수 없습니다.' : parseApiError(err, '검증 결과를 불러오지 못했습니다.'));
           setResultData(null);
         }
       })
