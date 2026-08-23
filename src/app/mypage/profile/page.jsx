@@ -5,6 +5,7 @@ import { Icons } from '@/components/icons';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/contexts/AuthContext';
 import { getMeApi } from '@/lib/auth';
+import { parseApiError } from '@/lib/parseApiError';
 
 const profileFields = [
   { key: 'name', label: '이름', icon: 'user' },
@@ -38,9 +39,7 @@ export default function MypageProfilePage() {
         }
       } catch (err) {
         if (!isMounted) return;
-        const detail = err?.response?.data?.detail;
-        const msg = Array.isArray(detail) ? detail[0]?.msg : detail;
-        setError(msg || err?.message || '회원정보를 불러오지 못했습니다.');
+        setError(parseApiError(err, '회원정보를 불러오지 못했습니다.'));
         setData(null);
       } finally {
         if (isMounted) setLoading(false);
