@@ -1,6 +1,7 @@
 'use client';
 
 import { Icons } from '@/components/icons';
+import VerifyFrameworkDiagram from '@/components/verify/VerifyFrameworkDiagram';
 import {
   audioAnalysisMethodsData,
   audioFrameworkCardsData,
@@ -51,14 +52,11 @@ export default function AudioVerifyGuide() {
         <div className="section__inner">
           <div className="section__header">
             <h2 className="section__title">{audioFrameworkCardsData.title}</h2>
-            <p className="section__desc">{audioFrameworkCardsData.description}</p>
           </div>
-          <div className="verify-framework-diagram">
-            <div className="verify-framework-diagram__placeholder">
-              <span className="verify-framework-diagram__label">시스템 구성도</span>
-              <p className="verify-framework-diagram__text">C2PA → 음성 유형 분석 → 이진분류 → 메타데이터 → 최종 판별</p>
-            </div>
-          </div>
+          <VerifyFrameworkDiagram
+            description={audioFrameworkCardsData.description}
+            diagrams={audioFrameworkCardsData.diagrams}
+          />
           <h3 className="verify-framework-subtitle">{audioFrameworkCardsData.subtitle}</h3>
           <div className="verify-framework-cards">
             {audioFrameworkCardsData.cards.map((card) => (
