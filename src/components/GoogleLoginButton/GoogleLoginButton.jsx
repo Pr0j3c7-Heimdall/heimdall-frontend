@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { GoogleLogin } from '@react-oauth/google';
 import Button from '@/components/ui/Button';
 import { loginWithGoogle } from '@/lib/auth';
+import { parseApiError } from '@/lib/parseApiError';
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
 
@@ -29,13 +30,7 @@ export default function GoogleLoginButton({ text = 'signin_with', disabled = fal
       router.push('/');
       router.refresh();
     } catch (err) {
-      const detail = err.response?.data?.detail;
-      const msg = Array.isArray(detail)
-        ? detail[0]?.msg || detail
-        : typeof detail === 'string'
-          ? detail
-          : err.message || '로그인에 실패했습니다.';
-      setError(typeof msg === 'string' ? msg : JSON.stringify(msg));
+      setError(parseApiError(err, '로그인에 실패했습니다.'));
     } finally {
       setLoading(false);
     }
