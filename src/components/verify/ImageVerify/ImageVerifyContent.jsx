@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAuthModal } from '@/contexts/AuthModalContext';
 import { uploadImage, getDetectionStatus, getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
+import { parseApiError } from '@/lib/parseApiError';
 
 const POLL_INTERVAL_MS = 2000;
 const POLL_MAX_ATTEMPTS = 60;
@@ -82,10 +83,7 @@ export default function ImageVerifyContent() {
       }
     } catch (error) {
       console.error('검증 실패:', error);
-      const msg = error?.response?.data?.detail
-        ? (Array.isArray(error.response.data.detail) ? error.response.data.detail[0]?.msg : error.response.data.detail)
-        : error?.message || '검증 요청에 실패했습니다.';
-      setErrorMessage(typeof msg === 'string' ? msg : '검증 요청에 실패했습니다.');
+      setErrorMessage(parseApiError(error, '검증 요청에 실패했습니다.'));
     } finally {
       setLoading(false);
     }
