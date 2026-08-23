@@ -624,6 +624,26 @@
   .verify-result__final-actions .btn {
     width: 100%;
   }
+
+  .verify-result-card__header {
+    padding: var(--spacing-16) var(--spacing-16);
+  }
+
+  .verify-result-card__details,
+  .verify-result-card__details--metadata {
+    padding: var(--spacing-16) var(--spacing-16);
+  }
+
+  .verify-result-card__details .verify-result-detail,
+  .verify-result-method__items .verify-result-detail,
+  .verify-result-detail {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-4);
+  }
+
+  .verify-result-method {
+    padding: var(--spacing-16) var(--spacing-12);
+  }
 }
 
 /* 이미지/음성 분석 방법 - 카드 4개 배치 */
