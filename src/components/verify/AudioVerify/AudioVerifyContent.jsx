@@ -3,17 +3,35 @@
 import { useState, useEffect } from 'react';
 import AudioDropzone from './AudioDropzone';
 import AudioVerifyGuide from './AudioVerifyGuide';
+import AudioVerifyResult from '@/components/mypage/AudioVerifyResult';
 import Button from '@/components/ui/Button';
-import Loader from '@/components/ui/Loader';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAuthModal } from '@/contexts/AuthModalContext';
+import {
+  uploadAudio,
+  getAudioDetectionStatus,
+  getAudioDetectionResult,
+  mapAudioDetectionResultToUI
+} from '@/api/audioDetection';
+import { parseApiError } from '@/lib/parseApiError';
+
+const POLL_INTERVAL_MS = 2000;
+const POLL_MAX_ATTEMPTS = 60;
+
+const TRACK_OPTIONS = [
+  { value: 'speech', label: '일반 음성' },
+  { value: 'singing', label: '가창' }
+];
 
 export default function AudioVerifyContent() {
   const { isLoggedIn } = useAuth();
   const { openAuthModal } = useAuthModal();
   const [file, setFile] = useState(null);
+  const [track, setTrack] = useState('speech');
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [resultData, setResultData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     if (!file) {
@@ -28,18 +46,62 @@ export default function AudioVerifyContent() {
   const handleSelect = (selectedFile) => {
     if (!selectedFile) return;
     setFile(selectedFile);
+    setErrorMessage(null);
   };
 
   const handleReset = () => {
     setFile(null);
+    setTrack('speech');
+    setResultData(null);
+    setErrorMessage(null);
   };
 
   const handleVerify = async () => {
     if (!file) return;
     setLoading(true);
+    setResultData(null);
+    setErrorMessage(null);
     try {
-      // TODO: API 연동
-      await new Promise((r) => setTimeout(r, 2000));
+      const uploadRes = await uploadAudio(file, track);
+      if (!uploadRes?.success || !uploadRes?.data?.audio_id) {
+        setErrorMessage(uploadRes?.data?.result || '업로드에 실패했습니다.');
+        return;
+      }
+      const { audio_id: audioId } = uploadRes.data;
+
+      let attempts = 0;
+      while (attempts < POLL_MAX_ATTEMPTS) {
+        const statusRes = await getAudioDetectionStatus(audioId);
+        const status = statusRes?.data?.analysis_status?.toLowerCase?.();
+        if (status === 'completed' || status === 'done' || status === 'success') {
+          break;
+        }
+        if (status === 'failed' || status === 'error') {
+          setErrorMessage('분석에 실패했습니다.');
+          return;
+        }
+        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+        attempts += 1;
+      }
+      if (attempts >= POLL_MAX_ATTEMPTS) {
+        setErrorMessage('분석 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.');
+        return;
+      }
+
+      const resultRes = await getAudioDetectionResult(audioId);
+      if (!resultRes?.success || !resultRes?.data) {
+        setErrorMessage('결과를 불러오지 못했습니다.');
+        return;
+      }
+      const mapped = mapAudioDetectionResultToUI(resultRes.data, { fileName: file.name });
+      if (mapped) {
+        setResultData(mapped);
+      } else {
+        setErrorMessage('결과 변환에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('음성 검증 실패:', error);
+      setErrorMessage(parseApiError(error, '검증 요청에 실패했습니다.'));
     } finally {
       setLoading(false);
     }
@@ -51,9 +113,12 @@ export default function AudioVerifyContent() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  if (resultData && !loading) {
+    return <AudioVerifyResult resultData={resultData} onReset={handleReset} />;
+  }
+
   return (
     <>
-      {/* 1. 검사 (음성 업로드) */}
       <section className="verify-section section section--gray">
         <div className="section__inner">
           <div className="section__header">
@@ -62,6 +127,27 @@ export default function AudioVerifyContent() {
           </div>
 
           <div className="verify-content">
+            {isLoggedIn && (
+              <div className="verify-track-select" role="radiogroup" aria-label="음성 분석 유형">
+                <p className="verify-track-select__label">분석 유형</p>
+                <div className="verify-track-select__options">
+                  {TRACK_OPTIONS.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      role="radio"
+                      aria-checked={track === option.value}
+                      className={`verify-track-select__option${track === option.value ? ' verify-track-select__option--active' : ''}`}
+                      onClick={() => setTrack(option.value)}
+                      disabled={loading}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="verify-upload">
               {!isLoggedIn ? (
                 <div
@@ -111,32 +197,25 @@ export default function AudioVerifyContent() {
               )}
             </div>
 
-            {isLoggedIn && previewUrl && !loading && (
+            {isLoggedIn && previewUrl && (
               <div className="verify-actions">
-                <Button variant="primary" size="lg" onClick={handleVerify}>
-                  검증하기
-                </Button>
+                {errorMessage && (
+                  <p className="verify-error" role="alert">
+                    {errorMessage}
+                  </p>
+                )}
+                {loading ? (
+                  <p className="verify-loading">분석 중입니다. 잠시만 기다려 주세요.</p>
+                ) : (
+                  <Button variant="primary" size="lg" onClick={handleVerify}>
+                    검증하기
+                  </Button>
+                )}
               </div>
             )}
           </div>
         </div>
       </section>
-
-      {/* 2. 검사 진행/대기 */}
-      {loading && (
-        <section className="section section--white verify-progress">
-          <div className="section__inner">
-            <div className="verify-progress__inner">
-              <Loader size={56} variant="shield" />
-              <h2 className="verify-progress__title">검사 진행 중</h2>
-              <p className="verify-progress__desc">음성을 분석하고 있습니다. 잠시만 기다려 주세요.</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 결과 상세 - TODO: API 연동 후 표시 */}
-      {/* <section className="section section--gray verify-result-section">...</section> */}
 
       <AudioVerifyGuide />
     </>
