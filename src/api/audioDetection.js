@@ -1,45 +1,27 @@
-import axios from 'axios';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-const ACCESS_TOKEN_KEY = 'heimdall_access_token';
-
-const client = axios.create({
-  baseURL: API_BASE_URL
-});
-
-client.interceptors.request.use((config) => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-  }
-  if (!config.headers['Content-Type'] && !(config.data instanceof FormData)) {
-    config.headers['Content-Type'] = 'application/json';
-  }
-  return config;
-});
+import { apiClient } from '@/lib/apiClient';
+import { formatDateTime, toPercent } from '@/lib/format';
+import { fileNameFromUrl, normalizeMediaUrl } from '@/lib/mediaUrl';
+import { mapC2paToUI } from '@/lib/mapC2pa';
 
 /**
  * 마이페이지 음성 검증 내역 조회
  * GET /api/v1/users/me/history/audio
  */
 export async function getAudioHistory(params = {}) {
-  const { data } = await client.get('/api/v1/users/me/history/audio', { params });
+  const { data } = await apiClient.get('/api/v1/users/me/history/audio', { params });
   return data;
 }
 
 /**
  * 음성 업로드 후 비동기 검증 시작
  * POST /api/v1/audios/upload
- * @param {File} file
  * @param {'speech' | 'singing'} track - 분석 트랙 (OpenAPI 필수)
  */
 export async function uploadAudio(file, track = 'speech') {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('track', track);
-  const { data } = await client.post('/api/v1/audios/upload', formData);
+  const { data } = await apiClient.post('/api/v1/audios/upload', formData);
   return data;
 }
 
@@ -48,7 +30,7 @@ export async function uploadAudio(file, track = 'speech') {
  * GET /api/v1/detection/audio/{audio_id}/status
  */
 export async function getAudioDetectionStatus(audioId) {
-  const { data } = await client.get(`/api/v1/detection/audio/${audioId}/status`);
+  const { data } = await apiClient.get(`/api/v1/detection/audio/${audioId}/status`);
   return data;
 }
 
@@ -57,76 +39,14 @@ export async function getAudioDetectionStatus(audioId) {
  * GET /api/v1/detection/audio/{audio_id}/result
  */
 export async function getAudioDetectionResult(audioId) {
-  const { data } = await client.get(`/api/v1/detection/audio/${audioId}/result`);
+  const { data } = await apiClient.get(`/api/v1/detection/audio/${audioId}/result`);
   return data;
 }
-
-const toPercent = (value) => {
-  if (value == null) return 0;
-  const num = Number(value);
-  if (Number.isNaN(num)) return 0;
-  return num <= 1 ? Math.round(num * 100) : Math.round(num);
-};
-
-const formatDateTime = (value) => {
-  if (!value) return '-';
-  const d = new Date(value);
-  if (Number.isNaN(d.getTime())) return value;
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  return `${y}-${m}-${day} ${hh}:${mm}`;
-};
-
-const normalizeMediaUrl = (rawUrl) => {
-  if (!rawUrl) return null;
-  if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) return rawUrl;
-  if (rawUrl.startsWith('heimdall.ai.kr/')) return `https://${rawUrl}`;
-  const base = API_BASE_URL.replace(/\/$/, '');
-  return `${base}${rawUrl.startsWith('/') ? '' : '/'}${rawUrl}`;
-};
-
-const mapC2paToUI = (rawC2pa) => {
-  if (!rawC2pa || rawC2pa.c2pa_id == null) return undefined;
-  return {
-    isCompliant: rawC2pa.is_c2pa_compliant ?? false,
-    details: {
-      ...(rawC2pa.created_model != null && rawC2pa.created_model !== '' && { '모델명 1': rawC2pa.created_model }),
-      ...(rawC2pa.converted_model != null && rawC2pa.converted_model !== '' && { '모델명 2': rawC2pa.converted_model }),
-      ...(rawC2pa.created_description != null &&
-        rawC2pa.created_description !== '' && { '모델명 3': rawC2pa.created_description }),
-      ...(rawC2pa.claim_generator != null && rawC2pa.claim_generator !== '' && { '플랫폼 1': rawC2pa.claim_generator }),
-      ...(rawC2pa.claim_generator_info_name != null &&
-        rawC2pa.claim_generator_info_name !== '' && { '플랫폼 2': rawC2pa.claim_generator_info_name }),
-      ...(rawC2pa.synth_id != null && rawC2pa.synth_id !== '' && { SynthID: rawC2pa.synth_id }),
-      ...(rawC2pa.total_digital_source_type != null &&
-        rawC2pa.total_digital_source_type !== '' && { '디지털 소스': rawC2pa.total_digital_source_type }),
-      ...(rawC2pa.synth_id_digital_source_type != null &&
-        rawC2pa.synth_id_digital_source_type !== '' && {
-          'SynthID 디지털 소스': rawC2pa.synth_id_digital_source_type
-        })
-    }
-  };
-};
 
 const trackLabel = (track) => {
   if (track === 'speech') return '일반 음성';
   if (track === 'singing') return '가창';
   return track || '-';
-};
-
-const fileNameFromUrl = (url, fallback = 'audio') => {
-  if (!url) return fallback;
-  try {
-    const pathname = new URL(url, API_BASE_URL).pathname;
-    const name = pathname.split('/').pop();
-    return name || fallback;
-  } catch {
-    const parts = url.split('/');
-    return parts[parts.length - 1] || fallback;
-  }
 };
 
 /**
@@ -138,7 +58,7 @@ export function mapAudioDetectionResultToUI(apiData, options = {}) {
   if (!apiData) return null;
 
   const audioUrl = normalizeMediaUrl(apiData.audio_url);
-  const fileName = options.fileName ?? fileNameFromUrl(apiData.audio_url);
+  const fileName = options.fileName ?? fileNameFromUrl(apiData.audio_url, 'audio');
   const aiProbability = toPercent(apiData.final_ai_probability ?? 0);
   const isAi = apiData.final_is_ai === true;
   const resultLabel = apiData.final_is_ai != null ? (isAi ? 'AI' : 'Real') : '-';

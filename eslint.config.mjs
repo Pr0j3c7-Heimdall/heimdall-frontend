@@ -73,13 +73,6 @@ export default [
         }
       ],
 
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: ['@mui/*/*/*', '!@mui/material/test-utils/*']
-        }
-      ],
-
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

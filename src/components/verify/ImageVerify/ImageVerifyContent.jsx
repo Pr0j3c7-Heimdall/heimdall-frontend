@@ -4,14 +4,19 @@ import { useState } from 'react';
 import ImageDropzone from './ImageDropzone';
 import ImageVerifyResult from './ImageVerifyResult';
 import ImageVerifyGuide from './ImageVerifyGuide';
+import VerifyLoginPrompt from '@/components/verify/VerifyLoginPrompt';
 import Button from '@/components/ui/Button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAuthModal } from '@/contexts/AuthModalContext';
-import { uploadImage, getDetectionStatus, getDetectionResult, mapDetectionResultToUI } from '@/api/imageDetection';
+import {
+  uploadImage,
+  getImageDetectionStatus,
+  getImageDetectionResult,
+  mapDetectionResultToUI
+} from '@/api/imageDetection';
 import { parseApiError } from '@/lib/parseApiError';
-
-const POLL_INTERVAL_MS = 2000;
-const POLL_MAX_ATTEMPTS = 60;
+import { pollDetectionStatus } from '@/lib/pollDetectionStatus';
+import { formatFileSize } from '@/lib/format';
 
 export default function ImageVerifyContent() {
   const { isLoggedIn } = useAuth();
@@ -51,26 +56,13 @@ export default function ImageVerifyContent() {
       }
       const { image_id: imageId } = uploadRes.data;
 
-      let attempts = 0;
-      while (attempts < POLL_MAX_ATTEMPTS) {
-        const statusRes = await getDetectionStatus(imageId);
-        const status = statusRes?.data?.analysis_status?.toLowerCase?.();
-        if (status === 'completed' || status === 'done' || status === 'success') {
-          break;
-        }
-        if (status === 'failed' || status === 'error') {
-          setErrorMessage('분석에 실패했습니다.');
-          return;
-        }
-        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-        attempts += 1;
-      }
-      if (attempts >= POLL_MAX_ATTEMPTS) {
-        setErrorMessage('분석 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요.');
+      const pollResult = await pollDetectionStatus(getImageDetectionStatus, imageId);
+      if (!pollResult.ok) {
+        setErrorMessage(pollResult.error);
         return;
       }
 
-      const resultRes = await getDetectionResult(imageId);
+      const resultRes = await getImageDetectionResult(imageId);
       if (!resultRes?.success || !resultRes?.data) {
         setErrorMessage('결과를 불러오지 못했습니다.');
         return;
@@ -82,27 +74,18 @@ export default function ImageVerifyContent() {
         setErrorMessage('결과 변환에 실패했습니다.');
       }
     } catch (error) {
-      console.error('검증 실패:', error);
       setErrorMessage(parseApiError(error, '검증 요청에 실패했습니다.'));
     } finally {
       setLoading(false);
     }
   };
 
-  const formatSize = (bytes) => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
-
-  // 결과가 있으면 결과 페이지만 표시
   if (resultData && !loading) {
     return <ImageVerifyResult resultData={resultData} onReset={handleReset} />;
   }
 
   return (
     <>
-      {/* 1. 검사 (이미지 업로드) */}
       <section className="verify-section section section--gray">
         <div className="section__inner">
           <div className="section__header">
@@ -113,35 +96,7 @@ export default function ImageVerifyContent() {
           <div className="verify-content">
             <div className="verify-upload">
               {!isLoggedIn ? (
-                <div
-                  className="verify-dropzone verify-dropzone--login-prompt"
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => openAuthModal('login')}
-                  onKeyDown={(e) => e.key === 'Enter' && openAuthModal('login')}
-                  aria-label="로그인하고 이미지 검사하기"
-                >
-                  <span className="verify-dropzone__icon verify-dropzone__icon--lock" aria-hidden>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </span>
-                  <p className="verify-dropzone__text">이미지 검사를 사용하려면 로그인이 필요해요</p>
-                  <p className="verify-dropzone__hint">로그인하면 이미지를 업로드하고 AI 생성 여부를 검사할 수 있습니다.</p>
-                  <Button
-                    type="button"
-                    variant="primary"
-                    size="md"
-                    className="verify-dropzone__login-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openAuthModal('login');
-                    }}
-                  >
-                    로그인하고 검사하기
-                  </Button>
-                </div>
+                <VerifyLoginPrompt mediaType="image" onLogin={() => openAuthModal('login')} />
               ) : !preview ? (
                 <ImageDropzone onSelect={handleSelect} disabled={loading} />
               ) : (
@@ -151,7 +106,7 @@ export default function ImageVerifyContent() {
                   </div>
                   <div className="verify-preview__meta">
                     <p className="verify-preview__name">{file?.name}</p>
-                    <p className="verify-preview__size">{file && formatSize(file.size)}</p>
+                    <p className="verify-preview__size">{file && formatFileSize(file.size)}</p>
                     <button type="button" onClick={handleReset} className="verify-preview__reset" disabled={loading}>
                       다시 선택
                     </button>

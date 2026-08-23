@@ -75,7 +75,7 @@ export default function HomePage() {
                   {item.id === 'audio' && (
                     <div className="showcase__placeholder-audio">
                       <span className="showcase__placeholder-audio-icon">🎙️</span>
-                      <span className="showcase__placeholder-audio-text">음성 검사는 준비 중입니다</span>
+                      <span className="showcase__placeholder-audio-text">음성 AI 검사 지원</span>
                     </div>
                   )}
                 </div>
@@ -84,6 +84,11 @@ export default function HomePage() {
             <div className="showcase__content">
               <h3 className="showcase__title">{item.title}</h3>
               <p className="showcase__desc">{item.description}</p>
+              {item.href && (
+                <Button href={item.href} variant="primary" size="md">
+                  {item.id === 'audio' ? '음성 검사하기' : '이미지 검사하기'}
+                </Button>
+              )}
             </div>
           </ShowcaseAnimate>
         ))}
