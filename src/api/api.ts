@@ -124,6 +124,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/users/me/history/audio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Audio History
+         * @description 마이페이지 오디오 검증 내역 조회
+         */
+        get: operations["get_my_audio_history_api_v1_users_me_history_audio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/images/upload": {
         parameters: {
             query?: never;
@@ -138,6 +158,26 @@ export interface paths {
          * @description 이미지 파일을 업로드하고 AI 검증을 비동기로 시작함.
          */
         post: operations["upload_image_api_v1_images_upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audios/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Audio
+         * @description 오디오 파일을 업로드하고 AI 검증을 비동기로 시작함.
+         */
+        post: operations["upload_audio_api_v1_audios_upload_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -176,6 +216,46 @@ export interface paths {
          * @description AI 검증 파이프라인 분석이 완료된 후 상세 결과를 조회함.
          */
         get: operations["get_detection_result_api_v1_detection_image__image_id__result_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/detection/audio/{audio_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Detection Status
+         * @description AI 검증 파이프라인의 현재 상태 및 최종 결과를 조회함.
+         */
+        get: operations["get_detection_status_api_v1_detection_audio__audio_id__status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/detection/audio/{audio_id}/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Detection Result
+         * @description AI 검증 파이프라인 분석이 완료된 후 상세 결과를 조회함.
+         */
+        get: operations["get_detection_result_api_v1_detection_audio__audio_id__result_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -244,10 +324,133 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/redis-health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Redis Health Check
+         * @description Redis 연결 상태 확인
+         */
+        get: operations["redis_health_check_redis_health_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AudioDetectionResultData */
+        AudioDetectionResultData: {
+            /**
+             * Audio Id
+             * @description Audio ID
+             */
+            audio_id: number;
+            /**
+             * Audio Url
+             * @description Original audio URL
+             */
+            audio_url: string;
+            /**
+             * Track
+             * @description Analysis track (speech or singing)
+             */
+            track: string;
+            /**
+             * Final Is Ai
+             * @description Final determination if the audio is AI-generated
+             */
+            final_is_ai?: boolean | null;
+            /**
+             * Final Ai Probability
+             * @description Final probability that the audio is AI-generated
+             */
+            final_ai_probability?: number | null;
+            /**
+             * Completed At
+             * @description Time when the analysis was completed
+             */
+            completed_at?: string | null;
+            /** @description C2PA verification result */
+            c2pa?: components["schemas"]["app__detection__audio__schema__response__audio_result__C2PAResultSchema"] | null;
+            /**
+             * Models
+             * @description List of per-model detection results
+             */
+            models?: components["schemas"]["ModelResultSchema"][];
+        };
+        /** AudioDetectionResultResponse */
+        AudioDetectionResultResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["AudioDetectionResultData"];
+        };
+        /** AudioDetectionStatusData */
+        AudioDetectionStatusData: {
+            /**
+             * Audio Id
+             * @description ID of the audio
+             */
+            audio_id: number;
+            /**
+             * Analysis Status
+             * @description Current status of the analysis pipeline
+             */
+            analysis_status: string;
+        };
+        /** AudioDetectionStatusResponse */
+        AudioDetectionStatusResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["AudioDetectionStatusData"];
+        };
+        /** AudioUploadData */
+        AudioUploadData: {
+            /**
+             * Audio Id
+             * @description Unique ID of the uploaded audio
+             */
+            audio_id: number;
+            /**
+             * Audio Url
+             * @description Full URL to access the uploaded audio
+             */
+            audio_url: string;
+            /**
+             * Track
+             * @description Analysis track (speech or singing)
+             */
+            track: string;
+            /**
+             * Result
+             * @description Result message from AI validation (if any)
+             */
+            result?: string | null;
+        };
+        /** AudioUploadResponse */
+        AudioUploadResponse: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data: components["schemas"]["AudioUploadData"];
+        };
         /** BinaryResultSchema */
         BinaryResultSchema: {
             /**
@@ -271,73 +474,20 @@ export interface components {
              */
             result_json?: unknown | null;
         };
+        /** Body_upload_audio_api_v1_audios_upload_post */
+        Body_upload_audio_api_v1_audios_upload_post: {
+            /** File */
+            file: string;
+            /**
+             * Track
+             * @description 분석 트랙 (speech 또는 singing)
+             */
+            track: string;
+        };
         /** Body_upload_image_api_v1_images_upload_post */
         Body_upload_image_api_v1_images_upload_post: {
             /** File */
             file: string;
-        };
-        /** C2PAResultSchema */
-        C2PAResultSchema: {
-            /**
-             * C2Pa Id
-             * @description C2PA verification result ID
-             */
-            c2pa_id: number;
-            /**
-             * Is C2Pa Compliant
-             * @description Whether the image is C2PA compliant
-             */
-            is_c2pa_compliant: boolean;
-            /**
-             * Created Model
-             * @description 생성 모델명 1
-             */
-            created_model?: string | null;
-            /**
-             * Converted Model
-             * @description 생성 모델명 2
-             */
-            converted_model?: string | null;
-            /**
-             * Created Description
-             * @description 생성 모델명 3
-             */
-            created_description?: string | null;
-            /**
-             * Claim Generator
-             * @description 서명한 주체 1
-             */
-            claim_generator?: string | null;
-            /**
-             * Claim Generator Info Name
-             * @description 서명한 주체 2
-             */
-            claim_generator_info_name?: string | null;
-            /**
-             * Synth Id
-             * @description Google SynthID Watermark
-             */
-            synth_id?: string | null;
-            /**
-             * Visible Watermark
-             * @description Google Visible Watermark
-             */
-            visible_watermark?: string | null;
-            /**
-             * Total Digital Source Type
-             * @description 디지털 콘텐츠 제작 방식 라벨
-             */
-            total_digital_source_type?: string | null;
-            /**
-             * Synth Id Digital Source Type
-             * @description synthID 생성 방식 라벨
-             */
-            synth_id_digital_source_type?: string | null;
-            /**
-             * Visible Watermark Digital Source Type
-             * @description visible watermark 생성 방식 라벨
-             */
-            visible_watermark_digital_source_type?: string | null;
         };
         /** DetectionResultData */
         DetectionResultData: {
@@ -372,7 +522,7 @@ export interface components {
              */
             completed_at?: string | null;
             /** @description C2PA verification result */
-            c2pa?: components["schemas"]["C2PAResultSchema"] | null;
+            c2pa?: components["schemas"]["app__detection__image__schema__response__image_result__C2PAResultSchema"] | null;
             /**
              * Binary
              * @description List of binary detection results
@@ -475,6 +625,29 @@ export interface components {
              */
             refreshToken: string;
         };
+        /** ModelResultSchema */
+        ModelResultSchema: {
+            /**
+             * Model Result Id
+             * @description Model detection result ID
+             */
+            model_result_id: number;
+            /**
+             * Detection Method
+             * @description Model used for this detection (e.g. SSL-AASIST, RawNet3)
+             */
+            detection_method: string;
+            /**
+             * Confidence Score
+             * @description Confidence score for this detection
+             */
+            confidence_score?: number | null;
+            /**
+             * Result Json
+             * @description 상세 결과 JSON
+             */
+            result_json?: unknown | null;
+        };
         /** MultiResultSchema */
         MultiResultSchema: {
             /**
@@ -533,6 +706,132 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /**
+         * C2PAResultSchema
+         * @description C2PA 검증 결과.
+         *
+         *     필드 구성은 이미지 응답의 C2PAResultSchema와 의도적으로 맞췄다. 프론트엔드가
+         *     이미지/오디오 결과를 같은 컴포넌트로 렌더링할 수 있게 하기 위함이므로,
+         *     한쪽만 바꾸지 말 것.
+         *
+         *     예외는 visible_watermark 계열 2개다. 오디오에 "보이는" 워터마크는 성립하지 않아
+         *     이미지에만 존재한다. synth_id 계열은 SynthID가 오디오를 지원하므로 양쪽에 둔다.
+         */
+        app__detection__audio__schema__response__audio_result__C2PAResultSchema: {
+            /**
+             * C2Pa Id
+             * @description C2PA verification result ID
+             */
+            c2pa_id: number;
+            /**
+             * Is C2Pa Compliant
+             * @description 서명·바인딩·신뢰 검증을 통과하고 AI 생성이 선언된 경우에만 true
+             */
+            is_c2pa_compliant: boolean;
+            /**
+             * Created Model
+             * @description 생성 모델명 1
+             */
+            created_model?: string | null;
+            /**
+             * Converted Model
+             * @description 생성 모델명 2
+             */
+            converted_model?: string | null;
+            /**
+             * Created Description
+             * @description 생성 모델명 3
+             */
+            created_description?: string | null;
+            /**
+             * Claim Generator
+             * @description 서명한 주체 1
+             */
+            claim_generator?: string | null;
+            /**
+             * Claim Generator Info Name
+             * @description 서명한 주체 2
+             */
+            claim_generator_info_name?: string | null;
+            /**
+             * Synth Id
+             * @description Google SynthID Watermark
+             */
+            synth_id?: string | null;
+            /**
+             * Total Digital Source Type
+             * @description 디지털 콘텐츠 제작 방식 라벨
+             */
+            total_digital_source_type?: string | null;
+            /**
+             * Synth Id Digital Source Type
+             * @description synthID 생성 방식 라벨
+             */
+            synth_id_digital_source_type?: string | null;
+        };
+        /** C2PAResultSchema */
+        app__detection__image__schema__response__image_result__C2PAResultSchema: {
+            /**
+             * C2Pa Id
+             * @description C2PA verification result ID
+             */
+            c2pa_id: number;
+            /**
+             * Is C2Pa Compliant
+             * @description Whether the image is C2PA compliant
+             */
+            is_c2pa_compliant: boolean;
+            /**
+             * Created Model
+             * @description 생성 모델명 1
+             */
+            created_model?: string | null;
+            /**
+             * Converted Model
+             * @description 생성 모델명 2
+             */
+            converted_model?: string | null;
+            /**
+             * Created Description
+             * @description 생성 모델명 3
+             */
+            created_description?: string | null;
+            /**
+             * Claim Generator
+             * @description 서명한 주체 1
+             */
+            claim_generator?: string | null;
+            /**
+             * Claim Generator Info Name
+             * @description 서명한 주체 2
+             */
+            claim_generator_info_name?: string | null;
+            /**
+             * Synth Id
+             * @description Google SynthID Watermark
+             */
+            synth_id?: string | null;
+            /**
+             * Visible Watermark
+             * @description Google Visible Watermark
+             */
+            visible_watermark?: string | null;
+            /**
+             * Total Digital Source Type
+             * @description 디지털 콘텐츠 제작 방식 라벨
+             */
+            total_digital_source_type?: string | null;
+            /**
+             * Synth Id Digital Source Type
+             * @description synthID 생성 방식 라벨
+             */
+            synth_id_digital_source_type?: string | null;
+            /**
+             * Visible Watermark Digital Source Type
+             * @description visible watermark 생성 방식 라벨
+             */
+            visible_watermark_digital_source_type?: string | null;
         };
     };
     responses: never;
@@ -717,6 +1016,41 @@ export interface operations {
             };
         };
     };
+    get_my_audio_history_api_v1_users_me_history_audio_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+                keyword?: string | null;
+                file_type?: string | null;
+                result_type?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     upload_image_api_v1_images_upload_post: {
         parameters: {
             query?: never;
@@ -737,6 +1071,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ImageUploadResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_audio_api_v1_audios_upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_audio_api_v1_audios_upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioUploadResponse"];
                 };
             };
             /** @description Validation Error */
@@ -812,6 +1179,68 @@ export interface operations {
             };
         };
     };
+    get_detection_status_api_v1_detection_audio__audio_id__status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                audio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioDetectionStatusResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_detection_result_api_v1_detection_audio__audio_id__result_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                audio_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AudioDetectionResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     root__get: {
         parameters: {
             query?: never;
@@ -853,6 +1282,26 @@ export interface operations {
         };
     };
     db_health_check_db_health_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuccessResponse"];
+                };
+            };
+        };
+    };
+    redis_health_check_redis_health_get: {
         parameters: {
             query?: never;
             header?: never;
