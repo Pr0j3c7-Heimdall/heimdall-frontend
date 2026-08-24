@@ -119,14 +119,37 @@
 }
 
 .navbar__logo {
-  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-brand);
+  font-size: 1.0625rem;
   font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--color-fg);
-  letter-spacing: -0.02em;
+  transition: color var(--transition-hover), opacity var(--transition-hover);
+}
+
+.navbar__logo-mark {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.navbar__logo-text {
+  line-height: 1;
 }
 
 .navbar__logo:hover {
-  opacity: var(--interaction-hover-opacity);
+  color: var(--color-fg);
+  opacity: 0.78;
+}
+
+[data-theme='dark'] .navbar__logo:hover {
+  color: #ffffff;
+  opacity: 0.88;
 }
 
 .navbar__logo:active {
