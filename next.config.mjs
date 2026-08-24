@@ -1,5 +1,11 @@
 import { apiBaseUrl } from './apiBaseUrl.mjs';
 
+// rewrites()가 실제로 프록시할 대상. 브라우저에 노출되는 apiBaseUrl(프로덕션에서는
+// 상대경로 /api)과 달리, docker 내부 네트워크에서 backend 컨테이너에 도달하는
+// 주소가 필요하다. 미설정 시(로컬 개발 등, apiBaseUrl이 이미 절대 URL인 경우)
+// apiBaseUrl로 폴백한다.
+const internalBackendUrl = process.env.BACKEND_INTERNAL_URL || apiBaseUrl;
+
 const backendOrigin = (() => {
   try {
     return new URL(apiBaseUrl).origin;
@@ -56,7 +62,7 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    const backend = apiBaseUrl.replace(/\/$/, '');
+    const backend = internalBackendUrl.replace(/\/$/, '');
     return [
       {
         source: '/uploads/:path*',
