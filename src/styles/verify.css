@@ -261,6 +261,17 @@
   object-fit: contain;
 }
 
+.verify-result__image-placeholder {
+  background: var(--color-bg-muted);
+  border: 1px dashed var(--color-border);
+}
+
+.verify-result__image-placeholder-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-fg-muted);
+}
+
 /* 음성 결과 플레이스홀더 (히스토리 상세) */
 .verify-result__audio-placeholder {
   flex-direction: column;
@@ -763,6 +774,13 @@ section#audio-framework .section__header {
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   object-fit: contain;
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-surface);
+}
+
+[data-theme='dark'] .verify-framework-diagram__img {
+  background: var(--color-surface-elevated);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .verify-framework-diagram__img-caption {
@@ -1014,6 +1032,10 @@ section#audio-framework .section__header {
 }
 
 @media (max-width: 768px) {
+  .verify-framework-diagram__img {
+    border-radius: var(--radius-sm);
+  }
+
   .verify-support-cards {
     grid-template-columns: 1fr;
   }
