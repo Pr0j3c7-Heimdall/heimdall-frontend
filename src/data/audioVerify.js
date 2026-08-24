@@ -42,11 +42,13 @@ export const audioFrameworkCardsData = {
   diagrams: [
     {
       src: '/assets/images/framework/audio_framework.png',
+      fallbackSrc: '/assets/images/framework/audio_framework.svg',
       alt: '로그인과 음성 업로드부터 C2PA·음성 유형 분석·이진분류·메타데이터를 거쳐 최종 결과가 마이페이지에 저장되는 Heimdall 음성 판별 프레임워크 흐름도',
       caption: '프레임워크 흐름도'
     },
     {
       src: '/assets/images/framework/audio_system.png',
+      fallbackSrc: '/assets/images/framework/audio_system.svg',
       alt: '음성 업로드 후 C2PA·음성 유형 분석·이진분류·메타데이터 분석을 거쳐 최종 판단이 나오는 Heimdall 음성 판별 시스템 구성도',
       caption: '시스템 구성도'
     }
