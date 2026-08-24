@@ -7,6 +7,7 @@ import { getImageHistory } from '@/api/imageDetection';
 import { getAudioHistory } from '@/api/audioDetection';
 import { parseApiError } from '@/lib/parseApiError';
 import { mapHistoryToItems } from '@/lib/mapHistoryItems';
+import HistoryImageThumbnail from '@/components/mypage/HistoryImageThumbnail';
 
 const HISTORY_CONFIG = {
   image: {
@@ -139,7 +140,18 @@ export default function HistoryContent({ type }) {
                     }}
                   >
                     <td className="history-table__td history-table__td--no">{index + 1}</td>
-                    <td className="history-table__td history-table__td--name">{item.fileName}</td>
+                    <td className="history-table__td history-table__td--name">
+                      <div className="history-table__file">
+                        {type === 'image' ? (
+                          <HistoryImageThumbnail
+                            src={item.thumbnailUrl}
+                            alt=""
+                            className="history-table__thumb"
+                          />
+                        ) : null}
+                        <span className="history-table__filename">{item.fileName}</span>
+                      </div>
+                    </td>
                     <td className="history-table__td">
                       <span className={`history-table__result history-table__result--${item.result.replace(/\s/g, '')}`}>
                         {item.result}
@@ -163,7 +175,16 @@ export default function HistoryContent({ type }) {
                       {item.result}
                     </span>
                   </div>
-                  <p className="history-card__name">{item.fileName}</p>
+                  <div className="history-card__file">
+                    {type === 'image' ? (
+                      <HistoryImageThumbnail
+                        src={item.thumbnailUrl}
+                        alt=""
+                        className="history-card__thumb"
+                      />
+                    ) : null}
+                    <p className="history-card__name">{item.fileName}</p>
+                  </div>
                   <dl className="history-card__meta">
                     <div className="history-card__meta-row">
                       <dt>AI일 확률</dt>
