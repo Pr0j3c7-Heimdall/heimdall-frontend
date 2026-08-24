@@ -32,9 +32,6 @@ export async function getImageDetectionStatus(imageId) {
   return data;
 }
 
-/** @deprecated getImageDetectionStatus 사용 권장 */
-export const getDetectionStatus = getImageDetectionStatus;
-
 /**
  * 이미지 검증 상세 결과 조회
  * GET /api/v1/detection/image/{image_id}/result
@@ -43,9 +40,6 @@ export async function getImageDetectionResult(imageId) {
   const { data } = await apiClient.get(`/api/v1/detection/image/${imageId}/result`);
   return data;
 }
-
-/** @deprecated getImageDetectionResult 사용 권장 */
-export const getDetectionResult = getImageDetectionResult;
 
 /** 이진분류 앙상블 가중치 (DINOv3, F3Net, UNet) */
 const BINARY_WEIGHTS = [
