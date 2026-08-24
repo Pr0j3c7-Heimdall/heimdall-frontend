@@ -97,7 +97,8 @@ export default function Navbar({ logo = 'Heimdall', navItems = [], primaryBtn, s
     <nav className={`navbar${menuOpen ? ' navbar--menu-open' : ''}`}>
       <div className="navbar__inner">
         <Link href="/" className="navbar__logo" onClick={closeMenu}>
-          {logo}
+          <img src="/icon.svg" alt="" className="navbar__logo-mark" width={26} height={26} />
+          <span className="navbar__logo-text">{logo}</span>
         </Link>
 
         <button
