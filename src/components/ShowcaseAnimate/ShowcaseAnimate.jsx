@@ -10,9 +10,9 @@ export default function ShowcaseAnimate({ children, reverse, index = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: '-60px' }}
       transition={{
-        duration: 0.45,
+        duration: 0.4,
         ease: [0.22, 1, 0.36, 1],
-        delay: index * 0.12
+        delay: index * 0.08
       }}
     >
       {children}
