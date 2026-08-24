@@ -40,11 +40,13 @@ export const imageFrameworkCardsData = {
   diagrams: [
     {
       src: '/assets/images/framework/image_framework.png',
+      fallbackSrc: '/assets/images/framework/image_framework.svg',
       alt: '로그인과 이미지 업로드부터 C2PA·이진·다중분류·메타데이터를 거쳐 최종 결과가 마이페이지에 저장되는 Heimdall 이미지 판별 프레임워크 흐름도',
       caption: '프레임워크 흐름도'
     },
     {
       src: '/assets/images/framework/image_system.png',
+      fallbackSrc: '/assets/images/framework/image_system.svg',
       alt: '이미지 업로드 후 C2PA·이진·다중분류·메타데이터 분석을 거쳐 최종 판단이 나오는 Heimdall 이미지 판별 시스템 구성도',
       caption: '시스템 구성도'
     }
