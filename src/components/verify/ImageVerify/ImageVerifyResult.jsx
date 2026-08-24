@@ -107,18 +107,26 @@ export default function ImageVerifyResult({ resultData, onReset, backHref, backL
         </div>
 
         {/* 분석된 이미지 */}
-        <div className="verify-result__image-section">
-          <div className="verify-result__image-wrap">
-            <Image
-              src={image}
-              alt="분석된 이미지"
-              fill
-              className="verify-result__image"
-              unoptimized
-              sizes="(max-width: 768px) 100vw, 800px"
-            />
+        {image ? (
+          <div className="verify-result__image-section">
+            <div className="verify-result__image-wrap">
+              <Image
+                src={image}
+                alt="분석된 이미지"
+                fill
+                className="verify-result__image"
+                unoptimized
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="verify-result__image-section">
+            <div className="verify-result__image-wrap verify-result__image-placeholder">
+              <p className="verify-result__image-placeholder-text">이미지를 불러올 수 없습니다</p>
+            </div>
+          </div>
+        )}
 
         {/* 분석 결과 상세 */}
         <div className="verify-result__details">

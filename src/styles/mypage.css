@@ -15,26 +15,52 @@
 
 .mypage-snb {
   flex-shrink: 0;
-  width: 200px;
-  background: var(--color-nav-bg);
+  width: 220px;
+  position: sticky;
+  top: calc(var(--nav-height) + var(--spacing-16));
+  align-self: flex-start;
 }
 
 .mypage-snb__nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+}
+
+.mypage-snb__label {
+  flex: 1;
+  min-width: 0;
 }
 
 .mypage-snb__link {
-  display: block;
-  padding: var(--spacing-12) var(--spacing-16);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: 10px var(--spacing-12);
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--color-fg-muted);
   border-radius: var(--radius-md);
+  text-decoration: none;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background var(--transition-hover),
+    color var(--transition-hover);
+}
+
+.mypage-snb__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--color-fg-muted);
+  transition: color var(--transition-hover);
+}
+
+.mypage-snb__icon svg {
+  width: 16px;
+  height: 16px;
 }
 
 .mypage-snb__link:hover {
@@ -42,9 +68,26 @@
   color: var(--color-fg);
 }
 
+.mypage-snb__link:hover .mypage-snb__icon {
+  color: var(--color-accent);
+}
+
 .mypage-snb__link--active {
   background: var(--color-primary-light);
   color: var(--color-primary);
+}
+
+.mypage-snb__link--active .mypage-snb__icon {
+  color: var(--color-primary);
+}
+
+[data-theme='dark'] .mypage-snb__link--active {
+  background: var(--color-accent-soft-muted);
+  color: var(--color-accent-soft);
+}
+
+[data-theme='dark'] .mypage-snb__link--active .mypage-snb__icon {
+  color: var(--color-accent-soft);
 }
 
 .mypage-content {
@@ -334,10 +377,68 @@
 
 
 .history-table__td--name {
-  max-width: 200px;
+  max-width: 280px;
+}
+
+.history-table__file {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  min-width: 0;
+}
+
+.history-table__filename {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
+}
+
+.history-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-muted);
+}
+
+.history-thumb--placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fg-muted);
+}
+
+.history-thumb--placeholder svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+html:not([data-theme='dark']) .history-thumb,
+[data-theme='light'] .history-thumb {
+  box-shadow: var(--shadow-sm);
+}
+
+.history-thumb--loading {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-muted) 0%,
+    var(--color-bg-alt) 50%,
+    var(--color-bg-muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: history-thumb-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes history-thumb-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 .history-table__badge {
@@ -497,12 +598,31 @@
 }
 
 .history-card__name {
-  margin: 0 0 var(--spacing-12);
+  margin: 0;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--color-fg);
   word-break: break-all;
   line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+}
+
+.history-card__file {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-12);
+}
+
+.history-card__thumb {
+  width: 52px;
+  height: 52px;
+}
+
+html:not([data-theme='dark']) .history-card__thumb,
+[data-theme='light'] .history-card__thumb {
+  box-shadow: var(--shadow-sm);
 }
 
 .history-card__meta {
@@ -534,14 +654,15 @@
 @media (max-width: 768px) {
   .mypage {
     flex-direction: column;
-    gap: var(--spacing-20);
+    gap: var(--spacing-24);
     padding: var(--spacing-20) var(--spacing-16) 64px;
   }
 
   .mypage-snb {
     width: 100%;
-    padding-bottom: var(--spacing-4);
-    border-bottom: 1px solid var(--color-border);
+    position: static;
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
   .mypage-snb__nav {
@@ -554,6 +675,10 @@
     padding: var(--spacing-8) var(--spacing-12);
     font-size: 0.875rem;
     white-space: nowrap;
+  }
+
+  .mypage-snb__icon {
+    display: none;
   }
 
   .mypage-section__title {

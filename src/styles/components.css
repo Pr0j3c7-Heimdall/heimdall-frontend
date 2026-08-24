@@ -5,16 +5,23 @@
   justify-content: center;
   font-family: inherit;
   font-weight: 500;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   cursor: pointer;
   border: none;
+  transition:
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover),
+    background var(--transition-hover),
+    border-color var(--transition-hover),
+    opacity var(--transition-hover);
 }
 
 .btn:hover:not(:disabled) {
-  opacity: var(--interaction-hover-opacity);
+  transform: translateY(-1px);
 }
 
 .btn:active:not(:disabled) {
+  transform: translateY(0);
   opacity: var(--interaction-pressed-opacity);
 }
 
@@ -41,6 +48,12 @@
 .btn--primary {
   background: var(--color-primary);
   color: var(--color-on-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-md);
+  opacity: 1;
 }
 
 .btn--secondary {
@@ -61,12 +74,12 @@
 
 /* 다크모드 - 버튼: 토큰과 일관 */
 [data-theme='dark'] .btn--primary {
-  background: #ffffff;
+  background: var(--color-primary);
   color: var(--color-on-primary);
 }
 
 [data-theme='dark'] .btn--primary:hover:not(:disabled) {
-  background: #f0f0f0;
+  background: var(--color-primary-hover);
   opacity: 1;
 }
 

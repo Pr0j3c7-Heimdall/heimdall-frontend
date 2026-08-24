@@ -176,6 +176,8 @@ export interface paths {
         /**
          * Upload Audio
          * @description 오디오 파일을 업로드하고 AI 검증을 비동기로 시작함.
+         *     음성/가창 트랙은 더 이상 클라이언트가 지정하지 않으며, 백그라운드 파이프라인이
+         *     YAMNet으로 자동 판별한다 (완료 전까지 응답의 track은 null).
          */
         post: operations["upload_audio_api_v1_audios_upload_post"];
         delete?: never;
@@ -362,9 +364,9 @@ export interface components {
             audio_url: string;
             /**
              * Track
-             * @description Analysis track (speech or singing)
+             * @description 분석 트랙 (speech 또는 singing). C2PA로 모델 판별을 건너뛴 경우 null
              */
-            track: string;
+            track?: string | null;
             /**
              * Final Is Ai
              * @description Final determination if the audio is AI-generated
@@ -433,9 +435,9 @@ export interface components {
             audio_url: string;
             /**
              * Track
-             * @description Analysis track (speech or singing)
+             * @description 분석 트랙 (speech 또는 singing). YAMNet 판별 완료 전에는 null
              */
-            track: string;
+            track?: string | null;
             /**
              * Result
              * @description Result message from AI validation (if any)
@@ -478,11 +480,6 @@ export interface components {
         Body_upload_audio_api_v1_audios_upload_post: {
             /** File */
             file: string;
-            /**
-             * Track
-             * @description 분석 트랙 (speech 또는 singing)
-             */
-            track: string;
         };
         /** Body_upload_image_api_v1_images_upload_post */
         Body_upload_image_api_v1_images_upload_post: {

@@ -10,9 +10,9 @@ export default function StepAnimate({ children, index = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: '-40px' }}
       transition={{
-        duration: 0.4,
+        duration: 0.35,
         ease: [0.22, 1, 0.36, 1],
-        delay: index * 0.2
+        delay: index * 0.1
       }}
     >
       {children}

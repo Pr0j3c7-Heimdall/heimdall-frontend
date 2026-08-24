@@ -111,6 +111,16 @@ export const Icons = {
     <svg viewBox="0 0 24 24" style={iconStyle}>
       <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
     </svg>
+  ),
+  list: (
+    <svg viewBox="0 0 24 24" style={iconStyle}>
+      <line x1="8" y1="6" x2="21" y2="6" strokeLinecap="round" />
+      <line x1="8" y1="12" x2="21" y2="12" strokeLinecap="round" />
+      <line x1="8" y1="18" x2="21" y2="18" strokeLinecap="round" />
+      <circle cx="4" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4" cy="18" r="1" fill="currentColor" stroke="none" />
+    </svg>
   )
 };
 

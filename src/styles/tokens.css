@@ -2,48 +2,57 @@
  * Design tokens - 다크모드 시 [data-theme="dark"] 에서 override
  */
 :root {
-  /* Background - 라이트: 히어로 배경 톤과 맞춘 계열 */
-  --color-bg: #f8f9fb;       /* 페이지 전체 (히어로 상단과 동일 계열) */
-  --color-bg-alt: #ffffff;   /* 카드/흰색 섹션 */
-  --color-bg-muted: #e5e9f0; /* 회색 섹션 / 보조 배경 */
-  --color-bg-inverse: #111827;
+  /* Background - 라이트: 웜 뉴트럴 (블루 그레이 대신) */
+  --color-bg: #f7f5f2;
+  --color-bg-alt: #ffffff;
+  --color-bg-muted: #edeae6;
+  --color-bg-inverse: #1a1918;
 
   /* Foreground (text) */
-  --color-fg: #111827;
-  --color-fg-muted: #6b7280;
+  --color-fg: #1a1918;
+  --color-fg-muted: #6b6560;
   --color-fg-on-inverse: #ffffff;
   --color-fg-muted-on-inverse: rgba(255, 255, 255, 0.8);
 
-  /* Primary - 차분한 딥 슬레이트 블루 */
-  --color-primary: #1f2937;
-  --color-primary-hover: #111827;
-  --color-primary-light: #e5e7eb;
+  /* Primary - 웜 차콜 (버튼·강조) */
+  --color-primary: #2a2826;
+  --color-primary-hover: #1a1918;
+  --color-primary-light: #f0eeeb;
   --color-on-primary: #ffffff;
 
+  /* Accent - 호버·아이콘 (라이트: 중성 그레이) */
+  --color-accent: #44403c;
+  --color-accent-muted: #f0eeeb;
+
   /* Border */
-  --color-border: #e5e7eb;
+  --color-border: #e8e4df;
+  --color-border-subtle: rgba(26, 25, 24, 0.06);
   --color-border-on-inverse: rgba(255, 255, 255, 0.5);
 
   /* Semantic */
   --color-error: #dc2626;
   --color-error-muted: rgba(220, 38, 38, 0.15);
-  --color-focus-ring: rgba(55, 65, 81, 0.15);
-  --color-info-fg: #2563eb;
-  --color-info-bg: rgba(59, 130, 246, 0.1);
+  --color-focus-ring: rgba(26, 25, 24, 0.12);
+  --color-info-fg: #44403c;
+  --color-info-bg: rgba(107, 114, 128, 0.1);
   --color-success-fg: #16a34a;
   --color-success-bg: rgba(34, 197, 94, 0.1);
   --color-warn-bg: #fffbeb;
   --color-warn-border: #eab308;
 
-  /* Surface - 전역 네비와 동일 */
-  --color-nav-bg: #ffffff;
+  /* Surface */
+  --color-nav-bg: rgba(255, 255, 255, 0.88);
   --color-footer-bg: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-media-bg: linear-gradient(145deg, #1a1918 0%, #2a2826 100%);
+  --color-media-bg-light: linear-gradient(160deg, #ffffff 0%, #f3f0ec 52%, #e8e4df 100%);
+  --color-media-ring: rgba(26, 25, 24, 0.06);
 
-  /* CTA - 홈 '지금 바로 검사하세요' 배경 (완전 검정) */
-  --color-cta-bg: #000000;
+  /* CTA */
+  --color-cta-bg: #1a1918;
   --color-cta-fg: #f9fafb;
   --color-cta-fg-muted: rgba(249, 250, 251, 0.85);
-  --color-cta-border: rgba(255, 255, 255, 0.12);
+  --color-cta-border: rgba(255, 255, 255, 0.1);
 
   /* Opacity */
   --opacity-disabled: 0.5;
@@ -53,22 +62,28 @@
   --color-overlay: rgba(0, 0, 0, 0.2);
 
   /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 2px rgba(26, 25, 24, 0.05);
+  --shadow-md: 0 4px 12px rgba(26, 25, 24, 0.08), 0 1px 3px rgba(26, 25, 24, 0.04);
+  --shadow-surface: 0 1px 2px rgba(26, 25, 24, 0.04), 0 8px 24px rgba(26, 25, 24, 0.06);
+  --shadow-modal: 0 24px 48px -12px rgba(26, 25, 24, 0.18), 0 0 0 1px rgba(26, 25, 24, 0.05);
 
-  /* Hero - 라이트: 살짝 그라데이션 */
-  --color-hero-start: #f8f9fb;
+  /* Hero */
+  --color-hero-start: #f7f5f2;
   --color-hero-mid: #ffffff;
 
   /* Radius */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
+  --radius-xl: 20px;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Pretendard Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-brand: 'Cinzel', 'Times New Roman', serif;
   --font-mono: ui-monospace, monospace;
+  --text-section-title: clamp(1.5rem, 2.5vw, 1.875rem);
+  --leading-tight: 1.25;
+  --leading-body: 1.65;
 
   /* Layout */
   --max-width: 1200px;
@@ -85,56 +100,67 @@
   --spacing-48: 48px;
 
   /* Interaction */
-  --interaction-hover-opacity: 0.94;
-  --interaction-pressed-opacity: 0.88;
-  --transition-hover: 0.15s ease;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-hover: 0.2s var(--ease-out);
+  --transition-surface: 0.25s var(--ease-out);
+
+  /* Soft black - 눈 피로 적은 웜 차콜 (블루 네이비 대신) */
+  --color-soft-black: #141416;
+  --color-soft-black-deep: #111113;
 }
 
-/* 다크모드 - Heimdall 보안 대시보드 느낌 (딥 네이비 + 차분한 블루 포인트) */
+/* 다크모드 - 소프트 블랙 + 화이트 포인트 */
 [data-theme='dark'] {
-  /* Backgrounds - 다크모드 전역을 완전 검정으로 통일 */
-  --color-bg: #000000;        /* 페이지 전체 배경 */
-  --color-bg-alt: #000000;    /* 카드/섹션 기본 배경 */
-  --color-bg-muted: #000000;  /* 번갈아 쓰는 섹션 배경도 동일 톤 */
-  --color-bg-inverse: #000000;
+  --color-bg: #111113;
+  --color-bg-alt: #18181b;
+  --color-bg-muted: #0c0c0e;
+  --color-bg-inverse: #1f1f23;
 
-  /* Text */
-  --color-fg: #e5e7eb;
-  --color-fg-muted: #9ca3af;
-  --color-fg-on-inverse: #f9fafb;
-  --color-fg-muted-on-inverse: rgba(249, 250, 251, 0.75);
+  --color-fg: #e4e4e7;
+  --color-fg-muted: #a1a1aa;
+  --color-fg-on-inverse: #fafafa;
+  --color-fg-muted-on-inverse: rgba(250, 250, 250, 0.75);
 
-  /* Primary / Accent (차분한 블루 계열) */
-  --color-primary: #60a5fa;
-  --color-primary-hover: #3b82f6;
-  --color-primary-light: #1f2937;
-  --color-on-primary: #020617;
+  --color-primary: #ffffff;
+  --color-primary-hover: #e4e4e7;
+  --color-primary-light: rgba(255, 255, 255, 0.08);
+  --color-on-primary: #111113;
 
-  /* Border */
-  --color-border: #1f2937;
-  --color-border-on-inverse: rgba(148, 163, 184, 0.8);
+  --color-accent: #ffffff;
+  --color-accent-muted: rgba(255, 255, 255, 0.1);
 
-  /* Surface - 네비·푸터 */
-  --color-nav-bg: #000000;
-  --color-footer-bg: #000000;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-on-inverse: rgba(255, 255, 255, 0.5);
 
-  /* Overlay / Shadows */
-  --color-overlay: rgba(15, 23, 42, 0.75);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.85);
-  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(148, 163, 184, 0.3);
+  --color-nav-bg: rgba(17, 17, 19, 0.88);
+  --color-footer-bg: #111113;
+  --color-surface-elevated: #1c1c1f;
+  --color-media-bg: linear-gradient(145deg, #111113 0%, #1c1c1f 100%);
+  --color-media-bg-light: linear-gradient(160deg, #1c1c1f 0%, #141416 100%);
+  --color-media-ring: rgba(255, 255, 255, 0.08);
 
-  /* Hero */
-  --color-hero-start: #000000;
-  --color-hero-mid: #000000;
+  --color-accent-soft: #c4b8ab;
+  --color-accent-soft-muted: rgba(196, 184, 171, 0.1);
+  --color-accent-glow: rgba(196, 184, 171, 0.08);
 
-  /* CTA - 다크에서도 완전 검정 배경 */
-  --color-cta-bg: #000000;
-  --color-cta-fg: #e5e7eb;
-  --color-cta-fg-muted: rgba(209, 213, 219, 0.9);
-  --color-cta-border: rgba(255, 255, 255, 0.1);
+  --color-overlay: rgba(17, 17, 19, 0.78);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.45);
+  --shadow-surface: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 8px 32px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
 
-  /* Warn / Semantic */
+  --color-hero-start: #111113;
+  --color-hero-mid: #141416;
+
+  --color-cta-bg: #0c0c0e;
+  --color-cta-fg: #e4e4e7;
+  --color-cta-fg-muted: rgba(228, 228, 231, 0.88);
+  --color-cta-border: rgba(255, 255, 255, 0.08);
+
+  --color-focus-ring: rgba(255, 255, 255, 0.18);
+  --color-info-fg: #e5e7eb;
+  --color-info-bg: rgba(255, 255, 255, 0.08);
   --color-warn-bg: rgba(234, 179, 8, 0.12);
   --color-warn-border: rgba(234, 179, 8, 0.7);
 }
