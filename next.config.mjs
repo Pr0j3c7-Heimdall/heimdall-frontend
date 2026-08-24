@@ -29,6 +29,15 @@ const cspHeader = `
 `;
 
 const nextConfig = {
+  experimental: {
+    // rewrites()로 backend에 프록시되는 요청 body는 기본 10MB까지만 버퍼링되고
+    // 나머지는 잘린다 (에러 없이 조용히 잘려서 backend가 Content-Length만큼
+    // 못 받아 연결을 끊는 것처럼 보임 - ECONNRESET/socket hang up). 오디오/이미지
+    // 업로드가 10MB를 넘기므로 넉넉히 올려둔다.
+    // 옵션명은 next 버전에 종속적 (15.x: middlewareClientMaxBodySize,
+    // 16.x부터 proxyClientMaxBodySize로 개명됨 - package.json의 next 버전 확인 후 맞출 것).
+    middlewareClientMaxBodySize: '200mb',
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'flagcdn.com', pathname: '**' },
