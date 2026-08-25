@@ -15,12 +15,11 @@ export async function getAudioHistory(params = {}) {
 /**
  * 음성 업로드 후 비동기 검증 시작
  * POST /api/v1/audios/upload
- * @param {'speech' | 'singing'} track - 분석 트랙 (OpenAPI 필수)
+ * track은 서버(YAMNet)가 자동 판별
  */
-export async function uploadAudio(file, track = 'speech') {
+export async function uploadAudio(file) {
   const formData = new FormData();
   formData.append('file', file);
-  formData.append('track', track);
   const { data } = await apiClient.post('/api/v1/audios/upload', formData);
   return data;
 }

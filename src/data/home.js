@@ -3,8 +3,7 @@ export const navItems = [
   { href: '/verify/audio', label: '음성' },
   { href: '/docs', label: '가이드' },
   { href: '/policy', label: '정책' },
-  { href: 'https://github.com/Pr0j3c7-Heimdall', label: '깃허브', external: true },
-  { href: 'https://wooro.skhu.ac.kr/wooro/index.do', label: '후원', external: true }
+  { href: 'https://github.com/Pr0j3c7-Heimdall', label: '깃허브', external: true }
 ];
 
 export const footerLinks = [
@@ -41,8 +40,7 @@ export const showcaseData = [
       '업로드한 이미지가 AI로 생성되었는지, 실제 사진인지 판별합니다. 사진 변조 여부, AI 생성 모델 식별, 생성된 회사/플랫폼 분석, 메타데이터 추출을 통해 신뢰할 수 있는 종합적인 결과를 제공합니다.',
     reverse: false,
     href: '/verify/image',
-    // 이미지 검사 데모 영상 (홈 화면 카드 좌측에 표시)
-    video: '/assets/videos/images.mp4'
+    gif: '/assets/videos/image_gif.gif'
   },
   {
     id: 'audio',

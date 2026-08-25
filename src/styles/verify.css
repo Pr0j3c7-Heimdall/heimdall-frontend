@@ -811,56 +811,6 @@ section#audio-framework .section__header {
   margin: 0;
 }
 
-.verify-track-select {
-  margin-bottom: var(--spacing-20);
-}
-
-.verify-track-select__label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-fg-muted);
-  margin-bottom: var(--spacing-8);
-}
-
-.verify-track-select__options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-8);
-}
-
-.verify-track-select__option {
-  font-family: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-alt);
-  color: var(--color-fg);
-  cursor: pointer;
-  transition:
-    border-color var(--transition-ui),
-    background var(--transition-ui),
-    color var(--transition-ui),
-    box-shadow var(--transition-ui);
-}
-
-.verify-track-select__option:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
-}
-
-.verify-track-select__option--active {
-  border-color: var(--color-primary);
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 20%, transparent);
-}
-
-.verify-track-select__option:disabled {
-  opacity: var(--opacity-disabled);
-  cursor: not-allowed;
-}
-
 .verify-framework-subtitle {
   font-size: 1.25rem;
   font-weight: 600;
