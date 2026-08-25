@@ -3,8 +3,7 @@ export const navItems = [
   { href: '/verify/audio', label: '음성' },
   { href: '/docs', label: '가이드' },
   { href: '/policy', label: '정책' },
-  { href: 'https://github.com/Pr0j3c7-Heimdall', label: '깃허브', external: true },
-  { href: 'https://wooro.skhu.ac.kr/wooro/index.do', label: '후원', external: true }
+  { href: 'https://github.com/Pr0j3c7-Heimdall', label: '깃허브', external: true }
 ];
 
 export const footerLinks = [
