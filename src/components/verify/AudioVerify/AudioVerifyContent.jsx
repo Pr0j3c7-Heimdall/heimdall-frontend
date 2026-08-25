@@ -18,16 +18,10 @@ import { parseApiError } from '@/lib/parseApiError';
 import { pollDetectionStatus } from '@/lib/pollDetectionStatus';
 import { formatFileSize } from '@/lib/format';
 
-const TRACK_OPTIONS = [
-  { value: 'speech', label: '일반 음성' },
-  { value: 'singing', label: '가창' }
-];
-
 export default function AudioVerifyContent() {
   const { isLoggedIn } = useAuth();
   const { openAuthModal } = useAuthModal();
   const [file, setFile] = useState(null);
-  const [track, setTrack] = useState('speech');
   const [previewUrl, setPreviewUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState(null);
@@ -51,7 +45,6 @@ export default function AudioVerifyContent() {
 
   const handleReset = () => {
     setFile(null);
-    setTrack('speech');
     setResultData(null);
     setErrorMessage(null);
   };
@@ -62,7 +55,7 @@ export default function AudioVerifyContent() {
     setResultData(null);
     setErrorMessage(null);
     try {
-      const uploadRes = await uploadAudio(file, track);
+      const uploadRes = await uploadAudio(file);
       if (!uploadRes?.success || !uploadRes?.data?.audio_id) {
         setErrorMessage(uploadRes?.data?.result || '업로드에 실패했습니다.');
         return;
@@ -107,27 +100,6 @@ export default function AudioVerifyContent() {
           </div>
 
           <div className="verify-content">
-            {isLoggedIn && (
-              <div className="verify-track-select" role="radiogroup" aria-label="음성 분석 유형">
-                <p className="verify-track-select__label">분석 유형</p>
-                <div className="verify-track-select__options">
-                  {TRACK_OPTIONS.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      role="radio"
-                      aria-checked={track === option.value}
-                      className={`verify-track-select__option${track === option.value ? ' verify-track-select__option--active' : ''}`}
-                      onClick={() => setTrack(option.value)}
-                      disabled={loading}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             <div className="verify-upload">
               {!isLoggedIn ? (
                 <VerifyLoginPrompt mediaType="audio" onLogin={() => openAuthModal('login')} />
