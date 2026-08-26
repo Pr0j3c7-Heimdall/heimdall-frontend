@@ -135,8 +135,6 @@ public/
 - **음성:** 업로드(`track`: `speech` \| `singing`) → 상태 폴링 → 결과 조회 → 마이페이지 이력
 - **인증:** `POST /api/v1/auth/login` (Google ID Token)
 
-상세 API·컴포넌트 매핑은 [`docs/FRONTEND.md`](docs/FRONTEND.md)를 참고하세요.
-
 ---
 
 ## 라이선스
